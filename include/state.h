@@ -1,25 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   state.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 13:01:18 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/01 19:42:23 by manu             ###   ########.fr       */
+/*   Created: 2022/08/20 16:07:36 by manu              #+#    #+#             */
+/*   Updated: 2022/09/01 19:37:49 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "error.h"
-#include "state.h"
+#ifndef STATE_H
+# define STATE_H
 
-int	main(int argc, char *argv[])
-{
-	t_mini	state;
+# include "minishell.h"
 
-	if (!init_state(&state, argc, argv))
-		return (exit_with_error("Error initializing", &state));
-	free_state(&state);
-	return (0);
-}
+int	init_state(t_mini *state, int argc, char *argv[]);
+int	free_state(t_mini *state);
+
+#endif

@@ -1,25 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 13:01:18 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/01 19:42:23 by manu             ###   ########.fr       */
+/*   Created: 2022/08/20 16:19:49 by manu              #+#    #+#             */
+/*   Updated: 2022/09/01 19:45:02 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdlib.h>
+#include <stdio.h>
+
 #include "minishell.h"
-#include "error.h"
 #include "state.h"
+#include "error.h"
 
-int	main(int argc, char *argv[])
+static void	exit_with_code(int code, t_mini *state)
 {
-	t_mini	state;
+	free_state(state);
+	exit(code);
+}
 
-	if (!init_state(&state, argc, argv))
-		return (exit_with_error("Error initializing", &state));
-	free_state(&state);
+int	exit_with_error(char *message_error, t_mini *state)
+{
+	printf("%s", message_error);
+	exit_with_code(ERROR_GENERIC, state);
+	return (0);
+}
+
+int	exit_without_error(t_mini *state)
+{
+	exit_with_code(ERROR_NONE, state);
 	return (0);
 }
