@@ -3,13 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/01 13:02:34 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/01 19:18:25 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-typedef struct s_mini{
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
+typedef struct s_mini {
 }	t_mini;
+
+#endif

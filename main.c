@@ -3,15 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:01:18 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/01 13:01:20 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/01 19:29:40 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void main ()
+#include "minishell.h"
+#include "libft.h"
+
+int	main(int argc, char *argv[])
 {
-
+	(void) argc;
+	(void) argv;
+	ft_strlen("Test");
+	return (0);
 }
-
