@@ -1,27 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 13:01:18 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/02 14:18:02 by mruiz-sa         ###   ########.fr       */
+/*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
+/*   Updated: 2022/09/02 13:22:47 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "error.h"
-#include "state.h"
 
-int	main(int argc, char *argv[], char **envp)
+#include <readline/readline.h>
+
+char	*ft_read(t_mini *state, char **envp)
 {
-	t_mini	state;
-
-	if (!init_state(&state, argc, argv))
-		return (exit_with_error("Error initializing", &state));
-	while (1)
-		ft_read(&state, envp);
-	free_state(&state);
-	return (0);
+	state->readline = readline(get_prompt(envp));
+	return (state->readline);
 }
