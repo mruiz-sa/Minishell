@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+         #
+#    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/09/03 13:13:03 by mruiz-sa         ###   ########.fr        #
+#    Updated: 2022/09/03 20:44:08 by manu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC = 	env.c \
 		ft_read.c \
 		get_prompt.c \
 		main.c \
+		signals.c \
 		state.c \
 
 CC = gcc
