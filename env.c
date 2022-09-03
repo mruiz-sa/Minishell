@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.h                                        :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/03 12:52:55 by mruiz-sa         ###   ########.fr       */
+/*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
+/*   Updated: 2022/09/03 12:28:57 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MINISHELL_H
-# define MINISHELL_H
+#include "libft.h"
 
-typedef struct s_prompt{
-	char	*user;
-	char	*prompt;
-	char	*pwd;
-}	t_prompt;
+char	*get_env(char **envp, char *key)
+{
+	int		i;
 
-typedef struct s_mini {
-	t_prompt	prompt;
-	char		*readline;
-	char		**envp;
-}	t_mini;
-
-void	get_prompt(char **envp, t_prompt *prompt);
-char	*ft_read(t_mini *state, char **envp);
-int		free_state(t_mini *state);
-int		free_prompt(t_prompt *prompt);
-
-#endif
+	i = 0;
+	while (envp[i])
+	{
+		if (!ft_strncmp(envp[i], key, ft_strlen(key)))
+			return (ft_strchr(envp[i], '=') + 1);
+		i++;
+	}
+	return (NULL);
+}
