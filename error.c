@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 16:19:49 by manu              #+#    #+#             */
-/*   Updated: 2022/09/01 19:45:02 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/03 20:21:23 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 static void	exit_with_code(int code, t_mini *state)
 {
 	free_state(state);
+	system("Leaks minishell");
 	exit(code);
 }
 
