@@ -6,20 +6,38 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:09:41 by manugarc          #+#    #+#             */
-/*   Updated: 2022/09/03 20:51:35 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/05 20:58:20 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 #include <stdio.h>
+#include <readline/readline.h>
 
 #include "signals.h"
+#include "libft.h"
+#include "state.h"
 
+/**
+ * @brief printf("\33[2K\r"); is understood by most shells, but it 
+ * is a workaround using VT100 Escape Codes.
+ * 
+ * Code should be;
+ * 
+ * 		rl_on_new_line();
+ * 		rl_replace_line("", 0);
+ * 		rl_redisplay();
+ * 
+ * @param signum 
+ */
 void	on_kill_signal_action_received(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("CTRL-C pressed. Send new line to STDINPUT?\n");
+		printf("\33[2K\r");
+		write(STDERR_FILENO, "\n", ft_strlen("\n"));
+		write(STDERR_FILENO, g_state.prompt.prompt,
+			ft_strlen(g_state.prompt.prompt));
 	}
 }
 
