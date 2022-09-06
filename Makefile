@@ -6,7 +6,7 @@
 #    By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/09/04 18:29:50 by mruiz-sa         ###   ########.fr        #
+#    Updated: 2022/09/06 17:15:23 by mruiz-sa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,6 +16,7 @@ SRC 		= 	$(SRC_DIR)/env.c \
 				$(SRC_DIR)/error.c \
 				$(SRC_DIR)/ft_read.c \
 				$(SRC_DIR)/get_prompt.c \
+				$(SRC_DIR)/ft_lexer.c \
 				$(SRC_DIR)/main.c \
 				$(SRC_DIR)/signals.c \
 				$(SRC_DIR)/state.c \

@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/04 18:25:32 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/06 18:35:28 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,6 @@ void	get_prompt(char **envp, t_prompt *prompt);
 char	*ft_read(t_mini *state);
 int		free_state(t_mini *state);
 int		free_prompt(t_prompt *prompt);
-void	ft_lexer(t_mini *state);
+char	**ft_lexer(char const *str, char c);
 
 #endif
