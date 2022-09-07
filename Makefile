@@ -3,12 +3,21 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+         #
+#    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/09/04 18:29:50 by mruiz-sa         ###   ########.fr        #
+#    Updated: 2022/09/07 19:40:35 by manu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# brew install readline
+# brew info readline
+# brew --prefix readline
+# brew link --force readline
+# For compilers to find readline you may need to set:
+#   export LDFLAGS="-L/usr/local/opt/readline/lib"
+#   export CPPFLAGS="-I/usr/local/opt/readline/include"
+# -lreadline -L/usr/local/opt/readline/lib -I/usr/local/opt/readline/include
 
 NAME 		= minishell
 SRC_DIR		=	src
@@ -21,16 +30,17 @@ SRC 		= 	$(SRC_DIR)/env.c \
 				$(SRC_DIR)/state.c \
 
 CC = gcc
-CFLAGS = -Wall -Werror -Wextra -g3
+INCLUDES = -I include -I libft -I/usr/local/opt/readline/include
+CFLAGS = -Wall -Werror -Wextra $(INCLUDES) -g3
 OBJECTS = $(SRC:.c=.o)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
-	$(CC) -c $(CFLAGS) -I include -I libft -o $@ $^
+	$(CC) -c $(CFLAGS) -o $@ $^
 
 $(NAME): $(OBJECTS)
 	@clear
 	@make -C libft
-	@$(CC) $(CFLAGS) $(OBJECTS) -I include -I libft libft/libft.a -lreadline -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) libft/libft.a -lreadline -L/usr/local/opt/readline/lib -o $(NAME)
 	@echo "\n\033[92m"-------------\\n👌 COMPILED 👌\\n-------------\\n"\033[0m\n"
 
 all: $(NAME)

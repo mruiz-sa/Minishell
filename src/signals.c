@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:09:41 by manugarc          #+#    #+#             */
-/*   Updated: 2022/09/05 20:58:20 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/07 19:56:03 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,14 @@ void	on_kill_signal_action_received(int signum)
 {
 	if (signum == SIGINT)
 	{
-		printf("\33[2K\r");
-		write(STDERR_FILENO, "\n", ft_strlen("\n"));
-		write(STDERR_FILENO, g_state.prompt.prompt,
-			ft_strlen(g_state.prompt.prompt));
+		// printf("\33[2K\r");
+		// write(STDERR_FILENO, "\n", ft_strlen("\n"));
+		// write(STDERR_FILENO, g_state.prompt.prompt,
+		// 	ft_strlen(g_state.prompt.prompt));
+		write(1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
