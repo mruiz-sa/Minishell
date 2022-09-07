@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/07 19:39:27 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/07 20:03:58 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ char	*ft_read(t_mini *state)
 		exit_without_error(state);
 	// if (ft_strlen(state->readline))
 	// 	add_history(state->readline);
+	ft_lexer(state->readline, ' ');
 	free_prompt(&state->prompt);
 	if (!ft_strncmp(state->readline, "exit", 4))
 		exit_without_error(state);
