@@ -1,43 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/20 16:19:49 by manu              #+#    #+#             */
-/*   Updated: 2022/09/09 18:55:15 by manu             ###   ########.fr       */
+/*   Created: 2022/09/09 18:55:48 by manu              #+#    #+#             */
+/*   Updated: 2022/09/09 18:55:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
-#include <stdio.h>
 
-#include "minishell.h"
-#include "state.h"
 #include "error.h"
+#include "libft.h"
 
-static void	exit_with_code(int code)
+void	*ft_malloc(int size)
 {
-	free_state(&g_state);
-	system("Leaks minishell");
-	exit(code);
-}
+	void	*ptr;
 
-int	exit_with_error(char *message_error)
-{
-	printf("%s", message_error);
-	exit_with_code(ERROR_GENERIC);
-	return (0);
-}
-
-int	exit_with_memory_error(void)
-{
-	return (exit_with_error("Not enough memory"));
-}
-
-int	exit_without_error(void)
-{
-	exit_with_code(ERROR_NONE);
-	return (0);
+	ptr = malloc(size);
+	if (!ptr)
+		exit_with_memory_error();
+	ft_memset(ptr, 0, size);
+	return (ptr);
 }

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/07 21:59:45 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/09 18:55:07 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 # define MINISHELL_H
 
 typedef enum e_token_type {
-	NONE		= 0,
-	CMD			= 1,
-	ARG			= 2,
-	GREAT		= 3,
-	GREATGREAT	= 4,
-	LESS		= 5,
-	PIPE		= 6,
-	AMP			= 7,
+	TK_NONE		= 0,
+	TK_CMD			= 1,
+	TK_ARG			= 2,
+	TK_GREAT		= 3,
+	TK_GREATGREAT	= 4,
+	TK_LESS		= 5,
+	TK_PIPE		= 6,
+	TK_AMP			= 7,
 }	t_token_type;
 
 typedef struct s_token {
@@ -31,6 +31,8 @@ typedef struct s_token {
 typedef struct s_simple_cmd {
 	int		argc;
 	char	**argv;
+	void	(*new)(struct s_simple_cmd *self, int argc, char **argv);
+	char	*(*fn_test)(struct s_simple_cmd *self);
 }	t_simple_cmd;
 
 typedef struct s_cmd {
@@ -59,5 +61,6 @@ char	*ft_read(t_mini *state);
 int		free_state(t_mini *state);
 int		free_prompt(t_prompt *prompt);
 char	**ft_lexer(char const *str, char c);
+t_token	*lxr_get_tokens(char const *line);
 
 #endif

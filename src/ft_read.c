@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/07 22:09:07 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/09 18:55:29 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ char	*ft_read(t_mini *state)
 	get_prompt(state->envp, &state->prompt);
 	state->readline = readline(state->prompt.prompt);
 	if (!state->readline)
-		exit_without_error(state);
+		exit_without_error();
 	// if (ft_strlen(state->readline))
 	// 	add_history(state->readline);
 	ft_lexer(state->readline, ' ');
-	// lexer converts state->readline into tokens (t_token in minishell.h)
 	// parser validate grammar, converts tokens into a command table (t_cmd in minishell.h)
 	// convert state->readline into a command table
 	// 		break state->readline into simple commands (t_simple_cmd in minishell.h)
@@ -36,6 +35,6 @@ char	*ft_read(t_mini *state)
 	//		wait process. In "ls -a | wc", "wc" process should wait for "ls" to finish?
 	free_prompt(&state->prompt);
 	if (!ft_strncmp(state->readline, "exit", 4))
-		exit_without_error(state);
+		exit_without_error();
 	return (state->readline);
 }
