@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/09 18:55:21 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/10 12:18:56 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-static int	ft_count_words(const char *s, char c)
+
+/* static int	ft_count_words(const char *s, char c)
 {
 	int	i;
 	int	num_w;
@@ -55,6 +56,51 @@ static int	ft_count_words(const char *s, char c)
 				num_w++;
 			while (s[i] != c && s[i])
 				i++;
+		}
+	}
+	return (num_w);
+} */
+
+char	*skip_char(char *str, char c)
+{
+	while (str && *str && *str == c)
+	{
+		str++;
+	}
+	return (str);
+}
+
+char	*check_quotes(char *str, char c, int *num_w)
+{
+	if (*str == c)
+	{
+		str = skip_char(++str, c);
+		str++;
+	}
+	return (str);
+}
+
+static int	ft_count_words(char *str, char c)
+{
+	int		num_w;
+
+	num_w = 0;
+	while (str)
+	{
+		str = skip_char(str, c);
+		if (*str == '|' || *str == '>' || *str == '<')
+		{
+			str++;
+			num_w++;
+		}
+		else
+		{
+			str = check_quotes(str, '\"', &num_w);
+			str = check_quotes(str, '\'', &num_w);
+			else if (*str)
+				num_w++;
+			while (*str != c && *str)
+				str++;
 		}
 	}
 	return (num_w);

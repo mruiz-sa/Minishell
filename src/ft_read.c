@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/09 18:55:29 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/10 11:04:48 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "error.h"
 
 #include <readline/readline.h>
+#include <readline/history.h>
 
 char	*ft_read(t_mini *state)
 {
@@ -22,8 +23,8 @@ char	*ft_read(t_mini *state)
 	state->readline = readline(state->prompt.prompt);
 	if (!state->readline)
 		exit_without_error();
-	// if (ft_strlen(state->readline))
-	// 	add_history(state->readline);
+	if (ft_strlen(state->readline))
+		add_history(state->readline);
 	ft_lexer(state->readline, ' ');
 	// parser validate grammar, converts tokens into a command table (t_cmd in minishell.h)
 	// convert state->readline into a command table
