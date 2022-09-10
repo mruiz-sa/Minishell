@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 11:04:48 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/10 17:36:47 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,13 @@ char	*ft_read(t_mini *state)
 	if (ft_strlen(state->readline))
 		add_history(state->readline);
 	ft_lexer(state->readline, ' ');
+	// lexer string count n words
+	// 		quick test: line = "ls -a a* | grep test > outfile.txt"
+	//		8
+	// lexer string y expandir variables entorno
+	// lexer string to array (token)
+	//		t_token[0] = 'ls'
+	//		t_token[1] = '-a'
 	// parser validate grammar, converts tokens into a command table (t_cmd in minishell.h)
 	// convert state->readline into a command table
 	// 		break state->readline into simple commands (t_simple_cmd in minishell.h)

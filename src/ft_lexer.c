@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 16:20:53 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/10 16:34:41 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,50 +16,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-
-
-/* static int	ft_count_words(const char *s, char c)
-{
-	int	i;
-	int	num_w;
-
-	i = 0;
-	num_w = 0;
-	while (s[i])
-	{
-		while (s[i] == c)
-			i++;
-		if (s[i] == '|' || s[i] == '>' || s[i] == '<')
-		{
-			i++;
-			num_w++;
-		}
-		else
-		{
-			if (s[i] == '\"')
-			{
-				i++;
-				while (s[i] != '\"')
-					i++;
-				i++;
-				num_w++;
-			}
-			else if (s[i] == '\'')
-			{
-				i++;
-				while (s[i] != '\'')
-					i++;
-				i++;
-				num_w++;
-			}
-			else if (s[i])
-				num_w++;
-			while (s[i] != c && s[i])
-				i++;
-		}
-	}
-	return (num_w);
-} */
 
 static char	*skip_char(char *str, char c)
 {

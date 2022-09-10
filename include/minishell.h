@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 15:14:46 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/09/10 17:28:46 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,33 @@
 # define MINISHELL_H
 
 typedef enum e_token_type {
-	TK_NONE		= 0,
+	TK_NONE			= 0,
 	TK_CMD			= 1,
 	TK_ARG			= 2,
 	TK_GREAT		= 3,
 	TK_GREATGREAT	= 4,
-	TK_LESS		= 5,
-	TK_PIPE		= 6,
+	TK_LESS			= 5,
+	TK_PIPE			= 6,
 	TK_AMP			= 7,
 }	t_token_type;
 
 typedef struct s_token {
 	t_token_type	type;
+	char			*str;
+	struct s_token	*next;
+	struct s_token	*prev;
 }	t_token;
 
+typedef enum e_cmd_type {
+	CMD_LS		= 0,
+	CMD_EXPORT	= 1,
+	// TODO; Add the rest
+}	t_cmd_type;
+
 typedef struct s_simple_cmd {
-	int		argc;
-	char	**argv;
-	void	(*new)(struct s_simple_cmd *self, int argc, char **argv);
-	char	*(*fn_test)(struct s_simple_cmd *self);
+	t_cmd_type	type;
+	int			argc;
+	char		**argv;
 }	t_simple_cmd;
 
 typedef struct s_cmd {
