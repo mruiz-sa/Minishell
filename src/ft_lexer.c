@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 15:25:06 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/09/10 15:52:34 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,18 @@
 	return (num_w);
 } */
 
-char	*skip_char(char *str, char c)
+static char	*skip_char(char *str, char c)
 {
 	while (str && *str && *str == c)
+	{
+		str++;
+	}
+	return (str);
+}
+
+static char	*find_char(char *str, char c)
+{
+	while (str && *str && *str != c)
 	{
 		str++;
 	}
@@ -74,7 +83,7 @@ int	check_quotes(char **str, char c, int *num_w)
 {
 	if (**str == c)
 	{
-		(*str) = skip_char(++(*str), c);
+		(*str) = find_char(++(*str), c);
 		(*str)++;
 		(*num_w)++;
 		return (1);
