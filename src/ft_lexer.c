@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 15:52:34 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/09/10 16:20:53 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,16 +76,16 @@ static char	*find_char(char *str, char c)
 	{
 		str++;
 	}
+	if (*str == c)
+		str++;
 	return (str);
 }
 
-int	check_quotes(char **str, char c, int *num_w)
+static int	check_quotes(char **str, char c)
 {
 	if (**str == c)
 	{
 		(*str) = find_char(++(*str), c);
-		(*str)++;
-		(*num_w)++;
 		return (1);
 	}
 	return (0);
@@ -106,11 +106,10 @@ static int	ft_count_words(char *str, char c)
 		}
 		else
 		{
-			if (check_quotes(&str, '\"', &num_w)
-				|| check_quotes(&str, '\'', &num_w) || *str)
+			if (check_quotes(&str, '\"')
+				|| check_quotes(&str, '\'') || *str)
 				num_w++;
-			while (*str != c && *str)
-				str++;
+			str = find_char(str, c);
 		}
 	}
 	return (num_w);
@@ -123,9 +122,9 @@ char	**ft_lexer(char *str, char c)
 
 	n_words = ft_count_words(str, c);
 	printf("%d\n", n_words);
-	tokens = lxr_get_tokens(str);
-	if (tokens)
-		free(tokens);
+	// tokens = lxr_get_tokens(str);
+	// if (tokens)
+	// 	free(tokens);
 	return (0);
 }
 
