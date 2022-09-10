@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/09 18:55:07 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/10 15:14:46 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	get_prompt(char **envp, t_prompt *prompt);
 char	*ft_read(t_mini *state);
 int		free_state(t_mini *state);
 int		free_prompt(t_prompt *prompt);
-char	**ft_lexer(char const *str, char c);
-t_token	*lxr_get_tokens(char const *line);
+char	**ft_lexer(char *str, char c);
+t_token	*lxr_get_tokens(char *line);
 
 #endif

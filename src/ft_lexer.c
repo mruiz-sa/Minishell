@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 12:18:56 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/10 15:25:06 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,14 +70,16 @@ char	*skip_char(char *str, char c)
 	return (str);
 }
 
-char	*check_quotes(char *str, char c, int *num_w)
+int	check_quotes(char **str, char c, int *num_w)
 {
-	if (*str == c)
+	if (**str == c)
 	{
-		str = skip_char(++str, c);
-		str++;
+		(*str) = skip_char(++(*str), c);
+		(*str)++;
+		(*num_w)++;
+		return (1);
 	}
-	return (str);
+	return (0);
 }
 
 static int	ft_count_words(char *str, char c)
@@ -85,7 +87,7 @@ static int	ft_count_words(char *str, char c)
 	int		num_w;
 
 	num_w = 0;
-	while (str)
+	while (str && *str)
 	{
 		str = skip_char(str, c);
 		if (*str == '|' || *str == '>' || *str == '<')
@@ -95,9 +97,8 @@ static int	ft_count_words(char *str, char c)
 		}
 		else
 		{
-			str = check_quotes(str, '\"', &num_w);
-			str = check_quotes(str, '\'', &num_w);
-			else if (*str)
+			if (check_quotes(&str, '\"', &num_w)
+				|| check_quotes(&str, '\'', &num_w) || *str)
 				num_w++;
 			while (*str != c && *str)
 				str++;
@@ -106,7 +107,7 @@ static int	ft_count_words(char *str, char c)
 	return (num_w);
 }
 
-char	**ft_lexer(char const *str, char c)
+char	**ft_lexer(char *str, char c)
 {
 	int		n_words;
 	t_token	*tokens;
@@ -129,8 +130,8 @@ char	**ft_lexer(char const *str, char c)
 // 		token = grep, type cmd
 // 		token = test, arg
 // 		token = >, type great (redirection)
-// 
-t_token	*lxr_get_tokens(char const *str)
+//
+t_token	*lxr_get_tokens(char *str)
 {
 	t_token	*tokens;
 	int		n_tokens;

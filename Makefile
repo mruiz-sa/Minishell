@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+         #
+#    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/09/10 10:58:51 by mruiz-sa         ###   ########.fr        #
+#    Updated: 2022/09/10 15:16:15 by manugarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ SRC 		= 	$(SRC_DIR)/env.c \
 				$(SRC_DIR)/state.c \
 
 CC = gcc
-INCLUDES = -I include -I libft -I/Users/mruiz-sa/.brew/opt/readline/include 
+INCLUDES = -I include -I libft -I/Users/${USER}/.brew/opt/readline/include
 CFLAGS = -Wall -Werror -Wextra $(INCLUDES) -g3
 OBJECTS = $(SRC:.c=.o)
 
@@ -42,12 +42,12 @@ $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 $(NAME): $(OBJECTS)
 	@clear
 	@make -C libft
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) libft/libft.a -lreadline -L/Users/mruiz-sa/.brew/opt/readline/lib -o $(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) libft/libft.a -lreadline -L/Users/${USER}/.brew/opt/readline/lib -o $(NAME)
 	@echo "\n\033[92m"-------------\\n👌 COMPILED 👌\\n-------------\\n"\033[0m\n"
 
 all: $(NAME)
 
-clean: 
+clean:
 	@clear
 	@echo "\n\033[31m"-------------------\\n💣 DELETED FILES 💣\\n-------------------\\n"\033[0m\n"
 	@rm -f $(OBJECTS)
