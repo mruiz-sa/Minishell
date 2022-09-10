@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
+#    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/09/10 15:16:15 by manugarc         ###   ########.fr        #
+#    Updated: 2022/09/10 20:12:17 by manu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,19 +30,23 @@ SRC 		= 	$(SRC_DIR)/env.c \
 				$(SRC_DIR)/malloc.c \
 				$(SRC_DIR)/signals.c \
 				$(SRC_DIR)/state.c \
+				$(SRC_DIR)/str.c \
+				$(SRC_DIR)/token.c \
 
-CC = gcc
-INCLUDES = -I include -I libft -I/Users/${USER}/.brew/opt/readline/include
-CFLAGS = -Wall -Werror -Wextra $(INCLUDES) -g3
-OBJECTS = $(SRC:.c=.o)
+CC 			= gcc
+BREW_DIR 	= /Users/${USER}/.brew/opt
+# BREW_DIR 	= /usr/local/opt
+INCLUDES	= -I include -I libft -I${BREW_DIR}/readline/include
+CFLAGS 		= -Wall -Werror -Wextra $(INCLUDES) -g3
+OBJECTS 	= $(SRC:.c=.o)
 
 $(SRC_DIR)/%.o: $(SRC_DIR)/%.c
 	$(CC) -c $(CFLAGS) -o $@ $^
 
 $(NAME): $(OBJECTS)
 	@clear
-	@make -C libft
-	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) libft/libft.a -lreadline -L/Users/${USER}/.brew/opt/readline/lib -o $(NAME)
+	@make bonus -C libft
+	@$(CC) $(CFLAGS) $(INCLUDES) $(OBJECTS) libft/libft.a -lreadline -L${BREW_DIR}/readline/lib -o $(NAME)
 	@echo "\n\033[92m"-------------\\n👌 COMPILED 👌\\n-------------\\n"\033[0m\n"
 
 all: $(NAME)
