@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 20:08:26 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/12 20:06:32 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,15 @@ static t_token_type	get_token_type(char *str)
 	return (type);
 }
 
-static int	create_token_special(t_list	**tokens, char *str)
+static int	create_token(t_list	**tokens, char *str, t_token_type type)
 {
 	t_token	*token;
 
 	token = ft_malloc(sizeof(t_token));
-	token->type = get_token_type(str);
+	if (type != TK_NONE)
+		token->type = type;
+	else
+		token->type = get_token_type(str);
 	if (token->type != TK_NONE)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(token));
@@ -73,6 +76,34 @@ t_token	*get_token(t_list *token_node)
 	return (NULL);
 }
 
+t_cmd_type	get_cmd_type(char *str)
+{
+	if (ft_strnstr(str, "echo", ft_strlen("echo")))
+		return (CMD_ECHO);
+	else if (ft_strnstr(str, "cd", ft_strlen("cd")))
+		return (CMD_CD);
+	else if (ft_strnstr(str, "pwd", ft_strlen("pwd")))
+		return (CMD_PWD);
+	else if (ft_strnstr(str, "export", ft_strlen("export")))
+		return (CMD_EXPORT);
+	else if (ft_strnstr(str, "unset", ft_strlen("unset")))
+		return (CMD_UNSET);
+	else if (ft_strnstr(str, "env", ft_strlen("env")))
+		return (CMD_ENV);
+	else if (ft_strnstr(str, "exit", ft_strlen("exit")))
+		return (CMD_EXIT);
+	return (CMD_NONE);
+}
+
+int	add_cmd(char *str)
+{
+	if (get_cmd_type(str))
+	{
+		return (1);
+	}
+
+	return (0);
+}
 //
 //  lexer converts state->readline into array of tokens (t_token in minishell.h)
 // 		quick test: line = "ls -a a* | grep test > outfile.txt"
@@ -85,6 +116,7 @@ t_token	*get_token(t_list *token_node)
 // 		token = >, type great (redirection)
 //
 // ls -a | grep test >> outfile.txt > outfile2.txt < infile &
+// echo hi | cd test | pwd >> outfile.txt > outfile2.txt < infile &
 t_list	*str_to_tokens(char *str)
 {
 	t_list	*tokens;
@@ -95,18 +127,23 @@ t_list	*str_to_tokens(char *str)
 		str = skip_char(str, ' ');
 		if (*str == '|' || *str == '>' || *str == '<' || *str == '&')
 		{
-			create_token_special(&tokens, str);
+			create_token(&tokens, str, TK_NONE);
 			str++;
 			if (*str == '>')
 				str++;
 		}
 		else
 		{
-			// if (check_quotes(&str, '\"')
-			// 	|| check_quotes(&str, '\'') || *str)
-			// 	num_w++;
-			// str = find_char(str, ' ');
-			str++;
+			if (add_cmd(str))
+			{
+				create_token(&tokens, str, TK_CMD);
+			}
+			//  && (check_quotes(&str, '\"') || check_quotes(&str, '\''))
+			else if (*str)
+			{
+				create_token(&tokens, str, TK_ARG);
+			}
+			str = find_char(str, ' ');
 		}
 	}
 	return (tokens);

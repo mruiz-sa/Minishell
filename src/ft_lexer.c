@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/12 11:51:19 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/12 20:11:55 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ char	**ft_lexer(char *str, char c)
 	while (tokens)
 	{
 		token = get_token(tokens);
+		printf("Token is type %d\n", token->type);
 		tokens = tokens->next;
 	}
 	free_tokens(aux_to_free);
