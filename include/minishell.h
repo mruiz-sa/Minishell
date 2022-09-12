@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 17:28:46 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/12 12:45:40 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,7 @@ int		free_state(t_mini *state);
 int		free_prompt(t_prompt *prompt);
 char	**ft_lexer(char *str, char c);
 t_token	*lxr_get_tokens(char *line);
+void	free_array(char **array);
+void	exec_cmd(char *cmd, t_mini *state);
 
 #endif

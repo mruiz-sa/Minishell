@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 20:06:36 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/12 11:51:19 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ char	**ft_lexer(char *str, char c)
 	t_token	*token;
 
 	n_words = ft_count_words(str, c);
-	printf("%d\n", n_words);
+	/* printf("%d\n", n_words); */
 	tokens = str_to_tokens(str);
 	aux_to_free = tokens;
 	while (tokens)

@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/10 17:36:47 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/12 14:09:31 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,26 @@
 
 char	*ft_read(t_mini *state)
 {
+	pid_t	pid;
+
 	get_prompt(state->envp, &state->prompt);
 	state->readline = readline(state->prompt.prompt);
 	if (!state->readline)
 		exit_without_error();
 	if (ft_strlen(state->readline))
+	{
 		add_history(state->readline);
-	ft_lexer(state->readline, ' ');
+		pid = fork();
+		if (pid == -1)
+			perror("ERROR");
+		if (pid == 0)
+			exec_cmd(state->readline, state);
+		else
+		{
+			waitpid(pid, NULL, 0);
+			ft_lexer(state->readline, ' ');
+		}
+	}
 	// lexer string count n words
 	// 		quick test: line = "ls -a a* | grep test > outfile.txt"
 	//		8
