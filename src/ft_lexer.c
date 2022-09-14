@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/12 20:11:55 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/14 21:48:38 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ char	**ft_lexer(char *str, char c)
 	while (tokens)
 	{
 		token = get_token(tokens);
-		printf("Token is type %d\n", token->type);
+		printf("Token is type %d, str = %s\n", token->type, token->str);
 		tokens = tokens->next;
 	}
 	free_tokens(aux_to_free);

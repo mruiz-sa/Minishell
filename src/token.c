@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/12 20:06:32 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/14 21:51:13 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,24 @@ static t_token_type	get_token_type(char *str)
 	return (type);
 }
 
+char	*get_token_str(char *str, t_token_type type)
+{
+	char	quote;
+
+	if (type == TK_ARG && (*str == '\'' || *str == '\"'))
+	{
+		quote = *str;
+		return (ft_strcpy_until(++str, quote));
+	}
+	return (ft_strcpy_until(str, ' '));
+}
+
 static int	create_token(t_list	**tokens, char *str, t_token_type type)
 {
 	t_token	*token;
 
 	token = ft_malloc(sizeof(t_token));
+	token->str = get_token_str(str, type);
 	if (type != TK_NONE)
 		token->type = type;
 	else
@@ -57,9 +70,14 @@ static int	create_token(t_list	**tokens, char *str, t_token_type type)
 
 static void	free_node_content(void *content)
 {
-	if (!content)
+	t_token	*token;
+
+	token = content;
+	if (!token)
 		return ;
-	free(content);
+	if (token->str != NULL)
+		free(token->str);
+	free(token);
 }
 
 void	free_tokens(t_list *tokens)
@@ -95,15 +113,6 @@ t_cmd_type	get_cmd_type(char *str)
 	return (CMD_NONE);
 }
 
-int	add_cmd(char *str)
-{
-	if (get_cmd_type(str))
-	{
-		return (1);
-	}
-
-	return (0);
-}
 //
 //  lexer converts state->readline into array of tokens (t_token in minishell.h)
 // 		quick test: line = "ls -a a* | grep test > outfile.txt"
@@ -120,8 +129,10 @@ int	add_cmd(char *str)
 t_list	*str_to_tokens(char *str)
 {
 	t_list	*tokens;
+	int		can_be_cmd;
 
 	tokens = NULL;
+	can_be_cmd = 1;
 	while (str && *str)
 	{
 		str = skip_char(str, ' ');
@@ -131,17 +142,19 @@ t_list	*str_to_tokens(char *str)
 			str++;
 			if (*str == '>')
 				str++;
+			can_be_cmd = 1;
 		}
 		else
 		{
-			if (add_cmd(str))
+			if (can_be_cmd && get_cmd_type(str))
 			{
 				create_token(&tokens, str, TK_CMD);
+				can_be_cmd = 0;
 			}
-			//  && (check_quotes(&str, '\"') || check_quotes(&str, '\''))
 			else if (*str)
 			{
 				create_token(&tokens, str, TK_ARG);
+				can_be_cmd = 0;
 			}
 			str = find_char(str, ' ');
 		}

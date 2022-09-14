@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+         #
+#    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/09/12 12:25:15 by mruiz-sa         ###   ########.fr        #
+#    Updated: 2022/09/14 21:47:51 by manu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ SRC 		= 	$(SRC_DIR)/env.c \
 				$(SRC_DIR)/free.c \
 				$(SRC_DIR)/ft_lexer.c \
 				$(SRC_DIR)/ft_read.c \
+				$(SRC_DIR)/ft_strcpy_until.c \
 				$(SRC_DIR)/get_prompt.c \
 				$(SRC_DIR)/main.c \
 				$(SRC_DIR)/malloc.c \
