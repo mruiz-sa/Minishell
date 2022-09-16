@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/14 21:51:13 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/16 21:04:37 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,4 +160,22 @@ t_list	*str_to_tokens(char *str)
 		}
 	}
 	return (tokens);
+}
+
+void	display_tokens(t_list	*tokens)
+{
+	t_token	*token;
+
+	while (tokens)
+	{
+		token = get_token(tokens);
+		printf("Token is type %d, str = %s\n", token->type, token->str);
+		tokens = tokens->next;
+	}
+}
+
+int	validate_syntax_tokens(t_list *tokens)
+{
+	(void)tokens;
+	return (1);
 }

@@ -1,41 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   malloc.c                                           :+:      :+:    :+:   */
+/*   command.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/09 18:55:48 by manu              #+#    #+#             */
-/*   Updated: 2022/09/16 21:04:32 by manu             ###   ########.fr       */
+/*   Created: 2022/09/16 21:03:21 by manu              #+#    #+#             */
+/*   Updated: 2022/09/16 21:03:23 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdlib.h>
+#ifndef COMMAND_H
+# define COMMAND_H
 
-#include "error.h"
-#include "libft.h"
+# include "minishell.h"
 
-void	*ft_malloc(int size)
-{
-	void	*ptr;
+void	free_cmd_table(t_cmd *table);
+t_cmd	*tokens_to_cmd_table(t_list *tokens);
+void	display_cmd_table(t_cmd *table);
 
-	ptr = malloc(size);
-	if (!ptr)
-		exit_with_memory_error();
-	ft_memset(ptr, 0, size);
-	return (ptr);
-}
-
-void	ft_free_array(char **array)
-{
-	int	i;
-
-	i = 0;
-	while (array && array[i])
-	{
-		free(array[i]);
-		i++;
-	}
-	if (array)
-		free(array);
-}
+#endif

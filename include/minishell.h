@@ -6,12 +6,14 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/14 21:47:57 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/16 21:03:42 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+# include "libft.h"
 
 typedef enum e_token_type {
 	TK_NONE			= 0,
@@ -43,18 +45,20 @@ typedef enum e_cmd_type {
 }	t_cmd_type;
 
 typedef struct s_simple_cmd {
-	t_cmd_type	type;
-	int			argc;
-	char		**argv;
+	t_cmd_type			type;
+	int					argc;
+	char				**argv;
+	struct s_simple_cmd	*next;
+	struct s_simple_cmd	*prev;
 }	t_simple_cmd;
 
 typedef struct s_cmd {
-	int				ncmds;
-	t_simple_cmd	**cmds;
-	void			*outFile;
-	void			*inFile;
-	void			*errFile;
-	int				background;
+	int		ncmds;
+	t_list	*cmds;
+	void	*outFile;
+	void	*inFile;
+	void	*errFile;
+	int		background;
 }	t_cmd;
 
 typedef struct s_prompt {

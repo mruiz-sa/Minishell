@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:54:53 by manu              #+#    #+#             */
-/*   Updated: 2022/09/09 18:54:54 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/16 21:03:32 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,5 +14,6 @@
 # define MALLOC_H
 
 void	*ft_malloc(int size);
+void	ft_free_array(char **array);
 
 #endif

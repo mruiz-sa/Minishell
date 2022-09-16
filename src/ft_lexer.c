@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/14 21:48:38 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/16 21:04:27 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "error.h"
 #include "malloc.h"
 #include "token.h"
+#include "command.h"
 #include "str.h"
 
 #include <stdio.h>
@@ -42,24 +43,21 @@ static int	ft_count_words(char *str, char c)
 	}
 	return (num_w);
 }
-
+// echo hi | cd test | pwd >> outfile.txt > outfile2.txt < infile &
 char	**ft_lexer(char *str, char c)
 {
 	int		n_words;
 	t_list	*tokens;
-	t_list	*aux_to_free;
-	t_token	*token;
+	t_cmd	*cmd_table;
 
 	n_words = ft_count_words(str, c);
-	/* printf("%d\n", n_words); */
 	tokens = str_to_tokens(str);
-	aux_to_free = tokens;
-	while (tokens)
-	{
-		token = get_token(tokens);
-		printf("Token is type %d, str = %s\n", token->type, token->str);
-		tokens = tokens->next;
-	}
-	free_tokens(aux_to_free);
+	display_tokens(tokens);
+	printf("\n");
+	validate_syntax_tokens(tokens);
+	cmd_table = tokens_to_cmd_table(tokens);
+	display_cmd_table(cmd_table);
+	free_tokens(tokens);
+	free_cmd_table(cmd_table);
 	return (0);
 }
