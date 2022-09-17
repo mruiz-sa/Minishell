@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/17 10:36:55 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/09/17 13:19:32 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "error.h"
 #include "malloc.h"
 #include "token.h"
-#include "command.h"
+#include "command_table.h"
 #include "str.h"
 
 #include <stdio.h>

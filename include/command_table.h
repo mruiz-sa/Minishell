@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   command.h                                          :+:      :+:    :+:   */
+/*   command_table.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/16 21:03:21 by manu              #+#    #+#             */
-/*   Updated: 2022/09/17 13:19:02 by manugarc         ###   ########.fr       */
+/*   Created: 2022/09/17 13:17:43 by manugarc          #+#    #+#             */
+/*   Updated: 2022/09/17 13:17:59 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COMMAND_H
-# define COMMAND_H
+#ifndef COMMAND_TABLE_H
+# define COMMAND_TABLE_H
 
 # include "minishell.h"
 
-t_list			*add_cmd(t_list *tokens, t_cmd *table);
-t_simple_cmd	*get_cmd(t_list *cmd_node);
+void	free_cmd_table(t_cmd *table);
+t_cmd	*tokens_to_cmd_table(t_list *tokens);
+void	display_cmd_table(t_cmd *table);
 
 #endif
