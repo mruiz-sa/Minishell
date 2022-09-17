@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/16 21:04:37 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/17 16:36:31 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,19 +113,7 @@ t_cmd_type	get_cmd_type(char *str)
 	return (CMD_NONE);
 }
 
-//
-//  lexer converts state->readline into array of tokens (t_token in minishell.h)
-// 		quick test: line = "ls -a a* | grep test > outfile.txt"
-// 		token = ls, type cmd
-// 		token = -a, type arg
-// 		token = a*, type arg (expandable wildcard)
-// 		token = |, type pipe (fork process)
-// 		token = grep, type cmd
-// 		token = test, arg
-// 		token = >, type great (redirection)
-//
-// ls -a | grep test >> outfile.txt > outfile2.txt < infile &
-// echo hi | cd test | pwd >> outfile.txt > outfile2.txt < infile &
+/* echo hi | cd test | pwd >> outfile.txt > outfile2.txt < infile & */
 t_list	*str_to_tokens(char *str)
 {
 	t_list	*tokens;
