@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/09/16 21:04:11 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/17 10:53:32 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "malloc.h"
 #include "token.h"
+#include "array.h"
 
 static void	free_node_content(void *content)
 {
@@ -33,36 +34,6 @@ void	free_cmd_table(t_cmd *table)
 		return ;
 	ft_lstclear(&table->cmds, free_node_content);
 	free(table);
-}
-
-int	count_str_in_array(char **argv)
-{
-	int	count;
-
-	count = 0;
-	while (argv && argv[count])
-		count++;
-	return (count);
-}
-
-char	**add_str_to_array(char **argv, char *str)
-{
-	char	**new;
-	int		count;
-	int		i;
-
-	count = count_str_in_array(argv);
-	new = ft_malloc((count + 2) * sizeof(char *));
-	i = 0;
-	while (i < count && argv && argv[i])
-	{
-		new[i] = ft_strdup(argv[i]);
-		i++;
-	}
-	new[i] = ft_strdup(str);
-	new[i + 1] = NULL;
-	ft_free_array(argv);
-	return (new);
 }
 
 t_list	*add_cmd(t_list *tokens, t_cmd *table)

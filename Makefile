@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
+#    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/09/16 21:03:08 by manu             ###   ########.fr        #
+#    Updated: 2022/09/17 10:42:43 by manugarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@
 
 NAME 		= minishell
 SRC_DIR		=	src
-SRC 		= 	$(SRC_DIR)/command.c \
+SRC 		= 	$(SRC_DIR)/array.c \
+				$(SRC_DIR)/command.c \
 				$(SRC_DIR)/env.c \
 				$(SRC_DIR)/error.c \
 				$(SRC_DIR)/exec_cmd.c \

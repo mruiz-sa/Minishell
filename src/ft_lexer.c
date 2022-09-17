@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/16 21:04:27 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/17 10:36:55 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static int	ft_count_words(char *str, char c)
 	}
 	return (num_w);
 }
+
 // echo hi | cd test | pwd >> outfile.txt > outfile2.txt < infile &
 char	**ft_lexer(char *str, char c)
 {
