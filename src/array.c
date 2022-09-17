@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 10:41:24 by manugarc          #+#    #+#             */
-/*   Updated: 2022/09/17 10:54:31 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/09/17 11:34:39 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include "malloc.h"
 #include "token.h"
 
-void	ft_free_array(char **array)
+void	free_array(char **array)
 {
 	int	i;
 
@@ -55,6 +55,6 @@ char	**add_str_to_array(char **argv, char *str)
 	}
 	new[i] = ft_strdup(str);
 	new[i + 1] = NULL;
-	ft_free_array(argv);
+	free_array(argv);
 	return (new);
 }
