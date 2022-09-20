@@ -1,19 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   tests_command_table.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/03 12:27:46 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/20 15:05:22 by manu             ###   ########.fr       */
+/*   Created: 2022/09/20 18:57:48 by manu              #+#    #+#             */
+/*   Updated: 2022/09/20 19:17:14 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#include <assert.h>
 
-char	*get_env(char **envp, char *key);
-char	*expand_env_str(char *str);
+#include "minishell.h"
+#include "token.h"
+#include "command_table.h"
 
-#endif
+void	test_command_tables(void)
+{
+	t_cmd	*table;
+
+	table = tokens_to_cmd_table(str_to_tokens("ls"));
+	assert(table != NULL);
+	assert(table->ncmds == 1);
+	assert(ft_lstsize(table->cmds) == 1);
+	display_cmd_table(table);
+}

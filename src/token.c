@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/17 16:36:31 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/20 16:56:56 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "malloc.h"
 #include "libft.h"
 #include "str.h"
+#include "env.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -55,6 +56,7 @@ static int	create_token(t_list	**tokens, char *str, t_token_type type)
 
 	token = ft_malloc(sizeof(t_token));
 	token->str = get_token_str(str, type);
+	token->str = expand_env_str(token->str);
 	if (type != TK_NONE)
 		token->type = type;
 	else
@@ -134,7 +136,7 @@ t_list	*str_to_tokens(char *str)
 		}
 		else
 		{
-			if (can_be_cmd && get_cmd_type(str))
+			if (can_be_cmd/* && get_cmd_type(str)*/)
 			{
 				create_token(&tokens, str, TK_CMD);
 				can_be_cmd = 0;
