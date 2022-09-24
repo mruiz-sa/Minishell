@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/12 13:01:46 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/09/24 14:58:32 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,6 @@ void	exec_cmd(char *cmd, t_mini *state)
 		ft_putendl_fd(cmd_splitted[0], 2);
 		free_array(cmd_splitted);
 		free(path);
-		exit_with_error("");
+		exit_with_error(state, "");
 	}
 }

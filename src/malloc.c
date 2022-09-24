@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   malloc.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:55:48 by manu              #+#    #+#             */
-/*   Updated: 2022/09/17 11:30:08 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/09/24 15:00:30 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*ft_malloc(int size)
 
 	ptr = malloc(size);
 	if (!ptr)
-		exit_with_memory_error();
+		exit_with_memory_error(NULL);
 	ft_memset(ptr, 0, size);
 	return (ptr);
 }

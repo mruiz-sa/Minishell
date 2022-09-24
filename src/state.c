@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 16:22:30 by manu              #+#    #+#             */
-/*   Updated: 2022/09/03 20:35:49 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/24 15:08:17 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ int	init_state(t_mini *state, int argc, char *argv[], char **envp)
 
 int	free_state(t_mini *state)
 {
+	if (!state)
+		return (0);
 	if (state->readline)
 		free(state->readline);
 	free_prompt(&state->prompt);
