@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:57:48 by manu              #+#    #+#             */
-/*   Updated: 2022/09/20 19:20:42 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/24 15:53:31 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,9 @@ void	test_tokens(void)
 {
 	t_list	*tokens;
 
+	/* 0 */
+	tokens = str_to_tokens("");
+	assert(ft_lstsize(tokens) == 0);
 	/* 1 */
 	tokens = str_to_tokens("ls");
 	assert(ft_lstsize(tokens) == 1);
