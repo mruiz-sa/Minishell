@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 16:22:30 by manu              #+#    #+#             */
-/*   Updated: 2022/09/24 16:19:51 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/24 16:55:53 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	free_state(t_mini *state)
 	if (state->readline)
 		free(state->readline);
 	free_prompt(&state->prompt);
+	free_array(state->envp);
 	memset(state, 0, sizeof(t_mini));
 	return (1);
 }
