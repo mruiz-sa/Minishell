@@ -6,13 +6,17 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/24 17:18:21 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/24 17:47:06 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "array.h"
 
+/**
+ * @brief Get the index of key in the env array. -1 if it does not exist.
+ * 
+ */
 int	get_env_index(char **envp, char *key)
 {
 	int		i;
@@ -29,21 +33,50 @@ int	get_env_index(char **envp, char *key)
 	return (-1);
 }
 
-int	set_env(char **envp, char *key, char *value)
+/**
+ * @brief Builds a string in env format "key=value"
+ * 
+ */
+char	*build_env_str(char *key, char *value)
+{
+	char	*aux;
+	char	*str;
+
+	aux = ft_strjoin(key, "=");
+	str = ft_strjoin(aux, value);
+	free(aux);
+	return (str);
+}
+
+/**
+ * @brief Sets an environment variable
+ * 
+ * 	Modifies a value in the env array:
+ * 		set_env(&envp, "PWD", "/users/user/new_path");
+ * 
+ * 	Adds a new var and value to the env array if it does not exist before:
+ * 		set_env(&envp, "NON_EXISTENT_VAR", "value");
+ * 
+ */
+int	set_env(char ***envp, char *key, char *value)
 {
 	int		i;
-	char	*aux;
 
-	i = get_env_index(envp, key);
+	i = get_env_index(*envp, key);
 	if (i == -1)
+	{
+		*envp = add_str_to_array(*envp, build_env_str(key, value));
 		return (0);
-	free(envp[i]);
-	aux = ft_strjoin(key, "=");
-	envp[i] = ft_strjoin(aux, value);
-	free(aux);
+	}
+	free((*envp)[i]);
+	(*envp)[i] = build_env_str(key, value);
 	return (1);
 }
 
+/**
+ * @brief Get the value of a key in the env array.
+ * 
+ */
 char	*get_env(char **envp, char *key)
 {
 	int		i;
@@ -65,9 +98,4 @@ char	*expand_env_str(char *str)
 	/* Also expand ~ into users home path */
 	/* free up original str if expanded, and return de malloc-ed one? */
 	return (str);
-}
-
-char	**duplicate_envp(char **envp)
-{
-	return (duplicate_array(envp));
 }
