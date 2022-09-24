@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/20 15:13:01 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/24 16:18:58 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,11 @@ char	*expand_env_str(char *str)
 	/* Also expand ~ into users home path */
 	/* free up original str if expanded, and return de malloc-ed one? */
 	return (str);
+}
+
+char	**duplicate_envp(char **envp)
+{
+	/* TODO: We need to duplicate the whole char **envp */
+	/* Because we need to modify it as we change the env variables */
+	return (envp);
 }
