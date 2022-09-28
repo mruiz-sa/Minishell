@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:57:48 by manu              #+#    #+#             */
-/*   Updated: 2022/09/24 15:53:31 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/28 19:36:10 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,31 @@ void	test_tokens(void)
 {
 	t_list	*tokens;
 
-	/* 0 */
-	tokens = str_to_tokens("");
-	assert(ft_lstsize(tokens) == 0);
-	/* 1 */
+	/* 1 Execute simple command absolute, no args */
 	tokens = str_to_tokens("ls");
 	assert(ft_lstsize(tokens) == 1);
 	assert_token(tokens, TK_CMD, "ls");
-	/* 2 */
+	/* 2 Test an empty command */
+	tokens = str_to_tokens("");
+	assert(ft_lstsize(tokens) == 0);
+	/* 3 test only spaces or tabs */
+	tokens = str_to_tokens(" ");
+	assert(ft_lstsize(tokens) == 0);
+	tokens = str_to_tokens("	");
+	assert(ft_lstsize(tokens) == 0);
+	tokens = str_to_tokens(" 		 	 	 	 	 ");
+	assert(ft_lstsize(tokens) == 0);
+	/* 4 Test abs cmd with args, no quotes */
+	tokens = str_to_tokens("/bin/ls -la");
+	assert(ft_lstsize(tokens) == 2);
+	assert_token(tokens, TK_CMD, "/bin/ls");
+	assert_token(tokens->next, TK_ARG, "-la");
+	assert(tokens->next->next == NULL);
+	/* 5 Test cmd to absolute path */
+	tokens = str_to_tokens("ls");
+	assert(ft_lstsize(tokens) == 1);
+	assert_token(tokens, TK_CMD, "/bin/ls");
+	/* 6 */
 	tokens = str_to_tokens("grep \"test\"");
 	assert(ft_lstsize(tokens) == 2);
 	assert_token(tokens, TK_CMD, "grep");
