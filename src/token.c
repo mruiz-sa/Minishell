@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/24 15:55:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/30 19:49:39 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,13 @@ t_list	*str_to_tokens(char *str)
 			{
 				create_token(&tokens, str, TK_CMD);
 				can_be_cmd = 0;
+			}
+			else if (*str == '\'' || *str == '\"')
+			{
+				create_token(&tokens, str, TK_ARG);
+				can_be_cmd = 0;
+				str = find_char(str, '\"');
+				str = find_char(str, '\'');
 			}
 			else if (*str)
 			{

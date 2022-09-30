@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/24 15:05:21 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/30 19:21:28 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,8 @@ char	*ft_read(t_mini *state)
 		if (pid == 0)
 			exec_cmd(state->readline, state);
 		else
-		{
 			waitpid(pid, NULL, 0);
-			ft_lexer(state->readline, ' ');
-		}
+		ft_lexer(state->readline, ' ');
 	}
 	free_prompt(&state->prompt);
 	if (!ft_strncmp(state->readline, "exit", 4))
