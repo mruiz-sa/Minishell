@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/12 13:01:46 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/03 20:48:19 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*path_line(char **envp)
 	return (NULL);
 }
 
-void	get_path(char *cmd, char **envp, char **final_path)
+char	*get_path(char *cmd, char **envp)
 {
 	int		i;
 	int		fd;
@@ -50,15 +50,15 @@ void	get_path(char *cmd, char **envp, char **final_path)
 		fd = open(path_arg, O_RDONLY);
 		if (fd >= 0)
 		{
-			*final_path = path_arg;
 			free_array(path_list);
 			close(fd);
-			return ;
+			return (path_arg);
 		}
 		free(path_arg);
 		i++;
 	}
 	free_array(path_list);
+	return (NULL);
 }
 
 void	exec_cmd(char *cmd, t_mini *state)
@@ -67,13 +67,14 @@ void	exec_cmd(char *cmd, t_mini *state)
 	char	*path;
 
 	cmd_splitted = ft_split(cmd, ' ');
-	get_path(cmd_splitted[0], state->envp, &path);
+	path = get_path(cmd_splitted[0], state->envp);
 	if (execve(path, cmd_splitted, state->envp) == -1)
 	{
 		ft_putendl_fd("command not found: ", 2);
 		ft_putendl_fd(cmd_splitted[0], 2);
 		free_array(cmd_splitted);
-		free(path);
+		if (path)
+			free(path);
 		exit_with_error("");
 	}
 }

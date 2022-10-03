@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:57:48 by manu              #+#    #+#             */
-/*   Updated: 2022/09/20 19:20:42 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/03 20:48:33 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,4 +43,10 @@ void	test_tokens(void)
 	assert_token(tokens->next, TK_ARG, "test");
 	assert(tokens->next->next == NULL);
 	display_tokens(tokens);
+
+	tokens = str_to_tokens("ls <infile -ls");
+	assert(ft_lstsize(tokens) == 3);
+	assert_token(tokens, TK_CMD, "ls");
+	assert_token(tokens, TK_LESS, "infile");
+	assert_token(tokens, TK_CMD, "ls");
 }

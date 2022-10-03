@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/17 17:30:55 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/03 21:01:29 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	*ft_read(t_mini *state)
 		else
 		{
 			waitpid(pid, NULL, 0);
-			ft_lexer(state->readline, ' ');
+			ft_lexer(state->readline);
 		}
 	}
 	free_prompt(&state->prompt);
