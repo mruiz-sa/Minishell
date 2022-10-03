@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 10:44:12 by manugarc          #+#    #+#             */
-/*   Updated: 2022/09/17 11:34:39 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:51:34 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,6 @@
 void	free_array(char **array);
 int		count_str_in_array(char **argv);
 char	**add_str_to_array(char **argv, char *str);
+char	**duplicate_array(char **array);
 
 #endif

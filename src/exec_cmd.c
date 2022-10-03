@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/03 20:48:19 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/03 21:06:03 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,6 @@ void	exec_cmd(char *cmd, t_mini *state)
 		free_array(cmd_splitted);
 		if (path)
 			free(path);
-		exit_with_error("");
+		exit_with_error(state, "");
 	}
 }

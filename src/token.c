@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/20 16:56:56 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/30 19:49:39 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "libft.h"
 #include "str.h"
 #include "env.h"
+#include "path.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -45,8 +46,10 @@ char	*get_token_str(char *str, t_token_type type)
 	if (type == TK_ARG && (*str == '\'' || *str == '\"'))
 	{
 		quote = *str;
-		return (ft_strcpy_until(++str, quote));
+		return (expand_env_str(ft_strcpy_until(++str, quote)));
 	}
+	else if (type == TK_CMD)
+		return (path_to_absolute(ft_strcpy_until(str, ' ')));
 	return (ft_strcpy_until(str, ' '));
 }
 
@@ -56,7 +59,6 @@ static int	create_token(t_list	**tokens, char *str, t_token_type type)
 
 	token = ft_malloc(sizeof(t_token));
 	token->str = get_token_str(str, type);
-	token->str = expand_env_str(token->str);
 	if (type != TK_NONE)
 		token->type = type;
 	else
@@ -140,6 +142,13 @@ t_list	*str_to_tokens(char *str)
 			{
 				create_token(&tokens, str, TK_CMD);
 				can_be_cmd = 0;
+			}
+			else if (*str == '\'' || *str == '\"')
+			{
+				create_token(&tokens, str, TK_ARG);
+				can_be_cmd = 0;
+				str = find_char(str, '\"');
+				str = find_char(str, '\'');
 			}
 			else if (*str)
 			{

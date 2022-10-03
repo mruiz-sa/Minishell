@@ -4,3 +4,4 @@ minishell
 *.o
 *.a
 *.dSYM
+unit_test_*

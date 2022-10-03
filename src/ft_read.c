@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/03 21:01:29 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/03 21:06:52 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_read(t_mini *state)
 	get_prompt(state->envp, &state->prompt);
 	state->readline = readline(state->prompt.prompt);
 	if (!state->readline)
-		exit_without_error();
+		exit_without_error(state);
 	if (ft_strlen(state->readline))
 	{
 		add_history(state->readline);
@@ -34,13 +34,12 @@ char	*ft_read(t_mini *state)
 		if (pid == 0)
 			exec_cmd(state->readline, state);
 		else
-		{
 			waitpid(pid, NULL, 0);
-			ft_lexer(state->readline);
 		}
+		ft_lexer(state->readline);
 	}
 	free_prompt(&state->prompt);
 	if (!ft_strncmp(state->readline, "exit", 4))
-		exit_without_error();
+		exit_without_error(state);
 	return (state->readline);
 }

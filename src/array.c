@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 10:41:24 by manugarc          #+#    #+#             */
-/*   Updated: 2022/09/17 11:34:39 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/09/24 16:51:23 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,23 @@ char	**add_str_to_array(char **argv, char *str)
 	new[i] = ft_strdup(str);
 	new[i + 1] = NULL;
 	free_array(argv);
+	return (new);
+}
+
+char	**duplicate_array(char **array)
+{
+	char	**new;
+	int		count;
+	int		i;
+
+	count = count_str_in_array(array);
+	new = ft_malloc((count + 1) * sizeof(char *));
+	i = 0;
+	while (i < count && array && array[i])
+	{
+		new[i] = ft_strdup(array[i]);
+		i++;
+	}
+	new[i] = NULL;
 	return (new);
 }

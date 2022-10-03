@@ -6,7 +6,7 @@
 #    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/09/20 19:28:03 by manu             ###   ########.fr        #
+#    Updated: 2022/09/28 19:35:05 by manu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/ft_strcpy_until.c \
 				$(SRC_DIR)/get_prompt.c \
 				$(SRC_DIR)/malloc.c \
+				$(SRC_DIR)/path.c \
 				$(SRC_DIR)/signals.c \
 				$(SRC_DIR)/state.c \
 				$(SRC_DIR)/str.c \
@@ -65,11 +66,11 @@ all: $(NAME)
 test: $(TESTS_OBJS)
 	@clear
 	@make bonus -C libft
-	@$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_OBJS) libft/libft.a -lreadline -L${BREW_DIR}/readline/lib -o run_test_$(NAME)
+	@$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_OBJS) libft/libft.a -lreadline -L${BREW_DIR}/readline/lib -o unit_test_$(NAME)
 	@echo "\n\033[92m"-------------\\n👌 TESTS COMPILED 👌\\n-------------\\n"\033[0m\n"
 	@echo
 	@echo Running tests ...
-	@./run_test_$(NAME)
+	@./unit_test_$(NAME)
 
 clean:
 	@clear
@@ -79,7 +80,7 @@ clean:
 fclean: clean
 	@make fclean -C ./libft
 	@rm -rf $(NAME)
-	@rm -rf run_test_$(NAME)
+	@rm -rf unit_test_$(NAME)
 	@rm -rf minishell
 	@rm -rf libft.a
 

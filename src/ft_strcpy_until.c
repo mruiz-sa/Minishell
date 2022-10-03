@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/14 21:52:52 by manu             ###   ########.fr       */
+/*   Updated: 2022/09/24 15:00:41 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ char	*ft_strcpy_until(char *str, char until)
 
 	newstr = ft_strdup(str);
 	if (!newstr)
-		exit_with_memory_error();
+		exit_with_memory_error(NULL);
 	i = 0;
 	while (newstr[i])
 	{
