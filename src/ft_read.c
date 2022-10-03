@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/03 21:06:52 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/03 21:08:26 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ char	*ft_read(t_mini *state)
 			exec_cmd(state->readline, state);
 		else
 			waitpid(pid, NULL, 0);
-		}
 		ft_lexer(state->readline);
 	}
 	free_prompt(&state->prompt);
