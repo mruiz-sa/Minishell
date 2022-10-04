@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:04:00 by manu              #+#    #+#             */
-/*   Updated: 2022/09/10 20:04:50 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/04 17:02:03 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define STR_H
 
 char	*skip_char(char *str, char c);
+char	*skip_spaces(char *str);
+int		is_space(char c);
+int		is_special_char(char c);
 char	*find_char(char *str, char c);
 int		check_quotes(char **str, char c);
 

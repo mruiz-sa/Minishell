@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/30 19:49:39 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/04 17:28:14 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,6 +118,7 @@ t_cmd_type	get_cmd_type(char *str)
 }
 
 /* echo hi | cd test | pwd >> outfile.txt > outfile2.txt < infile & */
+
 t_list	*str_to_tokens(char *str)
 {
 	t_list	*tokens;
@@ -138,7 +139,7 @@ t_list	*str_to_tokens(char *str)
 		}
 		else
 		{
-			if (can_be_cmd/* && get_cmd_type(str)*/)
+			if (can_be_cmd && get_cmd_type(str))
 			{
 				create_token(&tokens, str, TK_CMD);
 				can_be_cmd = 0;
@@ -160,6 +161,42 @@ t_list	*str_to_tokens(char *str)
 	}
 	return (tokens);
 }
+
+/* t_list	*str_to_tokens(char *str)
+{
+	t_list	*tokens;
+
+	tokens = NULL;
+	while (*str)
+	{
+		str = skip_spaces(str);
+		if (*str == '\'')
+		{
+			create_token(&tokens, str, TK_ARG);
+			str = find_char(str, '\'');
+		}
+		if (*str == '\"')
+		{
+			create_token(&tokens, str, TK_ARG);
+			str = find_char(str, '\"');
+		}
+		if (*str == '|' || *str == '>' || *str == '<' || *str == '&')
+		{
+			create_token(&tokens, str, TK_NONE);
+			str++;
+			if (*str == '>')
+				str++;
+		}
+		if (!is_special_char(*str))
+		{
+			create_token(&tokens, str, TK_NONE);
+			while (!is_special_char(*str))
+				str++;
+		}
+		str = find_char(str, ' ');
+	}
+	return (tokens);
+} */
 
 void	display_tokens(t_list	*tokens)
 {
