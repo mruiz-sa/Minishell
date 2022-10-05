@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/05 19:03:39 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/05 21:17:54 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,18 @@ typedef struct s_token {
 	char			*str;
 }	t_token;
 
-typedef enum e_cmd_type {
-	CMD_NONE	= 0,
-	CMD_ECHO	= 1,
-	CMD_CD		= 2,
-	CMD_PWD		= 3,
-	CMD_EXPORT	= 4,
-	CMD_UNSET	= 5,
-	CMD_ENV		= 6,
-	CMD_EXIT	= 7,
-}	t_cmd_type;
+typedef enum e_builtin_type {
+	BLT_NONE	= 0,
+	BLT_ECHO	= 1,
+	BLT_CD		= 2,
+	BLT_PWD		= 3,
+	BLT_EXPORT	= 4,
+	BLT_UNSET	= 5,
+	BLT_ENV		= 6,
+	BLT_EXIT	= 7,
+}	t_builtin_type;
 
 typedef struct s_simple_cmd {
-	t_cmd_type			type;
 	int					argc;
 	char				**argv;
 }	t_simple_cmd;

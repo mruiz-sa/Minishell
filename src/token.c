@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/05 19:49:26 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/05 21:17:00 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,25 +98,6 @@ t_token	*get_token(t_list *token_node)
 	return (NULL);
 }
 
-t_cmd_type	get_cmd_type(char *str)
-{
-	if (ft_strnstr(str, "echo", ft_strlen("echo")))
-		return (CMD_ECHO);
-	else if (ft_strnstr(str, "cd", ft_strlen("cd")))
-		return (CMD_CD);
-	else if (ft_strnstr(str, "pwd", ft_strlen("pwd")))
-		return (CMD_PWD);
-	else if (ft_strnstr(str, "export", ft_strlen("export")))
-		return (CMD_EXPORT);
-	else if (ft_strnstr(str, "unset", ft_strlen("unset")))
-		return (CMD_UNSET);
-	else if (ft_strnstr(str, "env", ft_strlen("env")))
-		return (CMD_ENV);
-	else if (ft_strnstr(str, "exit", ft_strlen("exit")))
-		return (CMD_EXIT);
-	return (CMD_NONE);
-}
-
 /* echo hi | cd test | pwd >> outfile.txt > outfile2.txt < infile & */
 
 t_list	*str_to_tokens(char *str)
@@ -139,7 +120,7 @@ t_list	*str_to_tokens(char *str)
 		}
 		else
 		{
-			if (can_be_cmd/* && get_cmd_type(str)*/)
+			if (can_be_cmd)
 			{
 				create_token(&tokens, str, TK_CMD);
 				can_be_cmd = 0;
