@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/03 21:01:23 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/05 19:03:39 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,6 @@ typedef enum e_token_type {
 typedef struct s_token {
 	t_token_type	type;
 	char			*str;
-	struct s_token	*next;
-	struct s_token	*prev;
 }	t_token;
 
 typedef enum e_cmd_type {
@@ -48,8 +46,6 @@ typedef struct s_simple_cmd {
 	t_cmd_type			type;
 	int					argc;
 	char				**argv;
-	struct s_simple_cmd	*next;
-	struct s_simple_cmd	*prev;
 }	t_simple_cmd;
 
 typedef struct s_cmd {

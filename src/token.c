@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/04 17:28:14 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/05 19:49:26 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,17 +139,22 @@ t_list	*str_to_tokens(char *str)
 		}
 		else
 		{
-			if (can_be_cmd && get_cmd_type(str))
+			if (can_be_cmd/* && get_cmd_type(str)*/)
 			{
 				create_token(&tokens, str, TK_CMD);
 				can_be_cmd = 0;
 			}
-			else if (*str == '\'' || *str == '\"')
+			else if (*str == '\'')
 			{
 				create_token(&tokens, str, TK_ARG);
 				can_be_cmd = 0;
-				str = find_char(str, '\"');
-				str = find_char(str, '\'');
+				str = find_char(++str, '\'');
+			}
+			else if (*str == '\"')
+			{
+				create_token(&tokens, str, TK_ARG);
+				can_be_cmd = 0;
+				str = find_char(++str, '\"');
 			}
 			else if (*str)
 			{
