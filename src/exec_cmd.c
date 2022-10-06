@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/03 21:06:03 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/06 19:46:31 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "minishell.h"
 #include "error.h"
+#include "command.h"
 
 #include <fcntl.h>
 #include <unistd.h>
@@ -61,20 +62,36 @@ char	*get_path(char *cmd, char **envp)
 	return (NULL);
 }
 
-void	exec_cmd(char *cmd, t_mini *state)
+void	exec_cmd_table(t_cmd *table, t_mini *state)
 {
-	char	**cmd_splitted;
-	char	*path;
+	t_list			*cmds;
+	t_simple_cmd	*cmd;
+	pid_t			pid;
+	char			*path;
 
-	cmd_splitted = ft_split(cmd, ' ');
-	path = get_path(cmd_splitted[0], state->envp);
-	if (execve(path, cmd_splitted, state->envp) == -1)
+	if (!table)
+		return ;
+	cmds = table->cmds;
+	while (cmds)
 	{
-		ft_putendl_fd("command not found: ", 2);
-		ft_putendl_fd(cmd_splitted[0], 2);
-		free_array(cmd_splitted);
-		if (path)
-			free(path);
-		exit_with_error(state, "");
+		cmd = get_cmd(cmds);
+		pid = fork();
+		if (pid == -1)
+			perror("ERROR");
+		if (pid == 0)
+		{
+			path = get_path(cmd->argv[0], state->envp);
+			if (execve(path, cmd->argv, state->envp) == -1)
+			{
+				ft_putendl_fd("command not found: ", 2);
+				ft_putendl_fd(cmd->argv[0], 2);
+				if (path)
+					free(path);
+				exit_with_error(state, "");
+			}
+		}
+		else
+			waitpid(pid, NULL, 0);
+		cmds = cmds->next;
 	}
 }

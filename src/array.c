@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 10:41:24 by manugarc          #+#    #+#             */
-/*   Updated: 2022/09/24 16:51:23 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/06 19:45:16 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**duplicate_array(char **array)
 	int		i;
 
 	count = count_str_in_array(array);
-	new = ft_malloc((count + 1) * sizeof(char *));
+	new = (char **) ft_malloc((count + 1) * sizeof(char *));
 	i = 0;
 	while (i < count && array && array[i])
 	{

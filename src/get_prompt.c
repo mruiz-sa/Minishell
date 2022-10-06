@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_prompt.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 12:10:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/03 20:33:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/06 19:59:36 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	get_pwd(char **envp, t_prompt *prompt)
 void	get_prompt(char **envp, t_prompt *prompt)
 {
 	char	*user;
-	char	*aux;
 
 	user = get_env(envp, "USER");
 	if (!user)
@@ -47,10 +46,7 @@ void	get_prompt(char **envp, t_prompt *prompt)
 	if (!user)
 		return ;
 	get_pwd(envp, prompt);
-	prompt->user = ft_strjoin("\033[0;35m minishell‣ ", user);
+	prompt->user = ft_strjoin("minishell ", user);
 	free(user);
 	prompt->prompt = ft_strjoin(prompt->user, prompt->pwd);
-	aux = prompt->prompt;
-	prompt->prompt = ft_strjoin(prompt->prompt, "\033[0m");
-	free(aux);
 }
