@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/08 10:37:33 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:12:29 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	**ft_lexer(char *str, t_mini *state)
 	tokens = str_to_tokens(str);
 	display_tokens(tokens);
 	printf("\n");
-	expand_token_strings(tokens);
+	expand_token_strings(tokens, state);
 	validate_syntax_tokens(tokens);
 	// TODO: Mover esto a parser
 	cmd_table = tokens_to_cmd_table(tokens);
