@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/08 12:12:29 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/08 15:46:46 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,13 +28,13 @@ char	**ft_lexer(char *str, t_mini *state)
 	t_cmd	*cmd_table;
 
 	tokens = str_to_tokens(str);
-	display_tokens(tokens);
+	// display_tokens(tokens);
 	printf("\n");
 	expand_token_strings(tokens, state);
 	validate_syntax_tokens(tokens);
 	// TODO: Mover esto a parser
 	cmd_table = tokens_to_cmd_table(tokens);
-	display_cmd_table(cmd_table);
+	// display_cmd_table(cmd_table);
 	exec_cmd_table(cmd_table, state);
 	free_tokens(tokens);
 	free_cmd_table(cmd_table);
