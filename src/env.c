@@ -3,19 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/09/24 17:47:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/08 12:53:36 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "array.h"
+#include "minishell.h"
 
 /**
  * @brief Get the index of key in the env array. -1 if it does not exist.
- * 
+ *
  */
 int	get_env_index(char **envp, char *key)
 {
@@ -35,7 +36,7 @@ int	get_env_index(char **envp, char *key)
 
 /**
  * @brief Builds a string in env format "key=value"
- * 
+ *
  */
 char	*build_env_str(char *key, char *value)
 {
@@ -50,13 +51,13 @@ char	*build_env_str(char *key, char *value)
 
 /**
  * @brief Sets an environment variable
- * 
+ *
  * 	Modifies a value in the env array:
  * 		set_env(&envp, "PWD", "/users/user/new_path");
- * 
+ *
  * 	Adds a new var and value to the env array if it does not exist before:
  * 		set_env(&envp, "NON_EXISTENT_VAR", "value");
- * 
+ *
  */
 int	set_env(char ***envp, char *key, char *value)
 {
@@ -75,7 +76,7 @@ int	set_env(char ***envp, char *key, char *value)
 
 /**
  * @brief Get the value of a key in the env array.
- * 
+ *
  */
 char	*get_env(char **envp, char *key)
 {
@@ -91,11 +92,12 @@ char	*get_env(char **envp, char *key)
 	return (NULL);
 }
 
-char	*expand_env_str(char *str)
+char	*expand_env_str(char *str, t_mini *state)
 {
 	/* TODO: To be implemented! Expand strings containing ENV variables.*/
 	/* 'the user is $USER' => should return => 'The user is username'*/
 	/* Also expand ~ into users home path */
 	/* free up original str if expanded, and return de malloc-ed one? */
+	(void)state;
 	return (str);
 }

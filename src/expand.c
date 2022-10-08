@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/08 12:12:11 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:52:15 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	expand_token_strings(t_list *tokens, t_mini *state)
 		if (token->type == TK_CMD)
 			token->str = path_to_absolute(token->str, state);
 		else if (token->type == TK_ARG && token->str[0] != '\'')
-			token->str = expand_env_str(token->str);
+			token->str = expand_env_str(token->str, state);
 		tokens = tokens->next;
 	}
 }
