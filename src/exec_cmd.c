@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/06 19:46:31 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/08 10:14:55 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,10 @@ void	exec_cmd_table(t_cmd *table, t_mini *state)
 	while (cmds)
 	{
 		cmd = get_cmd(cmds);
+		if (is_builtin(cmd))
+		{
+			// Esto es un builtin. Algunos se ejecutan en proceso padre otros con fork!
+		}
 		pid = fork();
 		if (pid == -1)
 			perror("ERROR");

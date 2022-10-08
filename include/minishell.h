@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/06 19:05:49 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/08 10:09:35 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,9 @@ typedef enum e_builtin_type {
 }	t_builtin_type;
 
 typedef struct s_simple_cmd {
-	int					argc;
-	char				**argv;
+	int				argc;
+	char			**argv;
+	t_builtin_type	builtin_type;
 }	t_simple_cmd;
 
 typedef struct s_cmd {
