@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 15:34:54 by manu              #+#    #+#             */
-/*   Updated: 2022/10/08 12:41:20 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:46:34 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	*get_path(char *cmd, char **envp)
 
 char	*path_to_absolute(char *cmd_str, t_mini *state)
 {
+	char	*absolute_path;
+
 	/* TODO: To be implemented! Check if cmd starts with / or not (absolute vs local path). */
 	/* 'ls' => should return => '/bin/ls' */
 	/* a cmd can also start (and use more) ... This is a relative path, it needs to get converted to absolute */
@@ -69,5 +71,8 @@ char	*path_to_absolute(char *cmd_str, t_mini *state)
 	/* the funciton should not validate valid path/program, only convert'*/
 	if (*cmd_str == '/')
 		return (cmd_str);
-	return (get_path(cmd_str, state->envp));
+	absolute_path = get_path(cmd_str, state->envp);
+	if (cmd_str)
+		free(cmd_str);
+	return (absolute_path);
 }
