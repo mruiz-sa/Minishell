@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/05 21:17:00 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/08 10:33:30 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,10 +46,10 @@ char	*get_token_str(char *str, t_token_type type)
 	if (type == TK_ARG && (*str == '\'' || *str == '\"'))
 	{
 		quote = *str;
-		return (expand_env_str(ft_strcpy_until(++str, quote)));
+		return (ft_strcpy_until(++str, quote));
 	}
 	else if (type == TK_CMD)
-		return (path_to_absolute(ft_strcpy_until(str, ' ')));
+		return (ft_strcpy_until(str, ' '));
 	return (ft_strcpy_until(str, ' '));
 }
 
