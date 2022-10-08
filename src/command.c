@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/10/08 15:32:27 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/08 17:59:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ t_list	*add_cmd(t_list *tokens, t_cmd *table)
 		if (token->type == TK_CMD)
 		{
 			cmd_found = 1;
-			if (!token->str)
-				token->str = ft_strdup("");
 			cmd->builtin_type = get_builtin_type(token->str);
 		}
 		cmd->argc++;

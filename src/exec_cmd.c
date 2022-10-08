@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/08 14:48:07 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/08 18:10:17 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ static void	pipex(t_simple_cmd	*cmd, t_mini *state)
 	pid_t	pid;
 	int		fd[2];
 
-	pipe(fd);
+	if (pipe(fd) == -1)
+		exit_with_error(state, "Error calling pipe()");
 	pid = fork();
 	if (pid < 0)
 		perror("Error");
