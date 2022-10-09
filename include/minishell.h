@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/08 10:09:35 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:41:23 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,14 +46,14 @@ typedef struct s_simple_cmd {
 	int				argc;
 	char			**argv;
 	t_builtin_type	builtin_type;
+	int				fd_in;
+	int				fd_out;
+	int				fd_error;
 }	t_simple_cmd;
 
 typedef struct s_cmd {
 	int		ncmds;
 	t_list	*cmds;
-	void	*outFile;
-	void	*inFile;
-	void	*errFile;
 	int		background;
 }	t_cmd;
 

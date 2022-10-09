@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/08 18:10:17 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/09 19:40:55 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 #include "minishell.h"
 #include "error.h"
 #include "command.h"
+
+#define FD_IN 0
+#define FD_OUT 1
 
 static void	child_start(t_simple_cmd *cmd, t_mini *state)
 {
@@ -25,68 +28,48 @@ static void	child_start(t_simple_cmd *cmd, t_mini *state)
 	}
 }
 
-static void	pipex(t_simple_cmd	*cmd, t_mini *state)
+static void	pipex(t_list *cmds, t_mini *state)
 {
-	pid_t	pid;
-	int		fd[2];
+	pid_t			pid;
+	int				fd[2];
+	t_simple_cmd	*cmd;
+	t_simple_cmd	*next_cmd;
 
-	if (pipe(fd) == -1)
-		exit_with_error(state, "Error calling pipe()");
+	cmd = get_cmd(cmds);
+	next_cmd = get_cmd(cmds->next);
+	if (next_cmd)
+	{
+		if (pipe(fd) == -1)
+			exit_with_error(state, "Error calling pipe()");
+		cmd->fd_out = fd[FD_OUT];
+	}
 	pid = fork();
 	if (pid < 0)
 		perror("Error");
 	if (pid == 0)
 	{
-		close(fd[0]);
-		dup2(fd[1], STDOUT_FILENO);
-		close(fd[1]);
+		if (next_cmd)
+			close(fd[FD_IN]);
+		if (cmd->fd_in)
+		{
+			dup2(cmd->fd_in, STDIN_FILENO);
+			close(cmd->fd_in);
+		}
+		if (cmd->fd_out)
+		{
+			dup2(cmd->fd_out, STDOUT_FILENO);
+			close(cmd->fd_out);
+		}
 		child_start(cmd, state);
 	}
 	else
 	{
-		close(fd[1]);
-		wait(NULL);
-		dup2(fd[0], STDIN_FILENO);
-		close(fd[0]);
-	}
-}
-
-static void	exec_one_cmd(t_simple_cmd	*cmd, t_mini *state)
-{
-	pid_t	pid;
-
-	pid = fork();
-	if (pid == -1)
-		perror("ERROR");
-	if (pid == 0)
-	{
-		if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
+		if (next_cmd)
 		{
-			ft_putendl_fd("command not found: ", 2);
-			ft_putendl_fd(cmd->argv[0], 2);
-			exit_with_error(state, "");
+			next_cmd->fd_in = fd[FD_IN];
+			close(fd[FD_OUT]);
 		}
-	}
-	else
 		waitpid(pid, NULL, 0);
-}
-
-static void	exec_multiple_cmds(t_simple_cmd	*cmd, t_list *cmds, t_mini *state)
-{
-	int	i;
-	int	size;
-
-	i = 0;
-	size = ft_lstsize(cmds);
-	while (i < size)
-	{
-		pipex(cmd, state);
-		if (i < size - 1)
-		{
-			cmds = cmds->next;
-			cmd = get_cmd(cmds);
-		}
-		i++;
 	}
 }
 
@@ -103,8 +86,9 @@ void	exec_cmd_table(t_cmd *table, t_mini *state)
 	// {
 	// 	Esto es un builtin. Algunos se ejecutan en proceso padre otros con fork!
 	// }
-	if (cmds->next)
-		exec_multiple_cmds(cmd, cmds, state);
-	else
-		exec_one_cmd(cmd, state);
+	while (cmds)
+	{
+		pipex(cmds, state);
+		cmds = cmds->next;
+	}
 }

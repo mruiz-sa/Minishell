@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lexer.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/08 15:46:46 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/09 19:42:38 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	**ft_lexer(char *str, t_mini *state)
 
 	tokens = str_to_tokens(str);
 	// display_tokens(tokens);
-	printf("\n");
 	expand_token_strings(tokens, state);
 	validate_syntax_tokens(tokens);
 	// TODO: Mover esto a parser
