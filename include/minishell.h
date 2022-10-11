@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/09 19:41:23 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/11 19:54:44 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,12 @@ typedef enum e_builtin_type {
 	BLT_EXIT	= 7,
 }	t_builtin_type;
 
+typedef struct s_redirection {
+	t_token_type	type;
+	char			*file;
+	int				fd;
+}	t_redirection;
+
 typedef struct s_simple_cmd {
 	int				argc;
 	char			**argv;
@@ -49,6 +55,7 @@ typedef struct s_simple_cmd {
 	int				fd_in;
 	int				fd_out;
 	int				fd_error;
+	t_list			*redirections;
 }	t_simple_cmd;
 
 typedef struct s_cmd {

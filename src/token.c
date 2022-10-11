@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/08 10:33:30 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:58:25 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,10 @@
 #include "str.h"
 #include "env.h"
 #include "path.h"
+#include "token_type.h"
 
 #include <stdio.h>
 #include <stdlib.h>
-
-static t_token_type	get_token_type(char *str)
-{
-	t_token_type	type;
-
-	type = TK_NONE;
-	if (str && *str == '|')
-		type = TK_PIPE;
-	else if (str && *str == '>' && *(str + 1) == '>')
-		type = TK_GREATGREAT;
-	else if (str && *str == '>')
-		type = TK_GREAT;
-	else if (str && *str == '<')
-		type = TK_LESS;
-	else if (str && *str == '&')
-		type = TK_AMP;
-	return (type);
-}
 
 char	*get_token_str(char *str, t_token_type type)
 {
@@ -109,14 +92,15 @@ t_list	*str_to_tokens(char *str)
 	can_be_cmd = 1;
 	while (str && *str)
 	{
-		str = skip_char(str, ' ');
+		str = skip_spaces(str);
 		if (*str == '|' || *str == '>' || *str == '<' || *str == '&')
 		{
 			create_token(&tokens, str, TK_NONE);
+			if (*str == '|')
+				can_be_cmd = 1;
 			str++;
-			if (*str == '>')
+			if (*str == '>' || *str == '<')
 				str++;
-			can_be_cmd = 1;
 		}
 		else
 		{
@@ -147,42 +131,6 @@ t_list	*str_to_tokens(char *str)
 	}
 	return (tokens);
 }
-
-/* t_list	*str_to_tokens(char *str)
-{
-	t_list	*tokens;
-
-	tokens = NULL;
-	while (*str)
-	{
-		str = skip_spaces(str);
-		if (*str == '\'')
-		{
-			create_token(&tokens, str, TK_ARG);
-			str = find_char(str, '\'');
-		}
-		if (*str == '\"')
-		{
-			create_token(&tokens, str, TK_ARG);
-			str = find_char(str, '\"');
-		}
-		if (*str == '|' || *str == '>' || *str == '<' || *str == '&')
-		{
-			create_token(&tokens, str, TK_NONE);
-			str++;
-			if (*str == '>')
-				str++;
-		}
-		if (!is_special_char(*str))
-		{
-			create_token(&tokens, str, TK_NONE);
-			while (!is_special_char(*str))
-				str++;
-		}
-		str = find_char(str, ' ');
-	}
-	return (tokens);
-} */
 
 void	display_tokens(t_list	*tokens)
 {

@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   command_table.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/09/17 13:21:57 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/11 19:56:26 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include "malloc.h"
-#include "token.h"
 #include "command.h"
+#include "malloc.h"
+#include "minishell.h"
+#include "redirection.h"
+#include "token.h"
 
 static void	free_node_content(void *content)
 {
@@ -24,6 +25,8 @@ static void	free_node_content(void *content)
 		return ;
 	if (cmd->argv != NULL)
 		free_array(cmd->argv);
+	if (cmd->redirections != NULL)
+		free_redirections(cmd->redirections);
 	free(cmd);
 }
 
@@ -65,12 +68,17 @@ void	display_cmd_table(t_cmd *table)
 	while (cmds)
 	{
 		cmd = get_cmd(cmds);
-		printf("Printing command (%s) and argv\n", cmd->argv[0]);
+		printf("\nPrinting command (%s) and argv\n", cmd->argv[0]);
 		i = 0;
 		while (cmd->argv && cmd->argv[i])
 		{
 			printf("Command argv[%d] = %s\n", i, cmd->argv[i]);
 			i++;
+		}
+		if (cmd->redirections)
+		{
+			printf("Command has redirections:\n");
+			display_redirections(cmd->redirections);
 		}
 		printf("\n");
 		cmds = cmds->next;
