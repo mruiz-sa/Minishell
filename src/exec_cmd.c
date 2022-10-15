@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/15 11:07:28 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/15 22:07:36 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	child_start(t_simple_cmd *cmd, t_mini *state)
 	}
 }
 
-static void	pipex(t_list *cmds, t_mini *state)
+static void	exec_cmd(t_list *cmds, t_mini *state)
 {
 	pid_t			pid;
 	int				fd[2];
@@ -90,7 +90,7 @@ void	exec_cmd_table(t_cmd *table, t_mini *state)
 	// }
 	while (cmds)
 	{
-		pipex(cmds, state);
+		exec_cmd(cmds, state);
 		cmds = cmds->next;
 	}
 }

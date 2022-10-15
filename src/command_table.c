@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/10/11 19:56:26 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/15 20:59:06 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 #include "minishell.h"
 #include "redirection.h"
 #include "token.h"
+#include "token_type.h"
 
 static void	free_node_content(void *content)
 {
@@ -48,7 +49,7 @@ t_cmd	*tokens_to_cmd_table(t_list *tokens)
 	while (tokens)
 	{
 		token = get_token(tokens);
-		if (token->type == TK_CMD)
+		if (token->type == TK_CMD || is_token_redirection(token->type))
 			tokens = add_cmd(tokens, table);
 		else
 			tokens = tokens->next;

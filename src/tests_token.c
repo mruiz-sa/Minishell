@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tests_token.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:57:48 by manu              #+#    #+#             */
-/*   Updated: 2022/10/03 21:07:04 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/15 22:07:59 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,26 @@ static void	assert_token(t_list	*tokens, t_token_type type, char *str)
 	token = get_token(tokens);
 	assert(token != NULL);
 	assert(token->type == type);
-	assert(!ft_strncmp(token->str, str, ft_strlen(str) + 1));
+	if (str)
+		assert(!ft_strncmp(token->str, str, ft_strlen(str) + 1));
+	else
+		assert(token->str == NULL);
 }
+
+static void	assert_arg_quotes(t_list *tokens, char quote)
+{
+	t_token	*token;
+
+	(void)quote;
+	assert(tokens != NULL);
+	token = get_token(tokens);
+	assert(token != NULL);
+	if (quote == '\'')
+		assert(token->single_quote == 1);
+	else if (quote == '\"')
+		assert(token->double_quote == 1);
+}
+
 
 void	test_tokens(void)
 {
@@ -51,22 +69,28 @@ void	test_tokens(void)
 	assert_token(tokens, TK_CMD, "/bin/ls");
 	assert_token(tokens->next, TK_ARG, "-la");
 	assert(tokens->next->next == NULL);
-	/* 5 Test cmd to absolute path */
-	tokens = str_to_tokens("ls");
-	assert(ft_lstsize(tokens) == 1);
-	assert_token(tokens, TK_CMD, "/bin/ls");
-	/* 6 */
-	tokens = str_to_tokens("grep \"test\"");
+	// /* 5 */
+	tokens = str_to_tokens("grep \"double quoted\"");
 	assert(ft_lstsize(tokens) == 2);
 	assert_token(tokens, TK_CMD, "grep");
-	// assert_token(tokens->next, TK_ARG, "\"test\"");
-	assert_token(tokens->next, TK_ARG, "test");
-	assert(tokens->next->next == NULL);
-	display_tokens(tokens);
-
-	tokens = str_to_tokens("ls <infile -ls");
+	assert_token(tokens->next, TK_ARG, "double quoted");
+	assert_arg_quotes(tokens->next, '\"');
+	tokens = str_to_tokens("grep \'single quoted\'");
+	assert(ft_lstsize(tokens) == 2);
+	assert_token(tokens->next, TK_ARG, "single quoted");
+	assert_arg_quotes(tokens->next, '\'');
+	// /* 6 */
+	// tokens = str_to_tokens("ls < infile -ls");
+	tokens = str_to_tokens("ls -ls > outfile");
+	assert(ft_lstsize(tokens) == 4);
+	assert_token(tokens, TK_CMD, "ls");
+	assert_token(tokens->next, TK_ARG, "-ls");
+	assert_token(tokens->next->next, TK_GREAT, ">");
+	assert_token(tokens->next->next->next, TK_ARG, "outfile");
+	// /* 7 */
+	tokens = str_to_tokens("< infile cat");
 	assert(ft_lstsize(tokens) == 3);
-	assert_token(tokens, TK_CMD, "ls");
-	assert_token(tokens, TK_LESS, "infile");
-	assert_token(tokens, TK_CMD, "ls");
+	assert_token(tokens, TK_LESS, "<");
+	assert_token(tokens->next, TK_ARG, "infile");
+	assert_token(tokens->next->next, TK_CMD, "cat");
 }
