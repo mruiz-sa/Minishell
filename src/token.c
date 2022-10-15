@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/11 19:58:25 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/15 12:52:53 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ char	*get_token_str(char *str, t_token_type type)
 	return (ft_strcpy_until(str, ' '));
 }
 
-static int	create_token(t_list	**tokens, char *str, t_token_type type)
+static char	*create_token(t_list	**tokens, char *str, t_token_type type)
 {
 	t_token	*token;
 
+	str = skip_spaces(str);
 	token = ft_malloc(sizeof(t_token));
 	token->str = get_token_str(str, type);
 	if (type != TK_NONE)
@@ -49,10 +50,16 @@ static int	create_token(t_list	**tokens, char *str, t_token_type type)
 	if (token->type != TK_NONE)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(token));
-		return (1);
+		if (token->type == TK_GREAT || token->type == TK_LESS)
+		{
+			str = find_char(str, ' ');
+			str = create_token(tokens, str, TK_ARG);
+		}
 	}
-	free(token);
-	return (0);
+	else
+		free(token);
+	str = find_char(str, ' ');
+	return (str);
 }
 
 static void	free_node_content(void *content)
@@ -95,7 +102,7 @@ t_list	*str_to_tokens(char *str)
 		str = skip_spaces(str);
 		if (*str == '|' || *str == '>' || *str == '<' || *str == '&')
 		{
-			create_token(&tokens, str, TK_NONE);
+			str = create_token(&tokens, str, TK_NONE);
 			if (*str == '|')
 				can_be_cmd = 1;
 			str++;
@@ -106,24 +113,24 @@ t_list	*str_to_tokens(char *str)
 		{
 			if (can_be_cmd)
 			{
-				create_token(&tokens, str, TK_CMD);
+				str = create_token(&tokens, str, TK_CMD);
 				can_be_cmd = 0;
 			}
 			else if (*str == '\'')
 			{
-				create_token(&tokens, str, TK_ARG);
+				str = create_token(&tokens, str, TK_ARG);
 				can_be_cmd = 0;
 				str = find_char(++str, '\'');
 			}
 			else if (*str == '\"')
 			{
-				create_token(&tokens, str, TK_ARG);
+				str = create_token(&tokens, str, TK_ARG);
 				can_be_cmd = 0;
 				str = find_char(++str, '\"');
 			}
 			else if (*str)
 			{
-				create_token(&tokens, str, TK_ARG);
+				str = create_token(&tokens, str, TK_ARG);
 				can_be_cmd = 0;
 			}
 			str = find_char(str, ' ');
