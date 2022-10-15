@@ -3,37 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   token.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/15 12:52:53 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/15 22:14:47 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "minishell.h"
-#include "error.h"
-#include "malloc.h"
-#include "libft.h"
-#include "str.h"
-#include "env.h"
-#include "path.h"
-#include "token_type.h"
 
 #include <stdio.h>
 #include <stdlib.h>
 
-char	*get_token_str(char *str, t_token_type type)
+#include "env.h"
+#include "error.h"
+#include "libft.h"
+#include "minishell.h"
+#include "malloc.h"
+#include "path.h"
+#include "str.h"
+#include "token_type.h"
+
+static	void	set_token_str(t_token *token, char *str)
 {
 	char	quote;
 
-	if (type == TK_ARG && (*str == '\'' || *str == '\"'))
-	{
-		quote = *str;
-		return (ft_strcpy_until(++str, quote));
-	}
-	else if (type == TK_CMD)
-		return (ft_strcpy_until(str, ' '));
-	return (ft_strcpy_until(str, ' '));
+	quote = *str;
+	if (token->type == TK_ARG && (*str == '\'' || *str == '\"'))
+		token->str = ft_strcpy_until(++str, quote);
+	else
+		token->str = ft_strcpy_until(str, ' ');
+	if (quote == '\'')
+		token->single_quote = 1;
+	else if (quote == '\"')
+		token->double_quote = 1;
 }
 
 static char	*create_token(t_list	**tokens, char *str, t_token_type type)
@@ -42,11 +43,11 @@ static char	*create_token(t_list	**tokens, char *str, t_token_type type)
 
 	str = skip_spaces(str);
 	token = ft_malloc(sizeof(t_token));
-	token->str = get_token_str(str, type);
 	if (type != TK_NONE)
 		token->type = type;
 	else
 		token->type = get_token_type(str);
+	set_token_str(token, str);
 	if (token->type != TK_NONE)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(token));
@@ -58,7 +59,6 @@ static char	*create_token(t_list	**tokens, char *str, t_token_type type)
 	}
 	else
 		free(token);
-	str = find_char(str, ' ');
 	return (str);
 }
 
@@ -100,14 +100,12 @@ t_list	*str_to_tokens(char *str)
 	while (str && *str)
 	{
 		str = skip_spaces(str);
+		if (!*str)
+			break;
 		if (*str == '|' || *str == '>' || *str == '<' || *str == '&')
 		{
 			str = create_token(&tokens, str, TK_NONE);
-			if (*str == '|')
-				can_be_cmd = 1;
-			str++;
-			if (*str == '>' || *str == '<')
-				str++;
+			can_be_cmd = 1;
 		}
 		else
 		{
@@ -133,8 +131,8 @@ t_list	*str_to_tokens(char *str)
 				str = create_token(&tokens, str, TK_ARG);
 				can_be_cmd = 0;
 			}
-			str = find_char(str, ' ');
 		}
+		str = find_char(str, ' ');
 	}
 	return (tokens);
 }
@@ -147,6 +145,10 @@ void	display_tokens(t_list	*tokens)
 	{
 		token = get_token(tokens);
 		printf("Token is type %d, str = %s\n", token->type, token->str);
+		if (token->single_quote)
+			printf("Token was single quoted\n");
+		if (token->double_quote)
+			printf("Token was double quoted\n");
 		tokens = tokens->next;
 	}
 }
