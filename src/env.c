@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/08 12:53:36 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/15 14:05:59 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ char	*get_env(char **envp, char *key)
 	while (envp && envp[i])
 	{
 		if (!ft_strncmp(envp[i], key, ft_strlen(key)))
-			return (ft_strchr(envp[i], '=') + 1);
+			return (ft_strdup(ft_strchr(envp[i], '=') + 1));
 		i++;
 	}
 	return (NULL);
@@ -96,8 +96,35 @@ char	*expand_env_str(char *str, t_mini *state)
 {
 	/* TODO: To be implemented! Expand strings containing ENV variables.*/
 	/* 'the user is $USER' => should return => 'The user is username'*/
-	/* Also expand ~ into users home path */
 	/* free up original str if expanded, and return de malloc-ed one? */
-	(void)state;
-	return (str);
+	char	*start;
+	char	*end;
+	char	*name;
+	char	*value;
+	char	*final;
+	char	*aux;
+	int		i;
+	int		index_dollar;
+
+	i = 0;
+	if (!ft_strchr(str, '$'))
+		return (str);
+	while (str && str[i] != '$')
+		i++;
+	start = ft_substr(str, 0, i);
+	index_dollar = i++;
+	while (ft_isalnum(str[i]) || str[i] == '_')
+		i++;
+	name = ft_substr(str, index_dollar, i - index_dollar);
+	end = ft_substr(str, i, ft_strlen(&str[i]));
+	value = get_env(state->envp, ++name);
+	if (!value)
+		value = ft_strdup("");
+	aux = ft_strjoin(start, value);
+	free(start);
+	free(value);
+	final = ft_strjoin(aux, end);
+	free(aux);
+	free(end);
+	return (final);
 }
