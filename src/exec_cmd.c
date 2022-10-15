@@ -3,23 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/09 19:40:55 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/15 11:07:28 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "command.h"
+#include "error.h"
 #include "libft.h"
 #include "minishell.h"
-#include "error.h"
-#include "command.h"
+#include "redirection.h"
 
 #define FD_IN 0
 #define FD_OUT 1
 
 static void	child_start(t_simple_cmd *cmd, t_mini *state)
 {
+	apply_redirections(cmd->redirections);
 	if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
 	{
 		ft_putendl_fd("command not found: ", 2);
