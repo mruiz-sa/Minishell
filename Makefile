@@ -6,7 +6,7 @@
 #    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/10/11 19:55:37 by manu             ###   ########.fr        #
+#    Updated: 2022/10/16 13:09:50 by manu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,10 +24,10 @@ SRC_DIR		=	src
 SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/builtins.c \
 				$(SRC_DIR)/command.c \
+				$(SRC_DIR)/command_exec.c \
 				$(SRC_DIR)/command_table.c \
 				$(SRC_DIR)/env.c \
 				$(SRC_DIR)/error.c \
-				$(SRC_DIR)/exec_cmd.c \
 				$(SRC_DIR)/expand.c \
 				$(SRC_DIR)/ft_lexer.c \
 				$(SRC_DIR)/ft_read.c \
@@ -73,7 +73,6 @@ test: $(TESTS_OBJS)
 	@$(CC) $(CFLAGS) $(INCLUDES) $(TESTS_OBJS) libft/libft.a -lreadline -L${BREW_DIR}/readline/lib -o unit_test_$(NAME)
 	@echo "\n\033[92m"-------------\\n👌 TESTS COMPILED 👌\\n-------------\\n"\033[0m\n"
 	@echo
-	@echo Running tests ...
 	@./unit_test_$(NAME)
 
 clean:

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exec_cmd.c                                         :+:      :+:    :+:   */
+/*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/15 22:07:36 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/16 12:34:09 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	child_start(t_simple_cmd *cmd, t_mini *state)
 	}
 }
 
-static void	exec_cmd(t_list *cmds, t_mini *state)
+void	exec_cmd(t_list *cmds, t_mini *state)
 {
 	pid_t			pid;
 	int				fd[2];
@@ -72,25 +72,5 @@ static void	exec_cmd(t_list *cmds, t_mini *state)
 			close(fd[FD_OUT]);
 		}
 		waitpid(pid, NULL, 0);
-	}
-}
-
-void	exec_cmd_table(t_cmd *table, t_mini *state)
-{
-	t_list			*cmds;
-	t_simple_cmd	*cmd;
-
-	if (!table)
-		return ;
-	cmds = table->cmds;
-	cmd = get_cmd(cmds);
-	// if (is_builtin(cmd))
-	// {
-	// 	Esto es un builtin. Algunos se ejecutan en proceso padre otros con fork!
-	// }
-	while (cmds)
-	{
-		exec_cmd(cmds, state);
-		cmds = cmds->next;
 	}
 }

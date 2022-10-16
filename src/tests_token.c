@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:57:48 by manu              #+#    #+#             */
-/*   Updated: 2022/10/15 22:07:59 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/16 12:47:00 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,11 @@ void	test_tokens(void)
 	assert_token(tokens->next, TK_ARG, "-ls");
 	assert_token(tokens->next->next, TK_GREAT, ">");
 	assert_token(tokens->next->next->next, TK_ARG, "outfile");
+	tokens = str_to_tokens("ls >file");
+	assert(ft_lstsize(tokens) == 3);
+	assert_token(tokens, TK_CMD, "ls");
+	assert_token(tokens->next, TK_GREAT, ">");
+	assert_token(tokens->next->next, TK_ARG, "file");
 	// /* 7 */
 	tokens = str_to_tokens("< infile cat");
 	assert(ft_lstsize(tokens) == 3);

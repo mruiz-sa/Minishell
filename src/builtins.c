@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/05 21:18:17 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/16 12:21:38 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,4 +29,11 @@ t_builtin_type	get_builtin_type(char *str)
 	else if (ft_strnstr(str, "exit", ft_strlen("exit")))
 		return (BLT_EXIT);
 	return (BLT_NONE);
+}
+
+int	run_builtin_in_parent(t_builtin_type type)
+{
+	if (type == BLT_ECHO || type == BLT_EXIT || type == BLT_ENV)
+		return (0);
+	return (1);
 }

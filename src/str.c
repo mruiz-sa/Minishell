@@ -3,12 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:02:50 by manu              #+#    #+#             */
-/*   Updated: 2022/10/04 17:00:14 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/16 13:08:43 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "minishell.h"
 
 char	*skip_spaces(char *str)
 {
@@ -66,4 +68,19 @@ int	check_quotes(char **str, char c)
 		return (1);
 	}
 	return (0);
+}
+
+char	*skip_token_str(char *str, t_token_type type)
+{
+	if (type == TK_GREAT && *str == '>')
+		return (str + 1);
+	if (type == TK_GREATGREAT && *str == '>')
+		return (str + 2);
+	if (type == TK_LESS && *str == '<')
+		return (str + 1);
+	if (type == TK_PIPE && *str == '<')
+		return (str + 1);
+	if (type == TK_AMP && *str == '<')
+		return (str + 1);
+	return (str);
 }

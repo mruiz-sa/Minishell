@@ -6,11 +6,12 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/10/15 20:59:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/16 12:34:27 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
+#include "command_exec.h"
 #include "malloc.h"
 #include "minishell.h"
 #include "redirection.h"
@@ -82,6 +83,26 @@ void	display_cmd_table(t_cmd *table)
 			display_redirections(cmd->redirections);
 		}
 		printf("\n");
+		cmds = cmds->next;
+	}
+}
+
+void	exec_cmd_table(t_cmd *table, t_mini *state)
+{
+	t_list			*cmds;
+	t_simple_cmd	*cmd;
+
+	if (!table)
+		return ;
+	cmds = table->cmds;
+	cmd = get_cmd(cmds);
+	// if (is_builtin(cmd))
+	// {
+	// 	Esto es un builtin. Algunos se ejecutan en proceso padre otros con fork!
+	// }
+	while (cmds)
+	{
+		exec_cmd(cmds, state);
 		cmds = cmds->next;
 	}
 }

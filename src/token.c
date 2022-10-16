@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/15 22:14:47 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/16 13:09:30 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static	void	set_token_str(t_token *token, char *str)
 	quote = *str;
 	if (token->type == TK_ARG && (*str == '\'' || *str == '\"'))
 		token->str = ft_strcpy_until(++str, quote);
+	else if (is_token_redirection(token->type))
+		token->str = token_type_to_str(token->type);
 	else
 		token->str = ft_strcpy_until(str, ' ');
 	if (quote == '\'')
@@ -37,7 +39,7 @@ static	void	set_token_str(t_token *token, char *str)
 		token->double_quote = 1;
 }
 
-static char	*create_token(t_list	**tokens, char *str, t_token_type type)
+static char	*create_token(t_list **tokens, char *str, t_token_type type)
 {
 	t_token	*token;
 
@@ -51,9 +53,10 @@ static char	*create_token(t_list	**tokens, char *str, t_token_type type)
 	if (token->type != TK_NONE)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(token));
-		if (token->type == TK_GREAT || token->type == TK_LESS)
+		if (token->type == TK_GREAT || token->type == TK_GREATGREAT
+			|| token->type == TK_LESS)
 		{
-			str = find_char(str, ' ');
+			str = skip_token_str(str, token->type);
 			str = create_token(tokens, str, TK_ARG);
 		}
 	}
