@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/09 19:46:14 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/17 12:18:57 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ char	*ft_read(t_mini *state)
 {
 	get_prompt(state->envp, &state->prompt);
 	state->readline = readline(state->prompt.prompt);
-	if (!ft_strncmp(state->readline, "exit", 4))
-		exit_without_error(state);
 	if (!state->readline)
+		exit_without_error(state);
+	if (!ft_strncmp(state->readline, "exit", 4))
 		exit_without_error(state);
 	if (ft_strlen(state->readline))
 	{

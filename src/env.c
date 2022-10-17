@@ -6,13 +6,14 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/15 14:05:59 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/17 11:46:53 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "array.h"
 #include "minishell.h"
+#include "str.h"
 
 /**
  * @brief Get the index of key in the env array. -1 if it does not exist.
@@ -94,37 +95,25 @@ char	*get_env(char **envp, char *key)
 
 char	*expand_env_str(char *str, t_mini *state)
 {
-	/* TODO: To be implemented! Expand strings containing ENV variables.*/
-	/* 'the user is $USER' => should return => 'The user is username'*/
-	/* free up original str if expanded, and return de malloc-ed one? */
-	char	*start;
-	char	*end;
-	char	*name;
-	char	*value;
-	char	*final;
-	char	*aux;
 	int		i;
 	int		index_dollar;
+	t_exp	exp;
 
 	i = 0;
 	if (!ft_strchr(str, '$'))
 		return (str);
 	while (str && str[i] != '$')
 		i++;
-	start = ft_substr(str, 0, i);
+	exp.start = ft_substr(str, 0, i);
 	index_dollar = i++;
 	while (ft_isalnum(str[i]) || str[i] == '_')
 		i++;
-	name = ft_substr(str, index_dollar, i - index_dollar);
-	end = ft_substr(str, i, ft_strlen(&str[i]));
-	value = get_env(state->envp, ++name);
-	if (!value)
-		value = ft_strdup("");
-	aux = ft_strjoin(start, value);
-	free(start);
-	free(value);
-	final = ft_strjoin(aux, end);
-	free(aux);
-	free(end);
-	return (final);
+	exp.name = ft_substr(str, index_dollar, i - index_dollar);
+	exp.end = ft_substr(str, i, ft_strlen(&str[i]));
+	exp.value = get_env(state->envp, ++exp.name);
+	if (!exp.value)
+		exp.value = ft_strdup("");
+	exp.aux = join_and_free(exp.start, exp.value);
+	exp.final = join_and_free(exp.aux, exp.end);
+	return (exp.final);
 }
