@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/17 10:32:57 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/17 22:59:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,6 @@ typedef enum e_token_type {
 	TK_PIPE			= 6,
 	TK_AMP			= 7,
 }	t_token_type;
-
-typedef struct s_exp {
-	char	*start;
-	char	*end;
-	char	*name;
-	char	*value;
-	char	*final;
-	char	*aux;
-}	t_exp;
 
 typedef struct s_token {
 	t_token_type	type;

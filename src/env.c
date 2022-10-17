@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/17 11:46:53 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/17 23:01:09 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,15 @@
 #include "array.h"
 #include "minishell.h"
 #include "str.h"
+
+typedef struct s_exp {
+	char	*start;
+	char	*end;
+	char	*name;
+	char	*value;
+	char	*final;
+	char	*aux;
+}	t_exp;
 
 /**
  * @brief Get the index of key in the env array. -1 if it does not exist.
@@ -87,10 +96,20 @@ char	*get_env(char **envp, char *key)
 	while (envp && envp[i])
 	{
 		if (!ft_strncmp(envp[i], key, ft_strlen(key)))
-			return (ft_strdup(ft_strchr(envp[i], '=') + 1));
+			return (ft_strchr(envp[i], '=') + 1);
 		i++;
 	}
 	return (NULL);
+}
+
+char	*get_env_dup(char **envp, char *key)
+{
+	char	*value;
+
+	value = get_env(envp, key);
+	if (!value)
+		return (ft_strdup(""));
+	return (ft_strdup(value));
 }
 
 char	*expand_env_str(char *str, t_mini *state)
@@ -110,9 +129,7 @@ char	*expand_env_str(char *str, t_mini *state)
 		i++;
 	exp.name = ft_substr(str, index_dollar, i - index_dollar);
 	exp.end = ft_substr(str, i, ft_strlen(&str[i]));
-	exp.value = get_env(state->envp, ++exp.name);
-	if (!exp.value)
-		exp.value = ft_strdup("");
+	exp.value = get_env_dup(state->envp, ++exp.name);
 	exp.aux = join_and_free(exp.start, exp.value);
 	exp.final = join_and_free(exp.aux, exp.end);
 	return (exp.final);

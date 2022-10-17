@@ -6,7 +6,7 @@
 #    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/10/16 13:09:50 by manu             ###   ########.fr        #
+#    Updated: 2022/10/17 22:58:02 by manu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,12 @@ NAME 		= minishell
 SRC_DIR		=	src
 SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/builtins.c \
+				$(SRC_DIR)/builtins_cd.c \
+				$(SRC_DIR)/builtins_echo.c \
+				$(SRC_DIR)/builtins_env.c \
+				$(SRC_DIR)/builtins_export.c \
+				$(SRC_DIR)/builtins_pwd.c \
+				$(SRC_DIR)/builtins_unset.c \
 				$(SRC_DIR)/command.c \
 				$(SRC_DIR)/command_exec.c \
 				$(SRC_DIR)/command_table.c \

@@ -1,23 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env.h                                              :+:      :+:    :+:   */
+/*   builtins_unset.h                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/03 12:27:46 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/17 22:59:18 by manu             ###   ########.fr       */
+/*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
+/*   Updated: 2022/10/17 22:58:43 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ENV_H
-# define ENV_H
+#ifndef BUILTINS_UNSET_H
+# define BUILTINS_UNSET_H
 
 # include "minishell.h"
 
-char	*get_env(char **envp, char *key);
-char	*get_env_dup(char **envp, char *key);
-char	*expand_env_str(char *str, t_mini *state);
-int		set_env(char ***envp, char *key, char *value);
+int	run_builtin_unset(t_simple_cmd	*cmd);
 
 #endif
