@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/17 23:00:29 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/18 21:03:18 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,18 @@
 #define FD_IN 0
 #define FD_OUT 1
 
-static void	child_start(t_simple_cmd *cmd, t_mini *state)
+static void	child_start(t_list *cmds, t_mini *state)
 {
+	t_simple_cmd	*cmd;
+
+	cmd = get_cmd(cmds);
+	apply_redirections(cmd->redirections);
 	if (is_builtin(cmd))
 	{
-		if (is_parent_builtin(cmd->builtin_type))
-			exit_with_error(state, "Trying to run a parent bound built-in as child\n");
-		// run builtin as child
+		run_builtin(cmds, state);
+		exit_without_error(state);
 	}
-	apply_redirections(cmd->redirections);
-	if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
+	else if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
 	{
 		ft_putendl_fd("command not found: ", 2);
 		ft_putendl_fd(cmd->argv[0], 2);
@@ -53,10 +55,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 		cmd->fd_out = fd[FD_OUT];
 	}
 	if (is_parent_builtin(cmd->builtin_type))
-	{
-		// run builtin in parent
-		run_builtin(cmds);
-	}
+		run_builtin(cmds, state);
 	else
 	{ 
 		pid = fork();
@@ -76,7 +75,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 				dup2(cmd->fd_out, STDOUT_FILENO);
 				close(cmd->fd_out);
 			}
-			child_start(cmd, state);
+			child_start(cmds, state);
 		}
 		else
 		{

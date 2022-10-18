@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 16:19:49 by manu              #+#    #+#             */
-/*   Updated: 2022/10/15 22:20:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/18 21:03:33 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,10 @@
 #include "state.h"
 #include "error.h"
 
-static void	exit_with_code(t_mini *state, int code)
+static void	exit_with_code(t_mini *state, int code, int check_for_leaks)
 {
 	free_state(state);
-	if (!code)
+	if (check_for_leaks)
 		system("Leaks minishell");
 	exit(code);
 }
@@ -28,7 +28,7 @@ static void	exit_with_code(t_mini *state, int code)
 int	exit_with_error(t_mini *state, char *message_error)
 {
 	printf("%s", message_error);
-	exit_with_code(state, ERROR_GENERIC);
+	exit_with_code(state, ERROR_GENERIC, 0);
 	return (0);
 }
 
@@ -39,6 +39,12 @@ int	exit_with_memory_error(t_mini *state)
 
 int	exit_without_error(t_mini *state)
 {
-	exit_with_code(state, ERROR_NONE);
+	exit_with_code(state, ERROR_NONE, 0);
+	return (0);
+}
+
+int	exit_without_error_check_leaks(t_mini *state)
+{
+	exit_with_code(state, ERROR_NONE, 1);
 	return (0);
 }

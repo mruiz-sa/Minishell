@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 15:34:54 by manu              #+#    #+#             */
-/*   Updated: 2022/10/15 11:42:51 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/18 21:04:07 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,26 @@ char	*path_to_absolute(char *cmd_str, t_mini *state)
 	if (*cmd_str == '/')
 		return (cmd_str);
 	absolute_path = get_path(cmd_str, state->envp);
-	if (cmd_str)
+	if (absolute_path)
+	{
 		free(cmd_str);
-	return (absolute_path);
+		return (absolute_path);
+	}
+	return (cmd_str);
+}
+
+char	*get_last_part_in_path(char *str)
+{
+	char	**path;
+	char	*last_part;
+	int		len;
+
+	path = ft_split(str, '/');
+	len = count_str_in_array(path);
+	if (!len)
+		last_part = ft_strdup("");
+	else
+		last_part = ft_strdup(path[len - 1]);
+	free_array(path);
+	return (last_part);
 }
