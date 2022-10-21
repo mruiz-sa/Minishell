@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/21 13:39:43 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:20:24 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	child_start(t_list *cmds, t_mini *state)
 	t_simple_cmd	*cmd;
 
 	cmd = get_cmd(cmds);
-	apply_redirections(cmd->redirections);
+	apply_redirections(cmd->redirections, state);
 	if (is_builtin(cmd))
 	{
 		run_builtin(cmds, state);

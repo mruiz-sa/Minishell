@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/16 13:09:30 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/21 19:21:37 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static	void	set_token_str(t_token *token, char *str)
 static char	*create_token(t_list **tokens, char *str, t_token_type type)
 {
 	t_token	*token;
+	char	quote;
 
+	quote = *str;
 	str = skip_spaces(str);
 	token = ft_malloc(sizeof(t_token));
 	if (type != TK_NONE)
@@ -53,12 +55,13 @@ static char	*create_token(t_list **tokens, char *str, t_token_type type)
 	if (token->type != TK_NONE)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(token));
-		if (token->type == TK_GREAT || token->type == TK_GREATGREAT
-			|| token->type == TK_LESS)
+		if (is_token_redirection(token->type))
 		{
 			str = skip_token_str(str, token->type);
 			str = create_token(tokens, str, TK_ARG);
 		}
+		else if (token->type == TK_ARG && (quote == '\'' || quote == '\"'))
+			str = find_char(++str, quote);
 	}
 	else
 		free(token);
@@ -103,37 +106,18 @@ t_list	*str_to_tokens(char *str)
 	while (str && *str)
 	{
 		str = skip_spaces(str);
-		if (!*str)
-			break;
 		if (*str == '|' || *str == '>' || *str == '<' || *str == '&')
 		{
 			str = create_token(&tokens, str, TK_NONE);
 			can_be_cmd = 1;
 		}
-		else
+		else if (*str)
 		{
 			if (can_be_cmd)
-			{
 				str = create_token(&tokens, str, TK_CMD);
-				can_be_cmd = 0;
-			}
-			else if (*str == '\'')
-			{
-				str = create_token(&tokens, str, TK_ARG);
-				can_be_cmd = 0;
-				str = find_char(++str, '\'');
-			}
-			else if (*str == '\"')
-			{
-				str = create_token(&tokens, str, TK_ARG);
-				can_be_cmd = 0;
-				str = find_char(++str, '\"');
-			}
 			else if (*str)
-			{
 				str = create_token(&tokens, str, TK_ARG);
-				can_be_cmd = 0;
-			}
+			can_be_cmd = 0;
 		}
 		str = find_char(str, ' ');
 	}

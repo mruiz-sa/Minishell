@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/17 22:59:50 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/21 13:55:56 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,9 @@ typedef enum e_token_type {
 	TK_GREAT		= 3,
 	TK_GREATGREAT	= 4,
 	TK_LESS			= 5,
-	TK_PIPE			= 6,
-	TK_AMP			= 7,
+	TK_LESSLESS		= 6,
+	TK_PIPE			= 7,
+	TK_AMP			= 8,
 }	t_token_type;
 
 typedef struct s_token {

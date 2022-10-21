@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 10:41:24 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/06 19:45:16 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:20:13 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,33 @@ void	free_array(char **array)
 		free(array);
 }
 
-int	count_str_in_array(char **argv)
+int	count_str_in_array(char **array)
 {
 	int	count;
 
 	count = 0;
-	while (argv && argv[count])
+	while (array && array[count])
 		count++;
 	return (count);
 }
 
-char	**add_str_to_array(char **argv, char *str)
+char	**add_str_to_array(char **array, char *str)
 {
 	char	**new;
 	int		count;
 	int		i;
 
-	count = count_str_in_array(argv);
+	count = count_str_in_array(array);
 	new = ft_malloc((count + 2) * sizeof(char *));
 	i = 0;
-	while (i < count && argv && argv[i])
+	while (i < count && array && array[i])
 	{
-		new[i] = ft_strdup(argv[i]);
+		new[i] = ft_strdup(array[i]);
 		i++;
 	}
 	new[i] = ft_strdup(str);
 	new[i + 1] = NULL;
-	free_array(argv);
+	free_array(array);
 	return (new);
 }
 
@@ -75,4 +75,16 @@ char	**duplicate_array(char **array)
 	}
 	new[i] = NULL;
 	return (new);
+}
+
+void	display_array(char **array)
+{
+	int	count;
+
+	count = 0;
+	while (array && array[count])
+	{
+		printf("%s\n", array[count]);
+		count++;
+	}
 }

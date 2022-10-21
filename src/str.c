@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:02:50 by manu              #+#    #+#             */
-/*   Updated: 2022/10/17 10:54:57 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/21 19:21:24 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ char	*skip_token_str(char *str, t_token_type type)
 		return (str + 2);
 	if (type == TK_LESS && *str == '<')
 		return (str + 1);
+	if (type == TK_LESSLESS && *str == '<')
+		return (str + 2);
 	if (type == TK_PIPE && *str == '<')
 		return (str + 1);
 	if (type == TK_AMP && *str == '<')
