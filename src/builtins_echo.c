@@ -3,24 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_echo.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/18 21:02:46 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/21 13:37:18 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "minishell.h"
 
-int	run_builtin_echo(t_simple_cmd	*cmd, t_mini *state)
+int	run_builtin_echo(t_simple_cmd	*cmd)
 {
 	int	i;
+	int	n;
 
-	(void)state;
 	i = 1;
+	n = 0;
 	if (cmd && cmd->argc > 1)
 	{
+		while (!ft_strncmp(cmd->argv[i], "-n", 2) && cmd->argv[i])
+		{
+			n = 1;
+			i++;
+		}
 		while (i < cmd->argc)
 		{
 			printf("%s", cmd->argv[i++]);
@@ -28,6 +34,7 @@ int	run_builtin_echo(t_simple_cmd	*cmd, t_mini *state)
 				printf(" ");
 		}
 	}
-	printf("\n");
+	if (n == 0)
+		printf("\n");
 	return (1);
 }

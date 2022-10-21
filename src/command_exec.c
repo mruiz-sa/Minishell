@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/18 21:03:18 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/21 13:39:43 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static void	child_start(t_list *cmds, t_mini *state)
 	}
 	else if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
 	{
-		ft_putendl_fd("command not found: ", 2);
-		ft_putendl_fd(cmd->argv[0], 2);
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putendl_fd(": command not found", 2);
 		exit_with_error(state, "");
 	}
 }
@@ -57,7 +57,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 	if (is_parent_builtin(cmd->builtin_type))
 		run_builtin(cmds, state);
 	else
-	{ 
+	{
 		pid = fork();
 		if (pid < 0)
 			perror("Error");
