@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/21 13:37:45 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/22 12:56:06 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "builtins_cd.h"
 #include "builtins_echo.h"
 #include "builtins_env.h"
+#include "builtins_exit.h"
 #include "builtins_export.h"
 #include "builtins_pwd.h"
 #include "builtins_unset.h"
@@ -47,7 +48,8 @@ t_builtin_type	get_builtin_type(char *str)
 
 int	is_parent_builtin(t_builtin_type type)
 {
-	if (type == BLT_NONE || type == BLT_ECHO || type == BLT_EXIT || type == BLT_ENV)
+	if (type == BLT_NONE || type == BLT_ECHO || type == BLT_ENV
+		|| type == BLT_PWD)
 		return (0);
 	return (1);
 }
@@ -69,5 +71,7 @@ int	run_builtin(t_list *cmds, t_mini *state)
 		return (run_builtin_pwd(cmd, state));
 	else if (cmd->builtin_type == BLT_UNSET)
 		return (run_builtin_unset(cmd, state));
+	else if (cmd->builtin_type == BLT_EXIT)
+		return (run_builtin_exit(cmd, state));
 	return (0);
 }

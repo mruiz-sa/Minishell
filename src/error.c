@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 16:19:49 by manu              #+#    #+#             */
-/*   Updated: 2022/10/18 21:03:33 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/22 12:52:28 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,10 @@
 
 static void	exit_with_code(t_mini *state, int code, int check_for_leaks)
 {
+	(void)check_for_leaks;
 	free_state(state);
-	if (check_for_leaks)
-		system("Leaks minishell");
+	// if (check_for_leaks)
+	// 	system("Leaks minishell");
 	exit(code);
 }
 
