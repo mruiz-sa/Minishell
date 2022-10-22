@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/17 23:01:09 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/22 12:44:52 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ char	*get_env_dup(char **envp, char *key)
 {
 	char	*value;
 
+	if (!key || !*key)
+		return (ft_strdup(""));
 	value = get_env(envp, key);
 	if (!value)
 		return (ft_strdup(""));
@@ -129,8 +131,10 @@ char	*expand_env_str(char *str, t_mini *state)
 		i++;
 	exp.name = ft_substr(str, index_dollar, i - index_dollar);
 	exp.end = ft_substr(str, i, ft_strlen(&str[i]));
-	exp.value = get_env_dup(state->envp, ++exp.name);
+	exp.value = get_env_dup(state->envp, exp.name + 1);
+	free(exp.name);
 	exp.aux = join_and_free(exp.start, exp.value);
 	exp.final = join_and_free(exp.aux, exp.end);
+	free(str);
 	return (exp.final);
 }
