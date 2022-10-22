@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 15:34:54 by manu              #+#    #+#             */
-/*   Updated: 2022/10/18 21:04:07 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/22 14:32:52 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ char	*path_to_absolute(char *cmd_str, t_mini *state)
 	/* free up original cmd if replaced, and return de malloc-ed one? */
 	/* the funciton should not validate valid path/program, only convert'*/
 	/* Also expand ~ into users home path */
-	if (*cmd_str == '/')
+	if (*cmd_str == '/' || *cmd_str == '.')
 		return (cmd_str);
 	absolute_path = get_path(cmd_str, state->envp);
 	if (absolute_path)

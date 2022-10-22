@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
+#    By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/10/22 12:53:33 by manugarc         ###   ########.fr        #
+#    Updated: 2022/10/22 13:16:38 by mruiz-sa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ CC 			= gcc
 BREW_DIR 	= /Users/${USER}/.brew/opt
 # BREW_DIR 	= /usr/local/opt
 INCLUDES	= -I include -I libft -I${BREW_DIR}/readline/include
-CFLAGS 		= -Wall -Werror -Wextra $(INCLUDES) -g3
+CFLAGS 		= -Wall -Werror -Wextra $(INCLUDES)
 OBJECTS		= 	$(MAIN_SRCS:.c=.o)
 TESTS_OBJS	= 	$(TEST_SRCS:.c=.o)
 
