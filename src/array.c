@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 10:41:24 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/21 19:20:13 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/24 19:15:02 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	free_array(char **array)
 	i = 0;
 	while (array && array[i])
 	{
-		free(array[i]);
+		if (array[i])
+			free(array[i]);
 		i++;
 	}
 	if (array)
@@ -55,6 +56,31 @@ char	**add_str_to_array(char **array, char *str)
 	}
 	new[i] = ft_strdup(str);
 	new[i + 1] = NULL;
+	free_array(array);
+	return (new);
+}
+
+char	**del_str_from_array(char **array, char *str)
+{
+	char	**new;
+	int		count;
+	int		array_index;
+	int		new_index;
+
+	count = count_str_in_array(array);
+	new = (char **) ft_malloc((count + 1) * sizeof(char *));
+	array_index = 0;
+	new_index = 0;
+	while (array_index < count && array && array[array_index])
+	{
+		if (ft_strncmp(str, array[array_index], ft_strlen(str)) != 0)
+		{
+			new[new_index] = ft_strdup(array[array_index]);
+			new_index++;
+		}
+		array_index++;
+	}
+	new[new_index] = NULL;
 	free_array(array);
 	return (new);
 }
