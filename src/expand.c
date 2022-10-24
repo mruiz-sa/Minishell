@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expand.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/17 11:47:48 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/24 20:01:41 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	expand_token_strings(t_list *tokens, t_mini *state)
 		token = get_token(tokens);
 		if (token->type == TK_CMD)
 			token->str = path_to_absolute(token->str, state);
-		else if (token->type == TK_ARG && token->str[0] != '\'')
+		else if (token->type == TK_ARG && !token->single_quote)
 		{
 			while (ft_strchr(token->str, '$'))
 				token->str = expand_env_str(token->str, state);
