@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/21 19:20:24 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/24 20:19:10 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	child_start(t_list *cmds, t_mini *state)
 	else if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
 	{
 		ft_putstr_fd(cmd->argv[0], 2);
-		ft_putendl_fd(": command not found", 2);
+		ft_putendl_fd(": No such file or directory", 2);
 		exit_with_error(state, "");
 	}
 }
