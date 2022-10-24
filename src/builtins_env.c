@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/18 21:02:49 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/24 19:53:29 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 int	run_builtin_env(t_simple_cmd	*cmd, t_mini *state)
 {
 	char	**envp;
+	char	**expanded;
 	int		i;
 
 	(void)cmd;
@@ -24,7 +25,14 @@ int	run_builtin_env(t_simple_cmd	*cmd, t_mini *state)
 	i = 0;
 	while (envp[i])
 	{
-		printf("%s\n", envp[i++]);
+		expanded = ft_split(envp[i], '=');
+		if (expanded)
+		{
+			if (ft_strlen(expanded[1]))
+				printf("%s\n", envp[i]);
+			free_array(expanded);
+		}
+		i++;
 	}
 	return (1);
 }
