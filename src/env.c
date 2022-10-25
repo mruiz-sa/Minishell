@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/25 14:37:55 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/25 21:31:43 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ int	get_env_index(char **envp, char *key)
  * @brief Builds a string in env format "key=value"
  *
  */
-char	*build_env_str(char *key, char *value)
+static char	*build_env_str(char *key, char *value)
 {
 	char	*aux;
 	char	*str;
@@ -71,11 +71,17 @@ char	*build_env_str(char *key, char *value)
  */
 char	**set_env(char **envp, char *key, char *value)
 {
+	char	*str;
 	int		i;
 
 	i = get_env_index(envp, key);
 	if (i == -1)
-		return (add_str_to_array(envp, build_env_str(key, value)));
+	{
+		str = build_env_str(key, value);
+		envp = add_str_to_array(envp, str);
+		free(str);
+		return (envp);
+	}
 	free(envp[i]);
 	envp[i] = build_env_str(key, value);
 	return (envp);

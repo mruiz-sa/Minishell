@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   error.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 16:19:49 by manu              #+#    #+#             */
-/*   Updated: 2022/10/22 12:52:28 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/25 21:32:03 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,12 @@ int	exit_with_error(t_mini *state, char *message_error)
 {
 	printf("%s", message_error);
 	exit_with_code(state, ERROR_GENERIC, 0);
+	return (0);
+}
+
+int	exit_with_error_code(t_mini *state, int exit_code)
+{
+	exit_with_code(state, exit_code, 1);
 	return (0);
 }
 
