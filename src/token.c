@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/21 19:21:37 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/25 20:02:06 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,21 +22,23 @@
 #include "str.h"
 #include "token_type.h"
 
-static	void	set_token_str(t_token *token, char *str)
+static	char	*set_token_str(t_token *token, char *str)
 {
 	char	quote;
 
 	quote = *str;
-	if (token->type == TK_ARG && (*str == '\'' || *str == '\"'))
-		token->str = ft_strcpy_until(++str, quote);
-	else if (is_token_redirection(token->type))
-		token->str = token_type_to_str(token->type);
-	else
-		token->str = ft_strcpy_until(str, ' ');
 	if (quote == '\'')
 		token->single_quote = 1;
 	else if (quote == '\"')
 		token->double_quote = 1;
+	if (is_token_redirection(token->type))
+	{
+		token->str = token_type_to_str(token->type);
+		return (skip_token_str(str, token->type));
+	}
+	else
+		token->str = copy_enclosed_str(str);
+	return (skip_enclosed_str(str));
 }
 
 static char	*create_token(t_list **tokens, char *str, t_token_type type)
@@ -44,24 +46,16 @@ static char	*create_token(t_list **tokens, char *str, t_token_type type)
 	t_token	*token;
 	char	quote;
 
-	quote = *str;
 	str = skip_spaces(str);
+	quote = *str;
 	token = ft_malloc(sizeof(t_token));
-	if (type != TK_NONE)
-		token->type = type;
-	else
-		token->type = get_token_type(str);
-	set_token_str(token, str);
+	token->type = type;
+	str = set_token_str(token, str);
 	if (token->type != TK_NONE)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(token));
 		if (is_token_redirection(token->type))
-		{
-			str = skip_token_str(str, token->type);
 			str = create_token(tokens, str, TK_ARG);
-		}
-		else if (token->type == TK_ARG && (quote == '\'' || quote == '\"'))
-			str = find_char(++str, quote);
 	}
 	else
 		free(token);
@@ -108,7 +102,7 @@ t_list	*str_to_tokens(char *str)
 		str = skip_spaces(str);
 		if (*str == '|' || *str == '>' || *str == '<' || *str == '&')
 		{
-			str = create_token(&tokens, str, TK_NONE);
+			str = create_token(&tokens, str, get_token_type(str));
 			can_be_cmd = 1;
 		}
 		else if (*str)
@@ -119,7 +113,6 @@ t_list	*str_to_tokens(char *str)
 				str = create_token(&tokens, str, TK_ARG);
 			can_be_cmd = 0;
 		}
-		str = find_char(str, ' ');
 	}
 	return (tokens);
 }

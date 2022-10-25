@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/22 12:44:52 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:37:55 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,25 +63,22 @@ char	*build_env_str(char *key, char *value)
  * @brief Sets an environment variable
  *
  * 	Modifies a value in the env array:
- * 		set_env(&envp, "PWD", "/users/user/new_path");
+ * 		envp = set_env(envp, "PWD", "/users/user/new_path");
  *
  * 	Adds a new var and value to the env array if it does not exist before:
- * 		set_env(&envp, "NON_EXISTENT_VAR", "value");
+ * 		envp = set_env(envp, "NON_EXISTENT_VAR", "value");
  *
  */
-int	set_env(char ***envp, char *key, char *value)
+char	**set_env(char **envp, char *key, char *value)
 {
 	int		i;
 
-	i = get_env_index(*envp, key);
+	i = get_env_index(envp, key);
 	if (i == -1)
-	{
-		*envp = add_str_to_array(*envp, build_env_str(key, value));
-		return (0);
-	}
-	free((*envp)[i]);
-	(*envp)[i] = build_env_str(key, value);
-	return (1);
+		return (add_str_to_array(envp, build_env_str(key, value)));
+	free(envp[i]);
+	envp[i] = build_env_str(key, value);
+	return (envp);
 }
 
 /**
