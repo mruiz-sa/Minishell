@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/25 16:43:18 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:24:29 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "minishell.h"
 
-void	run_builtin_exit(t_simple_cmd	*cmd, t_mini *state);
+void	run_builtin_exit(t_simple_cmd	*cmd);
 
 #endif

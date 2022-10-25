@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/25 16:43:10 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:24:35 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,6 @@ int	run_builtin(t_list *cmds, t_mini *state)
 	else if (cmd->builtin_type == BLT_UNSET)
 		return (run_builtin_unset(cmd, state));
 	else if (cmd->builtin_type == BLT_EXIT)
-		run_builtin_exit(cmd, state);
+		run_builtin_exit(cmd);
 	return (0);
 }
