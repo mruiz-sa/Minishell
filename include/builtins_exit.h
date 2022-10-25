@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_exit.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/22 12:53:19 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/10/25 17:24:29 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "minishell.h"
 
-int	run_builtin_exit(t_simple_cmd	*cmd, t_mini *state);
+void	run_builtin_exit(t_simple_cmd	*cmd);
 
 #endif
