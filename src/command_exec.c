@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/24 20:19:10 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/26 19:51:19 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,16 @@ static void	child_start(t_list *cmds, t_mini *state)
 		run_builtin(cmds, state);
 		exit_without_error(state);
 	}
-	else if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
+	else
 	{
-		ft_putstr_fd(cmd->argv[0], 2);
-		ft_putendl_fd(": No such file or directory", 2);
-		exit_with_error(state, "");
+		state->exec_ret = execve(cmd->argv[0], cmd->argv, state->envp);
+		if (state->exec_ret == -1)
+		{
+			state->exec_ret = 127;
+			ft_putstr_fd(cmd->argv[0], 2);
+			ft_putendl_fd(": command not found", 2);
+			exit_with_error(state, "");
+		}
 	}
 }
 
@@ -84,7 +89,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 				next_cmd->fd_in = fd[FD_IN];
 				close(fd[FD_OUT]);
 			}
-			waitpid(pid, NULL, 0);
+			waitpid(pid, &state->exec_ret, 0);
 		}
 	}
 }

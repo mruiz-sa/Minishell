@@ -6,14 +6,14 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/21 13:37:18 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 19:26:28 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "minishell.h"
 
-int	run_builtin_echo(t_simple_cmd	*cmd)
+int	run_builtin_echo(t_simple_cmd	*cmd, t_mini *state)
 {
 	int	i;
 	int	n;
@@ -36,5 +36,6 @@ int	run_builtin_echo(t_simple_cmd	*cmd)
 	}
 	if (n == 0)
 		printf("\n");
+	state->exec_ret = 0;
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/25 21:31:28 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/26 18:42:33 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	run_builtin(t_list *cmds, t_mini *state)
 	if (cmd->builtin_type == BLT_CD)
 		return (run_builtin_cd(cmd, state));
 	else if (cmd->builtin_type == BLT_ECHO)
-		return (run_builtin_echo(cmd));
+		return (run_builtin_echo(cmd, state));
 	else if (cmd->builtin_type == BLT_ENV)
 		return (run_builtin_env(cmd, state));
 	else if (cmd->builtin_type == BLT_EXPORT)

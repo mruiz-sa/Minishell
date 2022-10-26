@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/25 21:31:43 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/26 19:02:06 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,12 +105,17 @@ char	*get_env(char **envp, char *key)
 	return (NULL);
 }
 
-char	*get_env_dup(char **envp, char *key)
+char	*get_env_dup(t_mini *state, char **envp, char *key)
 {
 	char	*value;
 
 	if (!key || !*key)
 		return (ft_strdup(""));
+	if (!ft_strncmp(key, "?", 1))
+	{
+		value = ft_itoa(state->exec_ret);
+		return (ft_strdup(value));
+	}
 	value = get_env(envp, key);
 	if (!value)
 		return (ft_strdup(""));
@@ -130,11 +135,18 @@ char	*expand_env_str(char *str, t_mini *state)
 		i++;
 	exp.start = ft_substr(str, 0, i);
 	index_dollar = i++;
-	while (ft_isalnum(str[i]) || str[i] == '_')
+	while (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?')
+	{
+		if (str[i] == '?' && str[i + 1] == '?')
+		{
+			i++;
+			break ;
+		}
 		i++;
+	}
 	exp.name = ft_substr(str, index_dollar, i - index_dollar);
 	exp.end = ft_substr(str, i, ft_strlen(&str[i]));
-	exp.value = get_env_dup(state->envp, exp.name + 1);
+	exp.value = get_env_dup(state, state->envp, exp.name + 1);
 	free(exp.name);
 	exp.aux = join_and_free(exp.start, exp.value);
 	exp.final = join_and_free(exp.aux, exp.end);

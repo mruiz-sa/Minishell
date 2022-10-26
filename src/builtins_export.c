@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/24 19:43:28 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/26 19:26:58 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,10 @@ static int	export_variable_blocks(t_simple_cmd	*cmd, t_mini *state)
 int	run_builtin_export(t_simple_cmd	*cmd, t_mini *state)
 {
 	if (cmd->argc < 2)
+	{
+		state->exec_ret = 0;
 		return (display_export(state));
+	}
+	state->exec_ret = 0;
 	return (export_variable_blocks(cmd, state));
 }
