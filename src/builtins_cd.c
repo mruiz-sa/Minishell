@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 21:18:26 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/26 21:36:41 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static char	*get_new_pwd(t_simple_cmd	*cmd, t_mini *state)
 
 	new_pwd = NULL;
 	if (cmd->argc < 2 || !ft_strncmp(cmd->argv[1], "~", 1))
-		new_pwd = get_env_dup(state->envp, "HOME");
+		new_pwd = get_env_dup(state, state->envp, "HOME");
 	else if (!ft_strncmp(cmd->argv[1], "-", 1))
-		new_pwd = get_env_dup(state->envp, "OLDPWD");
+		new_pwd = get_env_dup(state, state->envp, "OLDPWD");
 	else
 		new_pwd = ft_strdup(cmd->argv[1]);
 	return (new_pwd);

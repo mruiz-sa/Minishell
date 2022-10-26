@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 21:19:07 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/26 21:36:52 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,13 @@
 #include "minishell.h"
 #include "path.h"
 
+static int	is_builtin_str(char *builtin, char *str)
+{
+	if (!ft_strncmp(builtin, str, ft_strlen(str) + 1))
+		return (1);
+	return (0);
+}
+
 t_builtin_type	get_builtin_type(char *str)
 {
 	char			*builtin;
@@ -29,19 +36,19 @@ t_builtin_type	get_builtin_type(char *str)
 
 	type = BLT_NONE;
 	builtin = get_last_part_in_path(str);
-	if (ft_strnstr(builtin, "echo", ft_strlen("echo")))
+	if (is_builtin_str(builtin, "echo"))
 		type = BLT_ECHO;
-	else if (ft_strnstr(builtin, "cd", ft_strlen("cd")))
+	else if (is_builtin_str(builtin, "cd"))
 		type = BLT_CD;
-	else if (ft_strnstr(builtin, "pwd", ft_strlen("pwd")))
+	else if (is_builtin_str(builtin, "pwd"))
 		type = BLT_PWD;
-	else if (ft_strnstr(builtin, "export", ft_strlen("export")))
+	else if (is_builtin_str(builtin, "export"))
 		type = BLT_EXPORT;
-	else if (ft_strnstr(builtin, "unset", ft_strlen("unset")))
+	else if (is_builtin_str(builtin, "unset"))
 		type = BLT_UNSET;
-	else if (ft_strnstr(builtin, "env", ft_strlen("env")))
+	else if (is_builtin_str(builtin, "env"))
 		type = BLT_ENV;
-	else if (ft_strnstr(builtin, "exit", ft_strlen("exit")))
+	else if (is_builtin_str(builtin, "exit"))
 		type = BLT_EXIT;
 	free(builtin);
 	return (type);
