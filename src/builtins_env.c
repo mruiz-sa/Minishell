@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 19:26:34 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:18:39 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "array.h"
 #include "command.h"
+#include "error.h"
 #include "minishell.h"
 
 int	run_builtin_env(t_simple_cmd	*cmd, t_mini *state)
@@ -34,6 +35,5 @@ int	run_builtin_env(t_simple_cmd	*cmd, t_mini *state)
 		}
 		i++;
 	}
-	state->exec_ret = 0;
-	return (1);
+	return (OK);
 }

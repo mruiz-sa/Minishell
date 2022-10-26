@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 19:26:46 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:18:44 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	run_builtin_exit(t_simple_cmd	*cmd, t_mini *state)
 	if (cmd->argc > 2)
 	{
 		printf("exit: too many arguments\n");
-		state->exec_ret = 1;
+		return (ERROR);
 	}
 	else if (cmd->argc == 2)
 	{
@@ -32,14 +32,13 @@ int	run_builtin_exit(t_simple_cmd	*cmd, t_mini *state)
 			{
 				printf("exit\nexit: %s: numeric argument required\n",
 					cmd->argv[1]);
-				state->exec_ret = 255;
 				return (exit_with_error_code(state, 255));
 			}
 			i++;
 		}
-		state->exec_ret = ft_atoi(cmd->argv[1]);
+		printf("exit\n");
 		return (exit_with_error_code(state, ft_atoi(cmd->argv[1])));
 	}
-	state->exec_ret = 0;
+	printf("exit\n");
 	return (exit_without_error_check_leaks(state));
 }

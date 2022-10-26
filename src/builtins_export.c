@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 19:26:58 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:18:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "array.h"
 #include "command.h"
 #include "env.h"
+#include "error.h"
 #include "minishell.h"
 
 static int	display_export(t_mini *state)
@@ -26,7 +27,7 @@ static int	display_export(t_mini *state)
 	{
 		printf("declare -x %s\n", envp[i++]);
 	}
-	return (1);
+	return (OK);
 }
 
 static char	**export_variables(char **variables, char **envp)
@@ -59,16 +60,12 @@ static int	export_variable_blocks(t_simple_cmd	*cmd, t_mini *state)
 		free_array(keys);
 		i++;
 	}
-	return (1);
+	return (OK);
 }
 
 int	run_builtin_export(t_simple_cmd	*cmd, t_mini *state)
 {
 	if (cmd->argc < 2)
-	{
-		state->exec_ret = 0;
 		return (display_export(state));
-	}
-	state->exec_ret = 0;
 	return (export_variable_blocks(cmd, state));
 }

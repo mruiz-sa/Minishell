@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/26 19:51:19 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:19:20 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <errno.h>
+#include <sys/wait.h>
 
 #include "builtins.h"
 #include "command.h"
@@ -23,24 +26,24 @@
 static void	child_start(t_list *cmds, t_mini *state)
 {
 	t_simple_cmd	*cmd;
+	int				result;
 
 	cmd = get_cmd(cmds);
 	apply_redirections(cmd->redirections, state);
 	if (is_builtin(cmd))
 	{
-		run_builtin(cmds, state);
-		exit_without_error(state);
+		result = run_builtin(cmds, state);
+		if (result == OK)
+			exit_without_error(state);
+		else
+			exit_with_error_code(state, result);
 	}
-	else
+	else if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
 	{
-		state->exec_ret = execve(cmd->argv[0], cmd->argv, state->envp);
-		if (state->exec_ret == -1)
-		{
-			state->exec_ret = 127;
-			ft_putstr_fd(cmd->argv[0], 2);
-			ft_putendl_fd(": command not found", 2);
-			exit_with_error(state, "");
-		}
+		ft_putstr_fd(cmd->argv[0], 2);
+		ft_putendl_fd(": command not found", 2);
+		// printf("Errno is %d\n", errno);
+		exit_with_error_code(state, errno);
 	}
 }
 
@@ -50,6 +53,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 	int				fd[2];
 	t_simple_cmd	*cmd;
 	t_simple_cmd	*next_cmd;
+	int				status;
 
 	cmd = get_cmd(cmds);
 	next_cmd = get_cmd(cmds->next);
@@ -60,7 +64,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 		cmd->fd_out = fd[FD_OUT];
 	}
 	if (is_parent_builtin(cmd->builtin_type))
-		run_builtin(cmds, state);
+		state->exec_ret = run_builtin(cmds, state);
 	else
 	{
 		pid = fork();
@@ -89,7 +93,17 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 				next_cmd->fd_in = fd[FD_IN];
 				close(fd[FD_OUT]);
 			}
-			waitpid(pid, &state->exec_ret, 0);
+			waitpid(pid, &status, 0);
+			state->exec_ret = WEXITSTATUS(status);
+			if (WIFSIGNALED(status))
+			{
+				if (WTERMSIG(status))
+					state->exec_ret = 128 + WTERMSIG(status);
+			}
+			// printf("wait status is %d\n", status);
+			// printf("wait WEXITSTATUS is %d\n", WEXITSTATUS(status));
+			// printf("wait WIFEXITED is %d\n", WIFEXITED(status));
+			// printf("wait WIFSIGNALED is %d\n", WIFSIGNALED(status));
 		}
 	}
 }

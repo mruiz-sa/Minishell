@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/26 19:28:11 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:08:38 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ typedef struct s_prompt {
 }	t_prompt;
 
 typedef struct s_mini {
-	t_prompt	prompt;
-	char		*readline;
-	char		**envp;
-	int			exec_ret;
+	t_prompt		prompt;
+	char			*readline;
+	char			**envp;
+	unsigned char	exec_ret;
 }	t_mini;
 
 void	get_prompt(char **envp, t_prompt *prompt);

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/09 18:54:34 by manu              #+#    #+#             */
-/*   Updated: 2022/10/25 21:31:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/26 21:17:08 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "minishell.h"
 
-# define ERROR_NONE			0
-# define ERROR_GENERIC		1
+# define OK			0
+# define ERROR		1
 
 int	exit_with_error(t_mini *state, char *message_error);
 int	exit_with_memory_error(t_mini *state);

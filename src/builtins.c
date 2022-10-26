@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 18:42:33 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:19:07 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #include "builtins_pwd.h"
 #include "builtins_unset.h"
 #include "command.h"
+#include "error.h"
 #include "minishell.h"
 #include "path.h"
 
@@ -73,5 +74,5 @@ int	run_builtin(t_list *cmds, t_mini *state)
 		return (run_builtin_unset(cmd, state));
 	else if (cmd->builtin_type == BLT_EXIT)
 		return (run_builtin_exit(cmd, state));
-	return (0);
+	return (ERROR);
 }

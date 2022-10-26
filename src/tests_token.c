@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/20 18:57:48 by manu              #+#    #+#             */
-/*   Updated: 2022/10/16 12:47:00 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/26 21:20:20 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,4 +98,8 @@ void	test_tokens(void)
 	assert_token(tokens, TK_LESS, "<");
 	assert_token(tokens->next, TK_ARG, "infile");
 	assert_token(tokens->next->next, TK_CMD, "cat");
+	// /* 8 */
+	tokens = str_to_tokens("cd-not-command");
+	assert(ft_lstsize(tokens) == 1);
+	assert_token(tokens, TK_CMD, "cd-not-command");
 }

@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_cd.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 19:26:11 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:18:26 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
 
 #include "command.h"
+#include "error.h"
 #include "env.h"
 #include "minishell.h"
 #include "path.h"
@@ -39,7 +40,7 @@ int	run_builtin_cd(t_simple_cmd	*cmd, t_mini *state)
 	char	*new_pwd;
 	int		result;
 
-	result = 0;
+	result = ERROR;
 	new_pwd = get_new_pwd(cmd, state);
 	if (new_pwd)
 	{
@@ -47,15 +48,14 @@ int	run_builtin_cd(t_simple_cmd	*cmd, t_mini *state)
 		result = chdir(new_pwd);
 		if (!result)
 		{
-			result = 1;
 			pwd = getcwd(NULL, 0);
 			state->envp = set_env(state->envp, "PWD", pwd);
 			state->envp = set_env(state->envp, "OLDPWD", old_pwd);
 			free(pwd);
+			result = OK;
 		}
 		free(new_pwd);
 		free(old_pwd);
 	}
-	state->exec_ret = 0;
 	return (result);
 }

@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_pwd.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 19:27:03 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:18:57 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "command.h"
 #include "env.h"
+#include "error.h"
 #include "minishell.h"
 
 int	run_builtin_pwd(t_simple_cmd	*cmd, t_mini *state)
@@ -24,6 +25,5 @@ int	run_builtin_pwd(t_simple_cmd	*cmd, t_mini *state)
 	pwd = get_env(envp, "PWD");
 	if (pwd)
 		printf("%s\n", pwd);
-	state->exec_ret = 0;
-	return (1);
+	return (OK);
 }

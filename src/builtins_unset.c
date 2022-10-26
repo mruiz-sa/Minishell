@@ -3,15 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_unset.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 19:27:07 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/26 21:19:01 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "array.h"
 #include "command.h"
+#include "error.h"
 #include "minishell.h"
 
 static char	**remove_keys_from_array(char **array, char	**keys)
@@ -33,7 +34,7 @@ int	run_builtin_unset(t_simple_cmd	*cmd, t_mini *state)
 	int		i;
 
 	if (cmd->argc < 2)
-		return (1);
+		return (ERROR);
 	i = 1;
 	while (i < cmd->argc)
 	{
@@ -42,6 +43,5 @@ int	run_builtin_unset(t_simple_cmd	*cmd, t_mini *state)
 		free_array(keys);
 		i++;
 	}
-	state->exec_ret = 0;
-	return (1);
+	return (OK);
 }
