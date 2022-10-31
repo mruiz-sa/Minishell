@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/31 18:05:58 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 20:15:09 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,14 @@ static int	is_expandable_arg(char *str)
 	return (0);
 }
 
+// TODO: expand one tilde '~', but not two consecutives '~~'
+static char	*expand_tilde(char *str)
+{
+	if (!ft_strchr(str, '~'))
+		return (str);
+	return (ft_strdup("/Users/manu"));
+}
+
 void	expand_token_strings(t_list *tokens, t_mini *state)
 {
 	t_token	*token;
@@ -60,6 +68,9 @@ void	expand_token_strings(t_list *tokens, t_mini *state)
 				while (is_expandable_arg(token->str))
 					token->str = expand_env_str(token->str, state);
 			}
+			if (token->type == TK_ARG
+				&& !token->single_quote && !token->double_quote)
+				token->str = expand_tilde(token->str);
 		}
 		tokens = tokens->next;
 	}
