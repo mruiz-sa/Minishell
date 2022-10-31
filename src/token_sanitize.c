@@ -1,33 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.c                                           :+:      :+:    :+:   */
+/*   token_sanitize.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/24 20:01:41 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 16:48:46 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "str.h"
 #include "token.h"
-#include "env.h"
-#include "path.h"
 
-void	expand_token_strings(t_list *tokens, t_mini *state)
+void	sanitize_token_strings(t_list *tokens, t_mini *state)
 {
 	t_token	*token;
+	char	*aux;
 
+	(void)state;
 	while (tokens)
 	{
 		token = get_token(tokens);
-		if (token->type == TK_CMD)
-			token->str = path_to_absolute(token->str, state);
-		else if (token->type == TK_ARG && !token->single_quote)
+		if (token->type == TK_ARG && !token->ignore)
 		{
-			while (ft_strchr(token->str, '$'))
-				token->str = expand_env_str(token->str, state);
+			if (ft_strchr(token->str, '\'') || ft_strchr(token->str, '\"'))
+			{
+				aux = token->str;
+				token->str = copy_enclosed_str(token->str);
+				if (aux)
+					free(aux);
+			}
 		}
 		tokens = tokens->next;
 	}

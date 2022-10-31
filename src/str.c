@@ -6,11 +6,12 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:02:50 by manu              #+#    #+#             */
-/*   Updated: 2022/10/25 20:05:19 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 16:47:25 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_strcpy_until.h"
 
 char	*join_and_free(char *s1, char *s2)
 {
@@ -44,7 +45,33 @@ static int	is_quote(char c)
 	return (0);
 }
 
-char	*skip_until_char(char *str, char c)
+static char	*skip_until_char_quoted(char *str, char c)
+{
+	int		single_quotes;
+	int		double_quotes;
+	int		dir;
+
+	dir = 1;
+	single_quotes = 0;
+	double_quotes = 0;
+	while (str && *str)
+	{
+		if (*str == '\'')
+			single_quotes += dir;
+		if (*str == '\"')
+			double_quotes += dir;
+		if (*str == ' ')
+			dir *= -1;
+		if (*str == c && !single_quotes && !double_quotes)
+			break ;
+		str++;
+	}
+	if (*str == c)
+		str++;
+	return (str);
+}
+
+static char	*skip_until_char(char *str, char c)
 {
 	while (str && *str && *str != c)
 	{
@@ -54,7 +81,6 @@ char	*skip_until_char(char *str, char c)
 		str++;
 	return (str);
 }
-
 char	*skip_token_str(char *str, t_token_type type)
 {
 	if (type == TK_GREAT && *str == '>')
@@ -88,7 +114,7 @@ char	*copy_enclosed_str(char *str)
 	if (is_quote(*sanitized))
 		sanitized = ft_strcpy_until(sanitized + 1, *sanitized);
 	else
-		sanitized = ft_strcpy_until(sanitized, ' ');
+		sanitized = ft_strcpy_until_quoted(sanitized, ' ');
 	free(aux);
 	return (sanitized);
 }
@@ -101,6 +127,6 @@ char	*skip_enclosed_str(char *str)
 	if (is_quote(*str))
 		str = skip_until_char(str + 1, *str);
 	else
-		str = skip_until_char(str + 1, ' ');
+		str = skip_until_char_quoted(str + 1, ' ');
 	return (str);
 }

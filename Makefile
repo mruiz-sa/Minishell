@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+         #
+#    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/10/22 13:16:38 by mruiz-sa         ###   ########.fr        #
+#    Updated: 2022/10/31 16:43:48 by manu             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,8 +35,6 @@ SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/command_table.c \
 				$(SRC_DIR)/env.c \
 				$(SRC_DIR)/error.c \
-				$(SRC_DIR)/expand.c \
-				$(SRC_DIR)/ft_lexer.c \
 				$(SRC_DIR)/ft_read.c \
 				$(SRC_DIR)/ft_strcpy_until.c \
 				$(SRC_DIR)/get_prompt.c \
@@ -47,6 +45,8 @@ SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/state.c \
 				$(SRC_DIR)/str.c \
 				$(SRC_DIR)/token.c \
+				$(SRC_DIR)/token_expand.c \
+				$(SRC_DIR)/token_sanitize.c \
 				$(SRC_DIR)/token_type.c \
 
 MAIN_SRCS	= 	$(SRC_DIR)/main.c $(SRC)
