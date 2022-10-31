@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/31 19:16:43 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 19:29:49 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,10 @@ char	*ft_read(t_mini *state)
 	get_prompt(state->envp, &state->prompt);
 	state->readline = readline(state->prompt.prompt);
 	if (!state->readline)
+	{
+		printf("exit\n");
 		exit_without_error_check_leaks(state);
+	}
 	if (ft_strlen(state->readline))
 	{
 		add_history(state->readline);
