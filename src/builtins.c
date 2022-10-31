@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 21:36:52 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 19:47:57 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@
 #include "builtins_unset.h"
 #include "command.h"
 #include "error.h"
+#include "libft.h"
 #include "minishell.h"
 #include "path.h"
+#include "str.h"
 
 static int	is_builtin_str(char *builtin, char *str)
 {
@@ -35,7 +37,7 @@ t_builtin_type	get_builtin_type(char *str)
 	t_builtin_type	type;
 
 	type = BLT_NONE;
-	builtin = get_last_part_in_path(str);
+	builtin = ft_str_tolower(get_last_part_in_path(str));
 	if (is_builtin_str(builtin, "echo"))
 		type = BLT_ECHO;
 	else if (is_builtin_str(builtin, "cd"))

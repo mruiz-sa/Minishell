@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:02:50 by manu              #+#    #+#             */
-/*   Updated: 2022/10/31 17:23:00 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 19:50:42 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,4 +158,17 @@ char	*copy_escaped_str(char *str)
 	}
 	escaped[i] = '\0';
 	return (escaped);
+}
+
+char	*ft_str_tolower(char *str)
+{
+	char	*aux;
+
+	aux = str;
+	while (str && *str)
+	{
+		*str = ft_tolower(*str);
+		str++;
+	}
+	return (aux);
 }
