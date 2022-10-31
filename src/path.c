@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 15:34:54 by manu              #+#    #+#             */
-/*   Updated: 2022/10/22 14:32:52 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/10/31 19:39:35 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	*get_path(char *cmd, char **envp)
 
 	i = 0;
 	path_list = ft_split(ft_strchr(path_line(envp), '/'), ':');
-	while (path_list[i])
+	while (path_list && path_list[i])
 	{
 		path_slash = ft_strjoin(path_list[i], "/");
 		path_arg = ft_strjoin(path_slash, cmd);
@@ -55,7 +55,8 @@ char	*get_path(char *cmd, char **envp)
 		free(path_arg);
 		i++;
 	}
-	free_array(path_list);
+	if (path_list)
+		free_array(path_list);
 	return (NULL);
 }
 
