@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/31 16:48:59 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 19:17:09 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,13 +134,35 @@ void	display_tokens(t_list	*tokens)
 	}
 }
 
+static int	validate_consecutive_tokens(t_token *token, t_token *prev)
+{
+	if (!token)
+		return (0);
+	if (!prev)
+		return (1);
+	if (is_token_redirection(prev->type))
+	{
+		if (is_token_redirection(token->type))
+			return (0);
+		else if (token->type == TK_ARG && !ft_strncmp(token->str, "|", 2))
+			return (0);
+	}
+	return (1);
+}
+
 int	validate_syntax_tokens(t_list *tokens)
 {
 	t_token	*token;
+	t_token	*prev;
 
+	token = NULL;
+	prev = NULL;
 	while (tokens)
 	{
+		prev = token;
 		token = get_token(tokens);
+		if (!validate_consecutive_tokens(token, prev))
+			return (0);
 		if (token && token->type == TK_ARG)
 		{
 			if (!ft_strlen(token->str))

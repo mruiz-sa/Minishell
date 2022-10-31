@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/31 16:48:42 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 18:05:58 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,35 @@
 #include "token.h"
 #include "env.h"
 #include "path.h"
+#include "str.h"
+
+static int	is_expandable_arg(char *str)
+{
+	int		n_escapes;
+	int		mod;
+
+	mod = 0;
+	if (!ft_strchr(str, '$'))
+		return (0);
+	n_escapes = 0;
+	while (str && *str)
+	{
+		if (*str == '\\')
+			n_escapes++;
+		else
+		{
+			if (*str == '$')
+			{
+				mod = n_escapes % 2;
+				if (!mod)
+					return (1);
+			}
+			n_escapes = 0;
+		}
+		str++;
+	}
+	return (0);
+}
 
 void	expand_token_strings(t_list *tokens, t_mini *state)
 {
@@ -28,7 +57,7 @@ void	expand_token_strings(t_list *tokens, t_mini *state)
 				token->str = path_to_absolute(token->str, state);
 			else if (token->type == TK_ARG && !token->single_quote)
 			{
-				while (ft_strchr(token->str, '$'))
+				while (is_expandable_arg(token->str))
 					token->str = expand_env_str(token->str, state);
 			}
 		}

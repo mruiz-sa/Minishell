@@ -6,12 +6,13 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:02:50 by manu              #+#    #+#             */
-/*   Updated: 2022/10/31 16:47:25 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 17:23:00 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "ft_strcpy_until.h"
+#include "malloc.h"
 
 char	*join_and_free(char *s1, char *s2)
 {
@@ -129,4 +130,32 @@ char	*skip_enclosed_str(char *str)
 	else
 		str = skip_until_char_quoted(str + 1, ' ');
 	return (str);
+}
+
+char	*copy_escaped_str(char *str)
+{
+	int		escape;
+	char	*escaped;
+	int		len;
+	int		i;
+
+	i = 0;
+	len = ft_strlen(str);
+	escaped = (char *)ft_malloc(len + 1);
+	escape = 1;
+	while (str && *str)
+	{
+		if (*str == '\\' && escape)
+			escape = 0;
+		else
+		{
+			if (*str == '\\')
+				escape = 1;
+			escaped[i] = *str;
+			i++;
+		}
+		str++;
+	}
+	escaped[i] = '\0';
+	return (escaped);
 }

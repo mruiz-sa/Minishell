@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/31 16:45:05 by manu             ###   ########.fr       */
+/*   Updated: 2022/10/31 19:16:43 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,17 @@ static void	process_readline(char *str, t_mini *state)
 	// display_tokens(tokens);
 	expand_token_strings(tokens, state);
 	sanitize_token_strings(tokens, state);
-	validate_syntax_tokens(tokens);
-	// display_tokens(tokens);
-	// TODO: Mover esto a parser
-	cmd_table = tokens_to_cmd_table(tokens);
-	// display_cmd_table(cmd_table);
-	exec_cmd_table(cmd_table, state);
+	if (validate_syntax_tokens(tokens))
+	{
+		// TODO: Mover esto a parser
+		cmd_table = tokens_to_cmd_table(tokens);
+		// display_cmd_table(cmd_table);
+		exec_cmd_table(cmd_table, state);
+		free_cmd_table(cmd_table);
+	}
+	else
+		printf("syntax error unexpected token\n");
 	free_tokens(tokens);
-	free_cmd_table(cmd_table);
 }
 
 char	*ft_read(t_mini *state)
