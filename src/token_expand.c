@@ -6,15 +6,18 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/31 20:15:09 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 16:15:50 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "token.h"
 #include "env.h"
+#include "malloc.h"
 #include "path.h"
 #include "str.h"
+
+#define TILDE '~'
 
 static int	is_expandable_arg(char *str)
 {
@@ -44,12 +47,44 @@ static int	is_expandable_arg(char *str)
 	return (0);
 }
 
-// TODO: expand one tilde '~', but not two consecutives '~~'
-static char	*expand_tilde(char *str)
+static int	count_tilde(char *str)
 {
-	if (!ft_strchr(str, '~'))
+	int		count;
+	char	prev;
+
+	count = 0;
+	prev = 0;
+	while (str && *str)
+	{
+		if (*str == TILDE && prev != TILDE && *(str + 1) != TILDE)
+			count++;
+		str++;
+	}
+	return (count);
+}
+
+static char	*expand_tilde(char *str, char *home)
+{
+	char	*expanded;
+	char	*aux;
+	char	prev;
+
+	if (!ft_strchr(str, TILDE) || !count_tilde(str))
 		return (str);
-	return (ft_strdup("/Users/manu"));
+	expanded = (char *)ft_malloc(
+			(count_tilde(str) * ft_strlen(home)) + ft_strlen(str) + 1);
+	prev = 0;
+	aux = str;
+	while (str && *str)
+	{
+		if (*str == TILDE && prev != TILDE && *(str + 1) != TILDE)
+			ft_strlcpy(expanded, home, ft_strlen(home) + 1);
+		else
+			expanded[ft_strlen(expanded)] = *str;
+		str++;
+	}
+	free(aux);
+	return (expanded);
 }
 
 void	expand_token_strings(t_list *tokens, t_mini *state)
@@ -70,7 +105,8 @@ void	expand_token_strings(t_list *tokens, t_mini *state)
 			}
 			if (token->type == TK_ARG
 				&& !token->single_quote && !token->double_quote)
-				token->str = expand_tilde(token->str);
+				token->str = expand_tilde(token->str,
+						get_env(state->envp, "HOME"));
 		}
 		tokens = tokens->next;
 	}
