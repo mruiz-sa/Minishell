@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy_until.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/31 16:45:25 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 10:24:29 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "error.h"
 #include "libft.h"
+#include "redirection.h"
+#include "str.h"
 
-char	*ft_strcpy_until_quoted(char *str, char until)
+char	*ft_strcpy_until_quoted(char *str)
 {
 	char	*newstr;
 	int		i;
@@ -36,7 +38,7 @@ char	*ft_strcpy_until_quoted(char *str, char until)
 			double_quotes += dir;
 		if (newstr[i] == ' ')
 			dir *= -1;
-		if (newstr[i] == until && !single_quotes && !double_quotes)
+		if (is_arg_breaking_char(newstr[i]) && !single_quotes && !double_quotes)
 		{
 			newstr[i] = '\0';
 			break ;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:02:50 by manu              #+#    #+#             */
-/*   Updated: 2022/10/31 19:50:42 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 11:41:17 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,13 @@ int	is_space(char c)
 	return (0);
 }
 
+int	is_arg_breaking_char(char c)
+{
+	if (is_space(c) || c == '|' || c == '>' || c == '<' || c == '&')
+		return (1);
+	return (0);
+}
+
 char	*skip_spaces(char *str)
 {
 	while (str && *str && is_space(*str))
@@ -46,7 +53,7 @@ static int	is_quote(char c)
 	return (0);
 }
 
-static char	*skip_until_char_quoted(char *str, char c)
+static char	*skip_until_char_quoted(char *str)
 {
 	int		single_quotes;
 	int		double_quotes;
@@ -63,12 +70,10 @@ static char	*skip_until_char_quoted(char *str, char c)
 			double_quotes += dir;
 		if (*str == ' ')
 			dir *= -1;
-		if (*str == c && !single_quotes && !double_quotes)
+		if (is_arg_breaking_char(*str) && !single_quotes && !double_quotes)
 			break ;
 		str++;
 	}
-	if (*str == c)
-		str++;
 	return (str);
 }
 
@@ -115,7 +120,7 @@ char	*copy_enclosed_str(char *str)
 	if (is_quote(*sanitized))
 		sanitized = ft_strcpy_until(sanitized + 1, *sanitized);
 	else
-		sanitized = ft_strcpy_until_quoted(sanitized, ' ');
+		sanitized = ft_strcpy_until_quoted(sanitized);
 	free(aux);
 	return (sanitized);
 }
@@ -128,7 +133,7 @@ char	*skip_enclosed_str(char *str)
 	if (is_quote(*str))
 		str = skip_until_char(str + 1, *str);
 	else
-		str = skip_until_char_quoted(str + 1, ' ');
+		str = skip_until_char_quoted(str + 1);
 	return (str);
 }
 
