@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 21:36:41 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 16:34:25 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,7 @@ int	run_builtin_cd(t_simple_cmd	*cmd, t_mini *state)
 	if (new_pwd)
 	{
 		old_pwd = getcwd(NULL, 0);
-		result = chdir(new_pwd);
-		if (!result)
+		if (!chdir(new_pwd))
 		{
 			pwd = getcwd(NULL, 0);
 			state->envp = set_env(state->envp, "PWD", pwd);
@@ -54,6 +53,8 @@ int	run_builtin_cd(t_simple_cmd	*cmd, t_mini *state)
 			free(pwd);
 			result = OK;
 		}
+		else
+			printf("cd: %s: No such file or directory\n", new_pwd);
 		free(new_pwd);
 		free(old_pwd);
 	}
