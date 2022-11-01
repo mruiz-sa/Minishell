@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/01 16:52:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 17:14:26 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,24 @@ static int	validate_consecutive_tokens(t_token *token, t_token *prev)
 	return (1);
 }
 
+static int	validate_redirection(t_token *token, t_token *next)
+{
+	if (!token || !next)
+		return (0);
+	if (!ft_strlen(next->str) || !ft_strncmp(next->str, "|", 1))
+		return (0);
+	return (1);
+}
+
+static int	validate_token(t_token *token, t_token *next)
+{
+	if (!token)
+		return (0);
+	if (is_token_redirection(token->type) && token->type != TK_LESSLESS)
+		return (validate_redirection(token, next));
+	return (1);
+}
+
 int	validate_syntax_tokens(t_list *tokens)
 {
 	t_token	*token;
@@ -163,8 +181,7 @@ int	validate_syntax_tokens(t_list *tokens)
 	{
 		prev = token;
 		token = get_token(tokens);
-		if (is_token_redirection(token->type) && ft_lstsize(tokens) == 1
-			&& token->type != TK_LESSLESS)
+		if (!validate_token(token, get_token(tokens->next)))
 			return (0);
 		if (!validate_consecutive_tokens(token, prev))
 			return (0);
