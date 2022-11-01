@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/01 17:14:26 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 17:17:40 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,9 @@ int	validate_syntax_tokens(t_list *tokens)
 		prev = token;
 		token = get_token(tokens);
 		if (!validate_token(token, get_token(tokens->next)))
+			return (0);
+		if ((token->type == TK_PIPE || token->type == TK_AMP)
+			&& ft_lstsize(tokens) == 1)
 			return (0);
 		if (!validate_consecutive_tokens(token, prev))
 			return (0);
