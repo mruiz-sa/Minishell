@@ -6,17 +6,17 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 13:01:18 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/26 21:20:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 18:37:46 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "minishell.h"
 #include "error.h"
-#include "state.h"
+#include "minishell.h"
 #include "signals.h"
+#include "state.h"
 
 int	main(int argc, char *argv[], char **envp)
 {
@@ -24,7 +24,7 @@ int	main(int argc, char *argv[], char **envp)
 
 	if (!init_state(&state, argc, argv, envp))
 		return (exit_with_error(&state, "Error initializing"));
-	setup_kill_signal_handler(on_kill_signal_action_received);
+	set_parent_signals();
 	while (1)
 	{
 		ft_read(&state);

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/26 21:19:20 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 18:37:24 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "libft.h"
 #include "minishell.h"
 #include "redirection.h"
+#include "signals.h"
 
 #define FD_IN 0
 #define FD_OUT 1
@@ -28,6 +29,7 @@ static void	child_start(t_list *cmds, t_mini *state)
 	t_simple_cmd	*cmd;
 	int				result;
 
+	set_child_signals();
 	cmd = get_cmd(cmds);
 	apply_redirections(cmd->redirections, state);
 	if (is_builtin(cmd))
@@ -93,6 +95,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 				next_cmd->fd_in = fd[FD_IN];
 				close(fd[FD_OUT]);
 			}
+			unset_signals();
 			waitpid(pid, &status, 0);
 			state->exec_ret = WEXITSTATUS(status);
 			if (WIFSIGNALED(status))
@@ -100,6 +103,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 				if (WTERMSIG(status))
 					state->exec_ret = 128 + WTERMSIG(status);
 			}
+			set_parent_signals();
 			// printf("wait status is %d\n", status);
 			// printf("wait WEXITSTATUS is %d\n", WEXITSTATUS(status));
 			// printf("wait WIFEXITED is %d\n", WIFEXITED(status));

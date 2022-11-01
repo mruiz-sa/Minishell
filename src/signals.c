@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:09:41 by manugarc          #+#    #+#             */
-/*   Updated: 2022/09/17 17:37:34 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/01 18:38:01 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,23 @@
  * 
  * @param signum 
  */
-void	on_kill_signal_action_received(int signum)
+static void	on_parent_signal(int signum)
 {
-	if (signum == SIGINT)
+	if (signum == SIGINT || signum == SIGQUIT)
 	{
 		write(1, "\n", 1);
-		rl_on_new_line();
 		rl_replace_line("", 0);
+		rl_on_new_line();
 		rl_redisplay();
 	}
 }
 
-void	setup_kill_signal_handler(void (*sa_handler_fn)(int))
+static void	on_child_signal(int signum)
+{
+	(void)signum;
+}
+
+static	void	setup_kill_signal_handler(void (*sa_handler_fn)(int))
 {
 	struct sigaction	signal_action;
 
@@ -49,5 +54,23 @@ void	setup_kill_signal_handler(void (*sa_handler_fn)(int))
 	signal_action.sa_flags = 0;
 	sigemptyset(&signal_action.sa_mask);
 	sigaddset(&signal_action.sa_mask, SIGINT);
+	sigaddset(&signal_action.sa_mask, SIGQUIT);
 	sigaction(SIGINT, &signal_action, NULL);
+	sigaction(SIGQUIT, &signal_action, NULL);
+}
+
+void	set_parent_signals(void)
+{
+	setup_kill_signal_handler(on_parent_signal);
+}
+
+void	set_child_signals(void)
+{
+	setup_kill_signal_handler(on_child_signal);
+}
+
+void	unset_signals(void)
+{
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 }
