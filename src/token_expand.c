@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/11/01 16:15:50 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 16:28:16 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ static int	count_tilde(char *str)
 	{
 		if (*str == TILDE && prev != TILDE && *(str + 1) != TILDE)
 			count++;
+		prev = *str;
 		str++;
 	}
 	return (count);
@@ -68,19 +69,21 @@ static char	*expand_tilde(char *str, char *home)
 	char	*expanded;
 	char	*aux;
 	char	prev;
+	int		len;
 
 	if (!ft_strchr(str, TILDE) || !count_tilde(str))
 		return (str);
-	expanded = (char *)ft_malloc(
-			(count_tilde(str) * ft_strlen(home)) + ft_strlen(str) + 1);
+	len = (count_tilde(str) * ft_strlen(home)) + ft_strlen(str) + 1;
+	expanded = (char *)ft_malloc(len);
 	prev = 0;
 	aux = str;
 	while (str && *str)
 	{
 		if (*str == TILDE && prev != TILDE && *(str + 1) != TILDE)
-			ft_strlcpy(expanded, home, ft_strlen(home) + 1);
+			ft_strlcat(expanded, home, len);
 		else
 			expanded[ft_strlen(expanded)] = *str;
+		prev = *str;
 		str++;
 	}
 	free(aux);
