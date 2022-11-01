@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/10/31 16:44:23 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 16:47:36 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	display_cmd_table(t_cmd *table)
 	while (cmds)
 	{
 		cmd = get_cmd(cmds);
-		printf("\nPrinting command (%s) and argv\n", cmd->argv[0]);
+		printf("\nPrinting command and argv\n");
 		i = 0;
 		while (cmd->argv && cmd->argv[i])
 		{

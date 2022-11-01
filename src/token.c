@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/31 19:17:09 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 16:52:06 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static char	*create_token(t_list **tokens, char *str, t_token_type type)
 	if (token->type != TK_NONE)
 	{
 		ft_lstadd_back(tokens, ft_lstnew(token));
-		if (is_token_redirection(token->type))
+		if (*str && is_token_redirection(token->type))
 			str = create_token(tokens, str, TK_ARG);
 	}
 	else
@@ -155,12 +155,17 @@ int	validate_syntax_tokens(t_list *tokens)
 	t_token	*token;
 	t_token	*prev;
 
+	if (!ft_lstsize(tokens))
+		return (0);
 	token = NULL;
 	prev = NULL;
 	while (tokens)
 	{
 		prev = token;
 		token = get_token(tokens);
+		if (is_token_redirection(token->type) && ft_lstsize(tokens) == 1
+			&& token->type != TK_LESSLESS)
+			return (0);
 		if (!validate_consecutive_tokens(token, prev))
 			return (0);
 		if (token && token->type == TK_ARG)

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/10/11 19:54:06 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/01 16:52:55 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ static t_list	*add_redirection_to_cmd(t_list *tokens, t_simple_cmd *cmd)
 	redirection = ft_malloc(sizeof(t_redirection));
 	redirection->type = token->type;
 	token = get_token(tokens->next);
-	redirection->file = ft_strdup(token->str);
+	if (token && token->str)
+		redirection->file = ft_strdup(token->str);
 	ft_lstadd_back(&cmd->redirections, ft_lstnew(redirection));
 	return (tokens->next);
 }
@@ -61,7 +62,8 @@ t_list	*add_cmd(t_list *tokens, t_cmd *table)
 			cmd->argc++;
 			cmd->argv = add_str_to_array(cmd->argv, token->str);
 		}
-		tokens = tokens->next;
+		if (tokens)
+			tokens = tokens->next;
 	}
 	return (tokens);
 }
