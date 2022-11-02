@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/11/01 16:52:55 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/02 12:30:30 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,9 @@ t_list	*add_cmd(t_list *tokens, t_cmd *table)
 	while (tokens)
 	{
 		token = get_token(tokens);
-		if (is_token_redirection(token->type))
+		if (!token->ignore && is_token_redirection(token->type))
 			tokens = add_redirection_to_cmd(tokens, cmd);
-		else
+		else if (!token->ignore)
 		{
 			if (token->type != TK_ARG && (token->type != TK_CMD || cmd_found))
 				break ;

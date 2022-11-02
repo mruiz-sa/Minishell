@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/11/01 16:28:16 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/02 12:29:56 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	expand_token_strings(t_list *tokens, t_mini *state)
 				while (is_expandable_arg(token->str))
 					token->str = expand_env_str(token->str, state);
 			}
-			if (token->type == TK_ARG
+			else if (token->type == TK_ARG
 				&& !token->single_quote && !token->double_quote)
 				token->str = expand_tilde(token->str,
 						get_env(state->envp, "HOME"));

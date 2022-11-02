@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   str.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:02:50 by manu              #+#    #+#             */
-/*   Updated: 2022/11/01 11:41:17 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/02 12:30:59 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,13 +32,6 @@ int	is_space(char c)
 	return (0);
 }
 
-int	is_arg_breaking_char(char c)
-{
-	if (is_space(c) || c == '|' || c == '>' || c == '<' || c == '&')
-		return (1);
-	return (0);
-}
-
 char	*skip_spaces(char *str)
 {
 	while (str && *str && is_space(*str))
@@ -49,6 +42,14 @@ char	*skip_spaces(char *str)
 static int	is_quote(char c)
 {
 	if (c == '\"' || c == '\'')
+		return (1);
+	return (0);
+}
+
+int	is_arg_breaking_char(char c)
+{
+	if (is_space(c) || is_quote(c) || c == '|' || c == '>'
+		|| c == '<' || c == '&')
 		return (1);
 	return (0);
 }
@@ -70,7 +71,7 @@ static char	*skip_until_char_quoted(char *str)
 			double_quotes += dir;
 		if (*str == ' ')
 			dir *= -1;
-		if (is_arg_breaking_char(*str) && !single_quotes && !double_quotes)
+		if (is_arg_breaking_char(*str)/* && !single_quotes && !double_quotes*/)
 			break ;
 		str++;
 	}

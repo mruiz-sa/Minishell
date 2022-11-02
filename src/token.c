@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/01 17:17:40 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/02 12:30:05 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,7 @@ void	display_tokens(t_list	*tokens)
 	while (tokens)
 	{
 		token = get_token(tokens);
-		printf("Token is type %d, ignore (%d), str = %s\n", token->type
+		printf("Token is type %d, ignore (%d), str = [%s]\n", token->type
 			, token->ignore, token->str);
 		if (token->single_quote)
 			printf("Token was single quoted\n");

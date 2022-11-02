@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy_until.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/01 10:24:29 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/02 12:30:39 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ char	*ft_strcpy_until_quoted(char *str)
 			double_quotes += dir;
 		if (newstr[i] == ' ')
 			dir *= -1;
-		if (is_arg_breaking_char(newstr[i]) && !single_quotes && !double_quotes)
+		if (is_arg_breaking_char(newstr[i])/* && !single_quotes && !double_quotes*/)
 		{
 			newstr[i] = '\0';
 			break ;
