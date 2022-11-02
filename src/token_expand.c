@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/11/02 12:29:56 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/02 12:50:36 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	is_expandable_arg(char *str)
 			n_escapes++;
 		else
 		{
-			if (*str == '$')
+			if (*str == '$' && (ft_isalpha(*(str + 1)) || *(str + 1) == '?'))
 			{
 				mod = n_escapes % 2;
 				if (!mod)
