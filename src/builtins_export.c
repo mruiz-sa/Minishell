@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 21:18:50 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/02 17:28:21 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,20 @@ static char	**export_variables(char **variables, char **envp)
 	return (envp);
 }
 
+static int	variable_checker(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (!ft_isalnum(str[i]))
+			return (0);
+		i++;
+	}
+	return (1);
+}
+
 static int	export_variable_blocks(t_simple_cmd	*cmd, t_mini *state)
 {
 	char	**keys;
@@ -54,7 +68,14 @@ static int	export_variable_blocks(t_simple_cmd	*cmd, t_mini *state)
 
 	i = 1;
 	while (i < cmd->argc)
-	{
+	{	
+		if (!variable_checker(cmd->argv[i]))
+		{
+			ft_putstr_fd("export: '", 2);
+			ft_putstr_fd(cmd->argv[i], 2);
+			ft_putendl_fd("': not a valid identifier", 2);
+			return (ERROR);
+		}
 		keys = ft_split(cmd->argv[i], ' ');
 		state->envp = export_variables(keys, state->envp);
 		free_array(keys);
