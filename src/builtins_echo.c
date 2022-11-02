@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/31 18:03:37 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/02 13:14:33 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,26 @@ static void	print_escaped_str(char *str)
 	}
 }
 
+static int	is_new_line_flag(char *str)
+{
+	int	is_new_line;
+
+	if (!str || *str != '-')
+		return (0);
+	str++;
+	is_new_line = 0;
+	while (str && *str)
+	{
+		if (*str == ' ')
+			return (is_new_line);
+		if (*str != 'n')
+			return (0);
+		is_new_line = 1;
+		str++;
+	}
+	return (is_new_line);
+}
+
 int	run_builtin_echo(t_simple_cmd	*cmd, t_mini *state)
 {
 	int	i;
@@ -46,7 +66,7 @@ int	run_builtin_echo(t_simple_cmd	*cmd, t_mini *state)
 	n = 0;
 	if (cmd && cmd->argc > 1)
 	{
-		while (!ft_strncmp(cmd->argv[i], "-n", 2) && cmd->argv[i])
+		while (is_new_line_flag(cmd->argv[i]) && cmd->argv[i])
 		{
 			n = 1;
 			i++;
