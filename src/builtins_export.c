@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/11/02 17:28:21 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/02 19:40:38 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,11 @@ static int	variable_checker(char *str)
 	int	i;
 
 	i = 0;
+	if (!ft_isalpha(str[i]))
+		return (0);
 	while (str[i])
 	{
-		if (!ft_isalnum(str[i]))
+		if (!ft_isalnum(str[i]) && str[i] != '=')
 			return (0);
 		i++;
 	}
