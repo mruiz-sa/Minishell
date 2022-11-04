@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/11/02 19:40:38 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/03 19:23:39 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,12 +76,15 @@ static int	export_variable_blocks(t_simple_cmd	*cmd, t_mini *state)
 			ft_putstr_fd("export: '", 2);
 			ft_putstr_fd(cmd->argv[i], 2);
 			ft_putendl_fd("': not a valid identifier", 2);
-			return (ERROR);
+			i++;
 		}
-		keys = ft_split(cmd->argv[i], ' ');
-		state->envp = export_variables(keys, state->envp);
-		free_array(keys);
-		i++;
+		else
+		{
+			keys = ft_split(cmd->argv[i], ' ');
+			state->envp = export_variables(keys, state->envp);
+			free_array(keys);
+			i++;
+		}
 	}
 	return (OK);
 }
