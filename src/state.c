@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   state.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 16:22:30 by manu              #+#    #+#             */
-/*   Updated: 2022/09/24 17:46:58 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/04 14:08:23 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,6 @@ int	free_prompt(t_prompt *prompt)
 		free(prompt->prompt);
 	if (prompt->pwd)
 		free(prompt->pwd);
-	if (prompt->user)
-		free(prompt->user);
 	memset(prompt, 0, sizeof(t_prompt));
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/31 19:29:49 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/04 12:14:15 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ static void	process_readline(char *str, t_mini *state)
 	t_cmd	*cmd_table;
 
 	tokens = str_to_tokens(str);
+	if (!tokens)
+		return ;
 	// display_tokens(tokens);
 	expand_token_strings(tokens, state);
 	sanitize_token_strings(tokens, state);

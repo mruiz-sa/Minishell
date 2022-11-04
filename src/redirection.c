@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 19:34:01 by manu              #+#    #+#             */
-/*   Updated: 2022/10/21 19:25:46 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/04 14:08:17 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,11 @@ static char	**heredoc_get_lines(t_list	*redirections)
 		{
 			lines = add_str_to_array(lines, line);
 		}
+		free(line);
 		line = readline("");
 	}
+	if (line)
+		free(line);
 	return (lines);
 }
 
@@ -113,8 +116,10 @@ static void	apply_heredoc_redirection(t_list *redirections, t_mini *state)
 		dup2(fd[FD_OUT], STDOUT_FILENO);
 		close(fd[FD_OUT]);
 		display_array(lines);
+		free_array(lines);
 		exit_without_error(state);
 	}
+	free_array(lines);
 	close(fd[FD_OUT]);
 	dup2(fd[FD_IN], STDIN_FILENO);
 	close(fd[FD_IN]);

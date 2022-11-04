@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/04 11:39:07 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/04 13:50:49 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	child_start(t_list *cmds, t_mini *state)
 	set_child_signals();
 	cmd = get_cmd(cmds);
 	apply_redirections(cmd->redirections, state);
+	if (!cmd->argv)
+		exit_without_error(state);
 	if (is_builtin(cmd))
 	{
 		result = run_builtin(cmds, state);
