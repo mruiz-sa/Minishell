@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/01 18:37:24 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/04 11:39:07 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 				close(fd[FD_OUT]);
 			}
 			unset_signals();
+			set_child_signals();
 			waitpid(pid, &status, 0);
 			state->exec_ret = WEXITSTATUS(status);
 			if (WIFSIGNALED(status))
