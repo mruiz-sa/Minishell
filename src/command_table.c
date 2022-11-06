@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/11/01 16:47:36 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/06 12:16:15 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	free_node_content(void *content)
 		return ;
 	if (cmd->argv != NULL)
 		free_array(cmd->argv);
+	if (cmd->argv_quoted != NULL)
+		free_array(cmd->argv_quoted);
 	if (cmd->redirections != NULL)
 		free_redirections(cmd->redirections);
 	free(cmd);

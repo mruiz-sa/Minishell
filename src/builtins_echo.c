@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/11/02 13:14:33 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/06 12:16:08 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	is_new_line_flag(char *str)
 	while (str && *str)
 	{
 		if (*str == ' ')
-			return (is_new_line);
+			return (0);
 		if (*str != 'n')
 			return (0);
 		is_new_line = 1;
@@ -66,7 +66,7 @@ int	run_builtin_echo(t_simple_cmd	*cmd, t_mini *state)
 	n = 0;
 	if (cmd && cmd->argc > 1)
 	{
-		while (is_new_line_flag(cmd->argv[i]) && cmd->argv[i])
+		while (is_new_line_flag(cmd->argv[i]))
 		{
 			n = 1;
 			i++;

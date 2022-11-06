@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/31 16:44:09 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/06 12:16:03 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ typedef struct s_redirection {
 typedef struct s_simple_cmd {
 	int				argc;
 	char			**argv;
+	char			**argv_quoted;
 	t_builtin_type	builtin_type;
 	int				fd_in;
 	int				fd_out;

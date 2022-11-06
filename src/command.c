@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/11/02 12:30:30 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/06 12:16:20 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,30 @@ static t_list	*add_redirection_to_cmd(t_list *tokens, t_simple_cmd *cmd)
 	return (tokens->next);
 }
 
+static void	add_token_str_to_cmd(t_simple_cmd	*cmd, t_token *token)
+{
+	if (token->double_quote)
+		cmd->argv_quoted = add_str_to_array(cmd->argv_quoted, "\"");
+	else if (token->single_quote)
+		cmd->argv_quoted = add_str_to_array(cmd->argv_quoted, "\'");
+	else
+		cmd->argv_quoted = add_str_to_array(cmd->argv_quoted, "");
+	cmd->argc++;
+	cmd->argv = add_str_to_array(cmd->argv, token->str);
+}
+
+int	is_cmd_arg_quoted(t_simple_cmd *cmd, int argc)
+{
+	if (!cmd || !cmd->argv || cmd->argc < argc)
+		return (0);
+	if (!ft_strlen(cmd->argv[argc]) || !ft_strlen(cmd->argv_quoted[argc]))
+		return (0);
+	if (ft_strncmp(cmd->argv_quoted[argc], "\"", 1)
+		&& ft_strncmp(cmd->argv_quoted[argc], "\'", 1))
+		return (0);
+	return (1);
+}
+
 t_list	*add_cmd(t_list *tokens, t_cmd *table)
 {
 	t_token			*token;
@@ -59,8 +83,7 @@ t_list	*add_cmd(t_list *tokens, t_cmd *table)
 				cmd_found = 1;
 				cmd->builtin_type = get_builtin_type(token->str);
 			}
-			cmd->argc++;
-			cmd->argv = add_str_to_array(cmd->argv, token->str);
+			add_token_str_to_cmd(cmd, token);
 		}
 		if (tokens)
 			tokens = tokens->next;
