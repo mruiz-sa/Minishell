@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/10/31 19:47:57 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/06 12:42:28 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,22 @@
 #include "path.h"
 #include "str.h"
 
-static int	is_builtin_str(char *builtin, char *str)
+static int	builtin_str_cmp(char *builtin, char *str)
 {
 	if (!ft_strncmp(builtin, str, ft_strlen(str) + 1))
 		return (1);
 	return (0);
+}
+
+static int	builtin_str_icmp(char *builtin, char *str)
+{
+	char	*str_tolower;
+	int		is_builtin;
+
+	str_tolower = ft_str_tolower(ft_strdup(str));
+	is_builtin = ft_strncmp(builtin, str_tolower, ft_strlen(str_tolower) + 1);
+	free(str_tolower);
+	return (!is_builtin);
 }
 
 t_builtin_type	get_builtin_type(char *str)
@@ -37,20 +48,20 @@ t_builtin_type	get_builtin_type(char *str)
 	t_builtin_type	type;
 
 	type = BLT_NONE;
-	builtin = ft_str_tolower(get_last_part_in_path(str));
-	if (is_builtin_str(builtin, "echo"))
+	builtin = get_last_part_in_path(str);
+	if (builtin_str_icmp(builtin, "echo"))
 		type = BLT_ECHO;
-	else if (is_builtin_str(builtin, "cd"))
+	else if (builtin_str_icmp(builtin, "cd"))
 		type = BLT_CD;
-	else if (is_builtin_str(builtin, "pwd"))
+	else if (builtin_str_icmp(builtin, "pwd"))
 		type = BLT_PWD;
-	else if (is_builtin_str(builtin, "export"))
+	else if (builtin_str_cmp(builtin, "export"))
 		type = BLT_EXPORT;
-	else if (is_builtin_str(builtin, "unset"))
+	else if (builtin_str_cmp(builtin, "unset"))
 		type = BLT_UNSET;
-	else if (is_builtin_str(builtin, "env"))
+	else if (builtin_str_icmp(builtin, "env"))
 		type = BLT_ENV;
-	else if (is_builtin_str(builtin, "exit"))
+	else if (builtin_str_cmp(builtin, "exit"))
 		type = BLT_EXIT;
 	free(builtin);
 	return (type);
