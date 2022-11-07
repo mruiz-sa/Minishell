@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/07 19:24:58 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/07 20:49:12 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,7 @@ char	*get_env_dup(t_mini *state, char **envp, char *key)
 	if (!key || !*key)
 		return (ft_strdup(""));
 	if (!ft_strncmp(key, "?", 1))
-	{
-		value = ft_itoa(state->exec_ret);
-		return (value);
-	}
+		return (ft_itoa(state->exec_ret));
 	value = get_env(envp, key);
 	if (!value)
 		return (ft_strdup(""));
