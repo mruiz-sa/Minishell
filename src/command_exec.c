@@ -3,14 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/04 13:50:49 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/07 19:21:22 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <errno.h>
 #include <sys/wait.h>
 
 #include "builtins.h"
@@ -45,9 +44,8 @@ static void	child_start(t_list *cmds, t_mini *state)
 	else if (execve(cmd->argv[0], cmd->argv, state->envp) == -1)
 	{
 		ft_putstr_fd(cmd->argv[0], 2);
-		ft_putendl_fd(": command not found", 2);
-		// printf("Errno is %d\n", errno);
-		exit_with_error_code(state, errno);
+		ft_putendl_fd(": No such file or directory", 2);
+		exit_with_error_code(state, 127);
 	}
 }
 

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/02 12:30:05 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/07 19:21:14 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -159,12 +159,14 @@ static int	validate_redirection(t_token *token, t_token *next)
 	return (1);
 }
 
-static int	validate_token(t_token *token, t_token *next)
+static int	validate_token(t_token *token, t_token *next, t_token *prev)
 {
 	if (!token)
 		return (0);
 	if (is_token_redirection(token->type) && token->type != TK_LESSLESS)
 		return (validate_redirection(token, next));
+	if (!prev && (token->type == TK_AMP || token->type == TK_PIPE))
+		return (0);
 	return (1);
 }
 
@@ -181,7 +183,7 @@ int	validate_syntax_tokens(t_list *tokens)
 	{
 		prev = token;
 		token = get_token(tokens);
-		if (!validate_token(token, get_token(tokens->next)))
+		if (!validate_token(token, get_token(tokens->next), prev))
 			return (0);
 		if ((token->type == TK_PIPE || token->type == TK_AMP)
 			&& ft_lstsize(tokens) == 1)
