@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/07 19:21:22 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/07 20:59:46 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,14 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 		cmd->fd_out = fd[FD_OUT];
 	}
 	if (is_parent_builtin(cmd->builtin_type))
+	{
+		if (next_cmd)
+		{
+			next_cmd->fd_in = fd[FD_IN];
+			close(fd[FD_OUT]);
+		}
 		state->exec_ret = run_builtin(cmds, state);
+	}
 	else
 	{
 		pid = fork();
