@@ -6,7 +6,7 @@
 /*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/10/26 19:02:06 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/07 19:24:58 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ char	*get_env_dup(t_mini *state, char **envp, char *key)
 	if (!ft_strncmp(key, "?", 1))
 	{
 		value = ft_itoa(state->exec_ret);
-		return (ft_strdup(value));
+		return (value);
 	}
 	value = get_env(envp, key);
 	if (!value)

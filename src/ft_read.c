@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/04 12:14:15 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/07 19:35:26 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ char	*ft_read(t_mini *state)
 	{
 		add_history(state->readline);
 		process_readline(state->readline, state);
+		// system("Leaks minishell");
 	}
 	free_prompt(&state->prompt);
 	return (state->readline);
