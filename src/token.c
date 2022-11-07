@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/07 19:21:14 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/07 19:59:25 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static	char	*set_token_str(t_token *token, char *str)
 		token->single_quote = 1;
 	else if (quote == '\"')
 		token->double_quote = 1;
-	if (is_token_redirection(token->type))
+	if (is_token_redirection(token->type) || token->type == TK_PIPE)
 	{
 		token->str = token_type_to_str(token->type);
 		return (skip_token_str(str, token->type));
@@ -174,8 +174,10 @@ int	validate_syntax_tokens(t_list *tokens)
 {
 	t_token	*token;
 	t_token	*prev;
+	int		size;
 
-	if (!ft_lstsize(tokens))
+	size = ft_lstsize(tokens);
+	if (!size)
 		return (0);
 	token = NULL;
 	prev = NULL;
@@ -185,8 +187,7 @@ int	validate_syntax_tokens(t_list *tokens)
 		token = get_token(tokens);
 		if (!validate_token(token, get_token(tokens->next), prev))
 			return (0);
-		if ((token->type == TK_PIPE || token->type == TK_AMP)
-			&& ft_lstsize(tokens) == 1)
+		if ((token->type == TK_PIPE || token->type == TK_AMP) && size == 1)
 			return (0);
 		if (!validate_consecutive_tokens(token, prev))
 			return (0);
