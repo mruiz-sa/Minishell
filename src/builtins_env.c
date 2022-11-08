@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/11/03 19:28:45 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/08 20:17:04 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	run_builtin_env(t_simple_cmd	*cmd, t_mini *state)
 	(void)cmd;
 	envp = state->envp;
 	i = 0;
-	while (envp[i])
+	while (envp && envp[i])
 	{
 		j = 0;
 		while (envp[i][j])
@@ -55,7 +55,7 @@ int	run_builtin_env(t_simple_cmd	*cmd, t_mini *state)
 			if (envp[i][j] == '=')
 			{
 				printf("%s\n", envp[i]);
-				j++;
+				break ;
 			}
 			j++;
 		}
