@@ -6,7 +6,7 @@
 #    By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 19:11:27 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/04/19 12:19:07 by mruiz-sa         ###   ########.fr        #
+#    Updated: 2022/11/08 16:13:39 by mruiz-sa         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,8 @@ BONUS = ft_lstnew_bonus.c ft_lstadd_front_bonus.c ft_lstsize_bonus.c ft_lstlast_
 
 OBJECTS = $(FUNCTIONS:.c=.o)
 
+CC = gcc 
+
 BONUS_OBJETCS = $(BONUS:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra
@@ -36,10 +38,10 @@ $(NAME): $(OBJECTS)
 		ar rc $(NAME) $(OBJECTS)
 
 $(OBJECTS): $(FUNCTIONS)
-		gcc $(CFLAGS) -c $(FUNCTIONS)
+		$(CC) $(CFLAGS) -c $(FUNCTIONS)
 
 $(BONUS_OBJECTS): $(FUNCTIONS) $(BONUS)
-		gcc $(CFLAGS) -c $(FUNCTIONS) $(BONUS)
+		$(CC) $(CFLAGS) -c $(FUNCTIONS) $(BONUS)
 		
 bonus: $(OBJECTS) $(BONUS_OBJETCS)
 		ar rc $(NAME) $(OBJECTS) $(BONUS_OBJETCS)
