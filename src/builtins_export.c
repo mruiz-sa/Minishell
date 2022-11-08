@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/11/07 20:49:53 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/08 19:06:27 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,19 +95,13 @@ static int	export_variable_blocks(t_simple_cmd	*cmd, t_mini *state)
 
 	result = OK;
 	i = 1;
-	while (result == OK && i < cmd->argc)
+	while (i < cmd->argc)
 	{	
 		keys = ft_split(cmd->argv[i], ' ');
 		if (!is_valid_export(keys))
 			result = ERROR;
-		free_array(keys);
-		i++;
-	}
-	i = 1;
-	while (result == OK && i < cmd->argc)
-	{	
-		keys = ft_split(cmd->argv[i], ' ');
-		state->envp = export_variables(keys, state->envp);
+		else
+			state->envp = export_variables(keys, state->envp);
 		free_array(keys);
 		i++;
 	}
