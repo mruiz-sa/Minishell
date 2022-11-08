@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/11/06 13:20:44 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/08 18:59:12 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,5 +58,5 @@ int	run_builtin_exit(t_simple_cmd	*cmd, t_mini *state)
 		return (exit_with_error_code(state, ft_atoi(cmd->argv[1])));
 	}
 	printf("exit\n");
-	return (exit_without_error_check_leaks(state));
+	return (exit_without_error(state));
 }

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/20 16:19:49 by manu              #+#    #+#             */
-/*   Updated: 2022/10/26 21:19:54 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/08 18:59:25 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,6 @@ static void	exit_with_code(t_mini *state, int code, int check_for_leaks)
 {
 	(void)check_for_leaks;
 	free_state(state);
-	// if (check_for_leaks)
-	// 	system("Leaks minishell");
 	exit(code);
 }
 
@@ -47,11 +45,5 @@ int	exit_with_memory_error(t_mini *state)
 int	exit_without_error(t_mini *state)
 {
 	exit_with_code(state, OK, 0);
-	return (0);
-}
-
-int	exit_without_error_check_leaks(t_mini *state)
-{
-	exit_with_code(state, OK, 1);
 	return (0);
 }

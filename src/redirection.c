@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 19:34:01 by manu              #+#    #+#             */
-/*   Updated: 2022/11/04 14:08:17 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/08 18:59:49 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,11 @@ void	apply_redirections(t_list *redirections, t_mini *state)
 			apply_heredoc_redirection(redirections, state);
 		else
 		{
-			redirection->fd = open(redirection->file, get_open_flags(redirection),
+			redirection->fd = open(redirection->file,
+					get_open_flags(redirection),
 					S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH);
-			if (redirection->type == TK_GREAT || redirection->type == TK_GREATGREAT)
+			if (redirection->type == TK_GREAT
+				|| redirection->type == TK_GREATGREAT)
 				dup2(redirection->fd, STDOUT_FILENO);
 			else if (redirection->type == TK_LESS)
 				dup2(redirection->fd, STDIN_FILENO);

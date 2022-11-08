@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/02 12:30:39 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/08 18:59:37 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,26 +19,14 @@ char	*ft_strcpy_until_quoted(char *str)
 {
 	char	*newstr;
 	int		i;
-	int		single_quotes;
-	int		double_quotes;
-	int		dir;
 
-	dir = 1;
-	single_quotes = 0;
-	double_quotes = 0;
 	newstr = ft_strdup(str);
 	if (!newstr)
 		exit_with_memory_error(NULL);
 	i = 0;
 	while (newstr[i])
 	{
-		if (newstr[i] == '\'')
-			single_quotes += dir;
-		if (newstr[i] == '\"')
-			double_quotes += dir;
-		if (newstr[i] == ' ')
-			dir *= -1;
-		if (is_arg_breaking_char(newstr[i])/* && !single_quotes && !double_quotes*/)
+		if (is_arg_breaking_char(newstr[i]))
 		{
 			newstr[i] = '\0';
 			break ;

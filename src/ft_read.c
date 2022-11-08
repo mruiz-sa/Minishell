@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_read.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/02 13:14:19 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/07 19:35:26 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/08 18:59:30 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,11 @@ static void	process_readline(char *str, t_mini *state)
 	tokens = str_to_tokens(str);
 	if (!tokens)
 		return ;
-	// display_tokens(tokens);
 	expand_token_strings(tokens, state);
 	sanitize_token_strings(tokens, state);
 	if (validate_syntax_tokens(tokens))
 	{
-		// TODO: Mover esto a parser
 		cmd_table = tokens_to_cmd_table(tokens);
-		// display_cmd_table(cmd_table);
 		exec_cmd_table(cmd_table, state);
 		free_cmd_table(cmd_table);
 	}
@@ -53,13 +50,12 @@ char	*ft_read(t_mini *state)
 	if (!state->readline)
 	{
 		printf("exit\n");
-		exit_without_error_check_leaks(state);
+		exit_without_error(state);
 	}
 	if (ft_strlen(state->readline))
 	{
 		add_history(state->readline);
 		process_readline(state->readline, state);
-		// system("Leaks minishell");
 	}
 	free_prompt(&state->prompt);
 	return (state->readline);

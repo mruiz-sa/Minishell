@@ -1,17 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   expand.h                                           :+:      :+:    :+:   */
+/*   token_expand.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:22:00 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/08 12:12:06 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/08 18:59:00 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef EXPAND_H
-# define EXPAND_H
+#ifndef TOKEN_EXPAND_H
+# define TOKEN_EXPAND_H
 
 # include "minishell.h"
 

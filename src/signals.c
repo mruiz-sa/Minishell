@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:09:41 by manugarc          #+#    #+#             */
-/*   Updated: 2022/11/04 11:40:13 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/08 18:59:56 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,9 @@
 #include "libft.h"
 #include "state.h"
 
-/**
- * @brief printf("\33[2K\r"); is understood by most shells, but it
- * is a workaround using VT100 Escape Codes.
- *
- * Code should be;
- *
- * 		rl_on_new_line();
- * 		rl_replace_line("", 0);
- * 		rl_redisplay();
- *
- * @param signum
- */
 static void	on_parent_signal(int signum)
 {
-	if (signum == SIGINT/* || signum == SIGQUIT*/)
+	if (signum == SIGINT)
 	{
 		write(1, "\n", 1);
 		rl_replace_line("", 0);

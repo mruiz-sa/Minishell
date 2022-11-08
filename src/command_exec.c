@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/07 20:59:46 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/08 18:59:18 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,10 +112,6 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 					state->exec_ret = 128 + WTERMSIG(status);
 			}
 			set_parent_signals();
-			// printf("wait status is %d\n", status);
-			// printf("wait WEXITSTATUS is %d\n", WEXITSTATUS(status));
-			// printf("wait WIFEXITED is %d\n", WIFEXITED(status));
-			// printf("wait WIFSIGNALED is %d\n", WIFSIGNALED(status));
 		}
 	}
 }

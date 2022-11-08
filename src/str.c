@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/10 20:02:50 by manu              #+#    #+#             */
-/*   Updated: 2022/11/07 19:59:13 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/08 19:00:01 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,22 +56,9 @@ int	is_arg_breaking_char(char c)
 
 static char	*skip_until_char_quoted(char *str)
 {
-	int		single_quotes;
-	int		double_quotes;
-	int		dir;
-
-	dir = 1;
-	single_quotes = 0;
-	double_quotes = 0;
 	while (str && *str)
 	{
-		if (*str == '\'')
-			single_quotes += dir;
-		if (*str == '\"')
-			double_quotes += dir;
-		if (*str == ' ')
-			dir *= -1;
-		if (is_arg_breaking_char(*str)/* && !single_quotes && !double_quotes*/)
+		if (is_arg_breaking_char(*str))
 			break ;
 		str++;
 	}
@@ -88,6 +75,7 @@ static char	*skip_until_char(char *str, char c)
 		str++;
 	return (str);
 }
+
 char	*skip_token_str(char *str, t_token_type type)
 {
 	if (type == TK_GREAT && *str == '>')
