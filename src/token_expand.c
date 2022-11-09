@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 10:19:01 by manugarc          #+#    #+#             */
-/*   Updated: 2022/11/02 12:50:36 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/09 20:28:11 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,8 @@ void	expand_token_strings(t_list *tokens, t_mini *state)
 		{
 			if (token->type == TK_CMD)
 				token->str = path_to_absolute(token->str, state);
-			else if (token->type == TK_ARG && !token->single_quote)
+			if ((token->type == TK_ARG || token->type == TK_CMD)
+				&& !token->single_quote)
 			{
 				while (is_expandable_arg(token->str))
 					token->str = expand_env_str(token->str, state);

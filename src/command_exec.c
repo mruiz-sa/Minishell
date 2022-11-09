@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/08 18:59:18 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/09 20:27:47 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	child_start(t_list *cmds, t_mini *state)
 	t_simple_cmd	*cmd;
 	int				result;
 
-	set_child_signals();
+	set_sigquit_signal();
 	cmd = get_cmd(cmds);
 	apply_redirections(cmd->redirections, state);
 	if (!cmd->argv)
@@ -103,14 +103,12 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 				close(fd[FD_OUT]);
 			}
 			unset_signals();
-			set_child_signals();
+			set_sigquit_signal();
 			waitpid(pid, &status, 0);
-			state->exec_ret = WEXITSTATUS(status);
 			if (WIFSIGNALED(status))
-			{
-				if (WTERMSIG(status))
-					state->exec_ret = 128 + WTERMSIG(status);
-			}
+				state->exec_ret = 128 + WTERMSIG(status);
+			else
+				state->exec_ret = WEXITSTATUS(status);
 			set_parent_signals();
 		}
 	}

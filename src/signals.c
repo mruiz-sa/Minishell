@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:09:41 by manugarc          #+#    #+#             */
-/*   Updated: 2022/11/08 18:59:56 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/09 20:27:54 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 #include "libft.h"
 #include "state.h"
 
-static void	on_parent_signal(int signum)
+static void	on_sigint_signal(int signum)
 {
 	if (signum == SIGINT)
 	{
@@ -29,38 +29,34 @@ static void	on_parent_signal(int signum)
 	}
 }
 
-static void	on_child_signal(int signum)
+static void	on_sigquit_signal(int signum)
 {
 	if (signum == SIGQUIT)
 		write(1, "Quit: 3", 7);
 }
 
-static	void	setup_kill_signal_handler(void (*sa_handler_fn)(int), int squit)
+static	void	setup_signal(void (*sa_handler_fn)(int), int signum)
 {
 	struct sigaction	signal_action;
 
+	ft_memset(&signal_action, 0, sizeof(struct sigaction));
 	signal_action.sa_handler = sa_handler_fn;
 	signal_action.sa_flags = 0;
 	sigemptyset(&signal_action.sa_mask);
-	sigaddset(&signal_action.sa_mask, SIGINT);
-	sigaction(SIGINT, &signal_action, NULL);
-	if (squit)
-	{
-		sigaddset(&signal_action.sa_mask, SIGQUIT);
-		sigaction(SIGQUIT, &signal_action, NULL);
-	}
-	else
-		signal(SIGQUIT, SIG_IGN);
+	sigaddset(&signal_action.sa_mask, signum);
+	sigaction(signum, &signal_action, NULL);
 }
+
 
 void	set_parent_signals(void)
 {
-	setup_kill_signal_handler(on_parent_signal, 0);
+	setup_signal(on_sigint_signal, SIGINT);
+	signal(SIGQUIT, SIG_IGN);
 }
 
-void	set_child_signals(void)
+void	set_sigquit_signal(void)
 {
-	setup_kill_signal_handler(on_child_signal, 1);
+	setup_signal(on_sigquit_signal, SIGQUIT);
 }
 
 void	unset_signals(void)
