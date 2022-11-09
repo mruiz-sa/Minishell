@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_export.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 21:16:07 by manu              #+#    #+#             */
-/*   Updated: 2022/11/08 19:06:27 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/09 18:17:30 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 #include "env.h"
 #include "error.h"
 #include "minishell.h"
+
+static int	syntax_error(char *str)
+{
+	ft_putstr_fd("export: '", 2);
+	ft_putstr_fd(str, 2);
+	ft_putendl_fd("': not a valid identifier", 2);
+	return (0);
+}
 
 static int	display_export(t_mini *state)
 {
@@ -46,41 +54,44 @@ static int	variable_checker(char *str)
 	return (1);
 }
 
-static int	is_valid_export(char **variables)
+static int	is_valid_export(char *variables)
 {
 	char	**variable_split;
 	int		result;
-	int		i;
 
 	result = 1;
-	i = 0;
-	while (result == 1 && variables[i])
+	if (result == 1 && ft_strlen(variables))
 	{
-		variable_split = ft_split(variables[i], '=');
-		if (!variable_checker(variable_split[0]))
+		if (variables[0] == '=' && variables[1] == '\0')
 		{
-			ft_putstr_fd("export: '", 2);
-			ft_putstr_fd(variable_split[0], 2);
-			ft_putendl_fd("': not a valid identifier", 2);
+			syntax_error(variables);
 			result = 0;
 		}
-		free_array(variable_split);
-		i++;
+		else
+		{
+			variable_split = ft_split(variables, '=');
+			if (!variable_checker(variable_split[0]))
+			{
+				syntax_error(variable_split[0]);
+				result = 0;
+			}
+			free_array(variable_split);
+		}
 	}
 	return (result);
 }
 
-static char	**export_variables(char **variables, char **envp)
+static char	**export_variables(char *variables, char **envp)
 {
 	char	**variable_split;
 	int		i;
 
 	i = 0;
-	while (variables[i])
+	if (ft_strlen(variables))
 	{
-		variable_split = ft_split(variables[i], '=');
+		variable_split = ft_split(variables, '=');
 		envp = del_str_from_array(envp, variable_split[0]);
-		envp = add_str_to_array(envp, variables[i]);
+		envp = add_str_to_array(envp, variables);
 		free_array(variable_split);
 		i++;
 	}
@@ -89,7 +100,6 @@ static char	**export_variables(char **variables, char **envp)
 
 static int	export_variable_blocks(t_simple_cmd	*cmd, t_mini *state)
 {
-	char	**keys;
 	int		i;
 	int		result;
 
@@ -97,12 +107,10 @@ static int	export_variable_blocks(t_simple_cmd	*cmd, t_mini *state)
 	i = 1;
 	while (i < cmd->argc)
 	{	
-		keys = ft_split(cmd->argv[i], ' ');
-		if (!is_valid_export(keys))
+		if (!is_valid_export(cmd->argv[i]))
 			result = ERROR;
 		else
-			state->envp = export_variables(keys, state->envp);
-		free_array(keys);
+			state->envp = export_variables(cmd->argv[i], state->envp);
 		i++;
 	}
 	return (result);
