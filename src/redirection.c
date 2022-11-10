@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   redirection.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 19:34:01 by manu              #+#    #+#             */
-/*   Updated: 2022/11/08 18:59:49 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 19:00:25 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "array.h"
+#include "array_display.h"
 #include "error.h"
 #include "minishell.h"
 

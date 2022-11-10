@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/16 21:03:58 by manu              #+#    #+#             */
-/*   Updated: 2022/11/06 12:16:20 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 18:54:07 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,22 @@ int	is_cmd_arg_quoted(t_simple_cmd *cmd, int argc)
 	return (1);
 }
 
+static int	add_str_to_cmd(t_list *tokens, t_simple_cmd *cmd)
+{
+	t_token			*token;
+	int				cmd_found;
+
+	cmd_found = 0;
+	token = get_token(tokens);
+	if (token->type == TK_CMD)
+	{
+		cmd_found = 1;
+		cmd->builtin_type = get_builtin_type(token->str);
+	}
+	add_token_str_to_cmd(cmd, token);
+	return (cmd_found);
+}
+
 t_list	*add_cmd(t_list *tokens, t_cmd *table)
 {
 	t_token			*token;
@@ -78,12 +94,8 @@ t_list	*add_cmd(t_list *tokens, t_cmd *table)
 		{
 			if (token->type != TK_ARG && (token->type != TK_CMD || cmd_found))
 				break ;
-			if (token->type == TK_CMD)
-			{
+			if (add_str_to_cmd(tokens, cmd))
 				cmd_found = 1;
-				cmd->builtin_type = get_builtin_type(token->str);
-			}
-			add_token_str_to_cmd(cmd, token);
 		}
 		if (tokens)
 			tokens = tokens->next;

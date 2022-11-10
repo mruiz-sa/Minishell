@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   array.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/17 10:41:24 by manugarc          #+#    #+#             */
-/*   Updated: 2022/10/24 19:15:02 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 19:00:13 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,16 +101,4 @@ char	**duplicate_array(char **array)
 	}
 	new[i] = NULL;
 	return (new);
-}
-
-void	display_array(char **array)
-{
-	int	count;
-
-	count = 0;
-	while (array && array[count])
-	{
-		printf("%s\n", array[count]);
-		count++;
-	}
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: manu <manu@student.42.fr>                  +#+  +:+       +#+         #
+#    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/10/31 16:43:48 by manu             ###   ########.fr        #
+#    Updated: 2022/11/10 19:01:42 by manugarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@
 NAME 		= minishell
 SRC_DIR		=	src
 SRC 		= 	$(SRC_DIR)/array.c \
+				$(SRC_DIR)/array_display.c \
 				$(SRC_DIR)/builtins.c \
 				$(SRC_DIR)/builtins_cd.c \
 				$(SRC_DIR)/builtins_echo.c \
