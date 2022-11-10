@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/10 19:17:07 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:53:10 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static int	validate_token(t_token *token, t_token *next, t_token *prev)
 {
 	if (!token)
 		return (0);
-	if (is_token_redirection(token->type) && token->type != TK_LESSLESS)
+	if (is_token_redirection(token->type))
 		return (validate_redirection(token, next));
 	if (!prev && (token->type == TK_AMP || token->type == TK_PIPE))
 		return (0);
