@@ -6,7 +6,7 @@
 #    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/11/10 19:37:11 by manugarc         ###   ########.fr        #
+#    Updated: 2022/11/10 20:11:23 by manugarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/malloc.c \
 				$(SRC_DIR)/path.c \
 				$(SRC_DIR)/redirection.c \
+				$(SRC_DIR)/redirection_apply.c \
 				$(SRC_DIR)/signals.c \
 				$(SRC_DIR)/state.c \
 				$(SRC_DIR)/str.c \

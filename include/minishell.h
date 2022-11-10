@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/01 12:23:43 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/10 18:38:05 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:08:11 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 # define MINISHELL_H
 
 # include "libft.h"
+
+# define FD_IN 0
+# define FD_OUT 1
 
 unsigned char	g_exec_ret;
 

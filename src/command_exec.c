@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/10 20:05:31 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:11:48 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,8 @@
 #include "error.h"
 #include "libft.h"
 #include "minishell.h"
-#include "redirection.h"
+#include "redirection_apply.h"
 #include "signals.h"
-
-#define FD_IN 0
-#define FD_OUT 1
 
 static void	child_start(t_list *cmds, t_mini *state)
 {
