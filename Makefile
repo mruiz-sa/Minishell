@@ -6,7 +6,7 @@
 #    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/11/10 20:23:13 by manugarc         ###   ########.fr        #
+#    Updated: 2022/11/10 20:27:10 by manugarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/builtins_pwd.c \
 				$(SRC_DIR)/builtins_unset.c \
 				$(SRC_DIR)/command.c \
+				$(SRC_DIR)/command_add.c \
 				$(SRC_DIR)/command_exec_child.c \
 				$(SRC_DIR)/command_exec.c \
 				$(SRC_DIR)/command_table.c \
