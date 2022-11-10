@@ -6,7 +6,7 @@
 #    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/11/10 20:11:23 by manugarc         ###   ########.fr        #
+#    Updated: 2022/11/10 20:19:40 by manugarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/command_exec.c \
 				$(SRC_DIR)/command_table.c \
 				$(SRC_DIR)/env.c \
+				$(SRC_DIR)/env_expand.c \
 				$(SRC_DIR)/error.c \
 				$(SRC_DIR)/ft_read.c \
 				$(SRC_DIR)/ft_strcpy_until.c \
