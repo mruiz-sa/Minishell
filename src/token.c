@@ -6,13 +6,15 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/10 19:22:24 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/10 19:36:53 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 #include "malloc.h"
 #include "str.h"
+#include "str_is.h"
+#include "str_skip.h"
 #include "token_type.h"
 
 static	char	*set_token_str(t_token *token, char *str)

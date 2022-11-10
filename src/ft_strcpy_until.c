@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strcpy_until.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/08 18:59:37 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 19:36:11 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 #include "libft.h"
 #include "redirection.h"
 #include "str.h"
+#include "str_is.h"
 
 char	*ft_strcpy_until_quoted(char *str)
 {
