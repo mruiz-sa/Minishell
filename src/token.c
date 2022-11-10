@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/08 19:00:23 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 18:05:08 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,11 +191,8 @@ int	validate_syntax_tokens(t_list *tokens)
 			return (0);
 		if (!validate_consecutive_tokens(token, prev))
 			return (0);
-		if (token && token->type == TK_ARG)
-		{
-			if (!ft_strlen(token->str))
+		if (token && token->type == TK_ARG && !ft_strlen(token->str))
 				token->ignore = 1;
-		}
 		tokens = tokens->next;
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/09 20:27:47 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 18:04:57 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,67 +49,97 @@ static void	child_start(t_list *cmds, t_mini *state)
 	}
 }
 
-void	exec_cmd(t_list *cmds, t_mini *state)
+static void	child_pipe(t_list *cmds, t_mini *state)
 {
-	pid_t			pid;
-	int				fd[2];
+	t_simple_cmd	*cmd;
+
+	cmd = get_cmd(cmds);
+	if (get_cmd(cmds->next))
+		close(cmd->pipe_fds[FD_IN]);
+	if (cmd->fd_in)
+	{
+		dup2(cmd->fd_in, STDIN_FILENO);
+		close(cmd->fd_in);
+	}
+	if (cmd->fd_out)
+	{
+		dup2(cmd->fd_out, STDOUT_FILENO);
+		close(cmd->fd_out);
+	}
+	child_start(cmds, state);
+}
+
+static void	parent_pipe(t_list *cmds)
+{
 	t_simple_cmd	*cmd;
 	t_simple_cmd	*next_cmd;
-	int				status;
 
 	cmd = get_cmd(cmds);
 	next_cmd = get_cmd(cmds->next);
 	if (next_cmd)
 	{
-		if (pipe(fd) == -1)
-			exit_with_error(state, "Error calling pipe()");
-		cmd->fd_out = fd[FD_OUT];
+		next_cmd->fd_in = cmd->pipe_fds[FD_IN];
+		close(cmd->pipe_fds[FD_OUT]);
 	}
+}
+
+static int	ft_fork(void)
+{
+	int	pid;
+
+	pid = fork();
+	if (pid < 0)
+		perror("Error");
+	return (pid);
+}
+
+void	create_pipe(t_list *cmds, t_mini *state)
+{
+	t_simple_cmd	*cmd;
+
+	cmd = get_cmd(cmds);
+	if (get_cmd(cmds->next))
+	{
+		if (pipe(cmd->pipe_fds) == -1)
+			exit_with_error(state, "Error calling pipe()");
+		cmd->fd_out = cmd->pipe_fds[FD_OUT];
+	}
+}
+
+void	wait_for_child(pid_t pid, t_mini *state)
+{
+	int				status;
+
+	unset_signals();
+	set_sigquit_signal();
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status))
+		state->exec_ret = 128 + WTERMSIG(status);
+	else
+		state->exec_ret = WEXITSTATUS(status);
+	set_parent_signals();
+}
+
+void	exec_cmd(t_list *cmds, t_mini *state)
+{
+	t_simple_cmd	*cmd;
+
+	cmd = get_cmd(cmds);
+	create_pipe(cmds, state);
 	if (is_parent_builtin(cmd->builtin_type))
 	{
-		if (next_cmd)
-		{
-			next_cmd->fd_in = fd[FD_IN];
-			close(fd[FD_OUT]);
-		}
+		parent_pipe(cmds);
 		state->exec_ret = run_builtin(cmds, state);
 	}
 	else
 	{
-		pid = fork();
-		if (pid < 0)
-			perror("Error");
-		if (pid == 0)
-		{
-			if (next_cmd)
-				close(fd[FD_IN]);
-			if (cmd->fd_in)
-			{
-				dup2(cmd->fd_in, STDIN_FILENO);
-				close(cmd->fd_in);
-			}
-			if (cmd->fd_out)
-			{
-				dup2(cmd->fd_out, STDOUT_FILENO);
-				close(cmd->fd_out);
-			}
-			child_start(cmds, state);
-		}
+		cmd->pid = ft_fork();
+		if (cmd->pid == 0)
+			child_pipe(cmds, state);
 		else
 		{
-			if (next_cmd)
-			{
-				next_cmd->fd_in = fd[FD_IN];
-				close(fd[FD_OUT]);
-			}
-			unset_signals();
-			set_sigquit_signal();
-			waitpid(pid, &status, 0);
-			if (WIFSIGNALED(status))
-				state->exec_ret = 128 + WTERMSIG(status);
-			else
-				state->exec_ret = WEXITSTATUS(status);
-			set_parent_signals();
+			parent_pipe(cmds);
+			wait_for_child(cmd->pid, state);
 		}
 	}
 }

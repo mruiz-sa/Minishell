@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 15:34:54 by manu              #+#    #+#             */
-/*   Updated: 2022/11/08 18:59:44 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 18:05:02 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*get_path(char *cmd, char **envp)
 	path_list = ft_split(ft_strchr(path_line(envp), '/'), ':');
 	while (path_list && path_list[i])
 	{
-		path_slash = ft_strjoin(path_list[i], "/");
+		path_slash = ft_strjoin(path_list[i++], "/");
 		path_arg = ft_strjoin(path_slash, cmd);
 		free(path_slash);
 		fd = open(path_arg, O_RDONLY);
@@ -53,7 +53,6 @@ char	*get_path(char *cmd, char **envp)
 			return (path_arg);
 		}
 		free(path_arg);
-		i++;
 	}
 	if (path_list)
 		free_array(path_list);

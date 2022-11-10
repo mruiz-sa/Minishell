@@ -6,7 +6,7 @@
 /*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:09:41 by manugarc          #+#    #+#             */
-/*   Updated: 2022/11/09 20:27:54 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 18:05:05 by manu             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ static	void	setup_signal(void (*sa_handler_fn)(int), int signum)
 	sigaddset(&signal_action.sa_mask, signum);
 	sigaction(signum, &signal_action, NULL);
 }
-
 
 void	set_parent_signals(void)
 {
