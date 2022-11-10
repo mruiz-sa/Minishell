@@ -6,7 +6,7 @@
 #    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/11/10 19:01:42 by manugarc         ###   ########.fr        #
+#    Updated: 2022/11/10 19:15:31 by manugarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/token_expand.c \
 				$(SRC_DIR)/token_sanitize.c \
 				$(SRC_DIR)/token_type.c \
+				$(SRC_DIR)/token_validate.c \
 
 MAIN_SRCS	= 	$(SRC_DIR)/main.c $(SRC)
 TEST_SRCS	= 	$(SRC_DIR)/tests.c \
