@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/03 12:26:34 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/07 20:49:12 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 18:59:20 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ typedef struct s_exp {
 	char	*value;
 	char	*final;
 	char	*aux;
+	int		i;
+	int		index_dollar;
 }	t_exp;
 
 /**
@@ -109,43 +111,47 @@ char	*get_env_dup(t_mini *state, char **envp, char *key)
 {
 	char	*value;
 
+	(void)state;
 	if (!key || !*key)
 		return (ft_strdup(""));
 	if (!ft_strncmp(key, "?", 1))
-		return (ft_itoa(state->exec_ret));
+		return (ft_itoa(g_exec_ret));
 	value = get_env(envp, key);
 	if (!value)
 		return (ft_strdup(""));
 	return (ft_strdup(value));
 }
 
+static void	expand_aux(char *str, t_exp *exp, t_mini *state)
+{
+	exp->name = ft_substr(str, exp->index_dollar, exp->i - exp->index_dollar);
+	exp->end = ft_substr(str, exp->i, ft_strlen(&str[exp->i]));
+	exp->value = get_env_dup(state, state->envp, exp->name + 1);
+	free(exp->name);
+	exp->aux = join_and_free(exp->start, exp->value);
+}
+
 char	*expand_env_str(char *str, t_mini *state)
 {
-	int		i;
-	int		index_dollar;
 	t_exp	exp;
 
-	i = 0;
+	exp.i = 0;
 	if (!ft_strchr(str, '$'))
 		return (str);
-	while (str && str[i] != '$')
-		i++;
-	exp.start = ft_substr(str, 0, i);
-	index_dollar = i++;
-	while (ft_isalnum(str[i]) || str[i] == '_' || str[i] == '?')
+	while (str && str[exp.i] != '$')
+		exp.i++;
+	exp.start = ft_substr(str, 0, exp.i);
+	exp.index_dollar = exp.i++;
+	while (ft_isalnum(str[exp.i]) || str[exp.i] == '_' || str[exp.i] == '?')
 	{
-		if (str[i] == '?' && str[i + 1] == '?')
+		if (str[exp.i] == '?' && str[exp.i + 1] == '?')
 		{
-			i++;
+			exp.i++;
 			break ;
 		}
-		i++;
+		exp.i++;
 	}
-	exp.name = ft_substr(str, index_dollar, i - index_dollar);
-	exp.end = ft_substr(str, i, ft_strlen(&str[i]));
-	exp.value = get_env_dup(state, state->envp, exp.name + 1);
-	free(exp.name);
-	exp.aux = join_and_free(exp.start, exp.value);
+	expand_aux(str, &exp, state);
 	exp.final = join_and_free(exp.aux, exp.end);
 	free(str);
 	return (exp.final);
