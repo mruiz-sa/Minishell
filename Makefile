@@ -6,7 +6,7 @@
 #    By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/01 12:23:52 by mruiz-sa          #+#    #+#              #
-#    Updated: 2022/11/10 20:27:10 by manugarc         ###   ########.fr        #
+#    Updated: 2022/11/10 20:33:30 by manugarc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRC 		= 	$(SRC_DIR)/array.c \
 				$(SRC_DIR)/builtins_env.c \
 				$(SRC_DIR)/builtins_exit.c \
 				$(SRC_DIR)/builtins_export.c \
+				$(SRC_DIR)/builtins_export_is.c \
 				$(SRC_DIR)/builtins_pwd.c \
 				$(SRC_DIR)/builtins_unset.c \
 				$(SRC_DIR)/command.c \
