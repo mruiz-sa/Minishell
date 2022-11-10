@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/10 18:04:57 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 18:39:11 by mruiz-sa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,13 +110,14 @@ void	wait_for_child(pid_t pid, t_mini *state)
 {
 	int				status;
 
+	(void)state;
 	unset_signals();
 	set_sigquit_signal();
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))
-		state->exec_ret = 128 + WTERMSIG(status);
+		g_exec_ret = 128 + WTERMSIG(status);
 	else
-		state->exec_ret = WEXITSTATUS(status);
+		g_exec_ret = WEXITSTATUS(status);
 	set_parent_signals();
 }
 
@@ -129,7 +130,7 @@ void	exec_cmd(t_list *cmds, t_mini *state)
 	if (is_parent_builtin(cmd->builtin_type))
 	{
 		parent_pipe(cmds);
-		state->exec_ret = run_builtin(cmds, state);
+		g_exec_ret = run_builtin(cmds, state);
 	}
 	else
 	{
