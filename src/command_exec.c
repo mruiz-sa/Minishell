@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mruiz-sa <mruiz-sa@student.42.fr>          +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 11:52:38 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/10 18:39:11 by mruiz-sa         ###   ########.fr       */
+/*   Updated: 2022/11/10 20:05:31 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,8 @@ void	wait_for_child(pid_t pid, t_mini *state)
 	int				status;
 
 	(void)state;
-	unset_signals();
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	set_sigquit_signal();
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status))

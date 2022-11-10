@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/04 17:09:41 by manugarc          #+#    #+#             */
-/*   Updated: 2022/11/10 18:05:05 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 20:05:41 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	on_sigint_signal(int signum)
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
+		g_exec_ret = 1;
 	}
 }
 
@@ -56,10 +57,4 @@ void	set_parent_signals(void)
 void	set_sigquit_signal(void)
 {
 	setup_signal(on_sigquit_signal, SIGQUIT);
-}
-
-void	unset_signals(void)
-{
-	signal(SIGINT, SIG_IGN);
-	signal(SIGQUIT, SIG_IGN);
 }
