@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/10 20:53:10 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/10 21:26:57 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,8 @@ int	validate_syntax_tokens(t_list *tokens)
 			return (0);
 		if (!validate_consecutive_tokens(token, prev))
 			return (0);
-		if (token && token->type == TK_ARG && !ft_strlen(token->str))
+		if (token && (token->type == TK_ARG || token->type == TK_CMD)
+			&& !ft_strlen(token->str))
 				token->ignore = 1;
 		tokens = tokens->next;
 	}

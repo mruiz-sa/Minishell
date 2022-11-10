@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   path.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: manu <manu@student.42.fr>                  +#+  +:+       +#+        */
+/*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/24 15:34:54 by manu              #+#    #+#             */
-/*   Updated: 2022/11/10 18:05:02 by manu             ###   ########.fr       */
+/*   Updated: 2022/11/10 21:23:26 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ char	*path_to_absolute(char *cmd_str, t_mini *state)
 {
 	char	*absolute_path;
 
-	if (*cmd_str == '/' || *cmd_str == '.')
+	if (!ft_strlen(cmd_str) || *cmd_str == '/' || *cmd_str == '.')
 		return (cmd_str);
 	absolute_path = get_path(cmd_str, state->envp);
 	if (absolute_path)
