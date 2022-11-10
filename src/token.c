@@ -6,7 +6,7 @@
 /*   By: manugarc <manugarc@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 17:14:58 by mruiz-sa          #+#    #+#             */
-/*   Updated: 2022/11/10 19:18:25 by manugarc         ###   ########.fr       */
+/*   Updated: 2022/11/10 19:22:24 by manugarc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,25 +53,6 @@ static char	*create_token(t_list **tokens, char *str, t_token_type type)
 	else
 		free(token);
 	return (str);
-}
-
-static void	free_node_content(void *content)
-{
-	t_token	*token;
-
-	token = content;
-	if (!token)
-		return ;
-	if (token->str != NULL)
-		free(token->str);
-	free(token);
-}
-
-void	free_tokens(t_list *tokens)
-{
-	if (!tokens)
-		return ;
-	ft_lstclear(&tokens, free_node_content);
 }
 
 t_token	*get_token(t_list *token_node)
